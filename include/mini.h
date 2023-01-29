@@ -13,13 +13,6 @@
 # define PROMPT_TOKENS_EXAMPLE "<a<b<c>d>\" t    \">>y<<u>i<i \"cat \"ls <\"t \"> u file"
 # define UNEXPECTED "|&;()"
 
-char	*ft_strdup_modif(const char *s1, int startIndex, int len);
-char	*ft_trim(char *s1);
-int		check_first_symbol(char *str);
-int 	check_last_symbol(char *str);
-int 	check_opening_closing_quote_pair(char* str);
-int 	has_errors(char *str);
-
 typedef struct s_red t_red;
 typedef struct s_pipe t_pipe;
 
@@ -40,7 +33,7 @@ typedef struct s_general
 typedef struct s_parsing
 {
 	char	**pipes; // containing array of lines in between pipes // the quote pipes doesnt count as pipe
-
+	int 	pipe_count;
 }					t_parsing;
 
 typedef struct s_pipe
@@ -58,4 +51,10 @@ typedef struct s_red
 	struct s_red 	*next;
 }					t_red;
 
-
+char	*ft_strdup_modif(const char *s1, int startIndex, int len);
+char	*ft_trim(char *s1);
+int		check_first_symbol(char *str);
+int 	check_last_symbol(char *str);
+int 	check_opening_closing_quote_pair(char* str);
+int 	has_errors(char *str);
+void 	split_by_pipes(t_parsing *data, char *cmd);

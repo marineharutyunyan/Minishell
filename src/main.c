@@ -20,10 +20,19 @@
 
 int main(int argc, char **argv, char **env)
 {
+	int		i; 
 	char	*cmd;
-
+	t_parsing pars_data;
 	cmd = readline("Minishell$ ");
 	if (!has_errors(cmd))
-		ft_printf(1, "line is valid");
+		ft_printf(1, "Line is valid\n");
+	split_by_pipes(&pars_data, cmd);
+
+	// print ---------------------
+	while (i < pars_data.pipe_count + 1)
+	{
+		printf("[i] =%s\n", pars_data.pipes[i]);
+		i++;
+	}
 	return (0);
 }
