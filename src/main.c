@@ -20,19 +20,43 @@
 
 int main(int argc, char **argv, char **env)
 {
-	int		i; 
+	int		i;
 	char	*cmd;
 	t_parsing pars_data;
-	cmd = readline("Minishell$ ");
-	if (!has_errors(cmd))
-		ft_printf(1, "Line is valid\n");
-	split_by_pipes(&pars_data, cmd);
-
-	// print ---------------------
-	while (i < pars_data.pipe_count + 1)
+	while (1)
 	{
-		printf("[i] =%s\n", pars_data.pipes[i]);
-		i++;
+		i = 0;
+		cmd = readline("Minishell$ ");
+		add_history(cmd);
+		if (!has_errors(cmd))
+			ft_printf(1, "Line is valid\n");
+		split_by_pipes(&pars_data, cmd);
+		// print bloks splited by pipe ---------------------
+		while (pars_data.pipes[i])
+		{
+			printf("[i] =%s\n", pars_data.pipes[i]);
+			i++;
+		}
+		i = 0;
+		while (pars_data.pipes[i])
+			free_array((void **)&pars_data.pipes[i++]);
+		free(pars_data.pipes);
 	}
 	return (0);
 }
+
+
+
+// int main()
+// {
+// 	char *ptr;
+// 	ptr = malloc(10);
+// 	ptr[9] = 0;
+// 	printf("\n\n\n\n");
+// 	printf("%p\n", &ptr);
+// 	printf("%p\n", ptr);
+
+// 	// printf("ptr = x%p\n", ptr);
+// 	free_array((void **)&ptr);
+// 	// printf("ptr = %p\n", ptr);
+// }

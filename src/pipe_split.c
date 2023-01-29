@@ -29,30 +29,26 @@ int get_pipes_count(char *str)
 
 void    split_by_pipes(t_parsing *data, char *str)
 {
-    data->pipe_count = get_pipes_count(str);
-    data->pipes = malloc(sizeof(char *) * data->pipe_count +1);
-
     int		i;
 	char	c;
     int     start_index;
     int     pipes_count;
 
+    data->pipe_count = get_pipes_count(str);
+    data->pipes = malloc(sizeof(char *) * (data->pipe_count + 2));
+    data->pipes[data->pipe_count + 1] = NULL;
 	i = 0;
     pipes_count = 0;
-
     start_index = i;
 	while (str[i] != '\0')
 	{
 		if (str[i] == '\'' || str[i] == '"')
 		{
-			c = str[i];
-			i++;
+			c = str[i++];
 			while (str[i] != c  && str[i] != '\0')
-			{
 				i++;
-			}
 		}
-        else if (str[i] == '|' || str[i] == '\0')
+        else if (str[i] == '|')
         {
             data->pipes[pipes_count] = ft_substr(str, start_index, i - start_index);
             pipes_count++;

@@ -9,9 +9,11 @@
 #include "ft_printf.h"
 
 
-# define PROMPT_PIPE_EXAMPLE "|\"ls |-la|\" | cat sgdsgsdg sdgsdgsdg |$dsgsd\"gs|dg\" '|f |f  |g| |'  | ls|"
+# define PROMPT_PIPE_EXAMPLE "|\"ls |-la|\" | cat sgdsgsdg sdgsdgsdg |$dsgsd\"gs|dg\" '|f |f  |g| |'  | ls"
 # define PROMPT_TOKENS_EXAMPLE "<a<b<c>d>\" t    \">>y<<u>i<i \"cat \"ls <\"t \"> u file"
 # define UNEXPECTED "|&;()"
+# define METACHARACTERS "|&;()<>\n\t "
+# define HEREDOC 1  // <<
 
 typedef struct s_red t_red;
 typedef struct s_pipe t_pipe;
@@ -32,25 +34,27 @@ typedef struct s_general
 
 typedef struct s_parsing
 {
-	char	**pipes; // containing array of lines in between pipes // the quote pipes doesnt count as pipe
+	char	**pipes; // containing array of lines in between pipes |  | the quote pipes doesn't count as pipe
 	int 	pipe_count;
 }					t_parsing;
 
-typedef struct s_pipe
+typedef struct s_pipe //malloc with noumer of pipes +1 , and give initial valuees 
 {
-	int		fd_in; // 0
-	int		fd_out; //1
-	char	**argv; // for execve
-	t_red	*head_red;
+	int		fd_in;  // 0
+	int		fd_out; // 1
+	char	**argv; // for execve //NULL
+	t_red	*head_red; //NULL
 }					t_pipe;
 
-typedef struct s_red
+typedef struct s_red 
 {
-	int				*flag;
-	char			*pathname;
-	struct s_red 	*next;
+	int				*flag; // if << flags = Heredoc       for others(>> > < ) man open defined flags numbers 
+	char			*pathname; // the string that doesn't contain metacharacters starting from <<
+	struct s_red 	*next; //NULL for the firs time 
 }					t_red;
 
+
+// parsing
 char	*ft_strdup_modif(const char *s1, int startIndex, int len);
 char	*ft_trim(char *s1);
 int		check_first_symbol(char *str);
@@ -58,3 +62,8 @@ int 	check_last_symbol(char *str);
 int 	check_opening_closing_quote_pair(char* str);
 int 	has_errors(char *str);
 void 	split_by_pipes(t_parsing *data, char *cmd);
+
+//utils
+int	free_array(void	**ptr);
+
+

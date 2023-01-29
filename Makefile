@@ -2,7 +2,7 @@ NAME		=	minishell
 CC			=	cc
 SRCS		=	$(wildcard src/*.c libs/*c)
 OBJS		=	$(patsubst %.c, %.o, $(SRCS))
-CFLAGS		=	-I./include #-Wall -Wextra -Werror
+CFLAGS		=	-I./include #-fsanitize=address #-Wall -Wextra -Werror
 LINKER		=	  -lreadline
 RM			=	rm -f
 LIBFT       =   libs/libft/libft.a
