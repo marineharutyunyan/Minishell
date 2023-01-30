@@ -1,4 +1,5 @@
 #include "mini.h"
+
 int get_pipes_count(char *str)
 {
     int count;
@@ -27,35 +28,36 @@ int get_pipes_count(char *str)
     return (count);
 }
 
-void    split_by_pipes(t_parsing *data, char *str)
+void 	split_by_pipes(t_general *g_data, t_parsing *data)
 {
     int		i;
 	char	c;
     int     start_index;
     int     pipes_count;
 
-    data->pipe_count = get_pipes_count(str);
+    data->pipe_count = get_pipes_count(g_data->line);
     data->pipes = malloc(sizeof(char *) * (data->pipe_count + 2));
     data->pipes[data->pipe_count + 1] = NULL;
 	i = 0;
     pipes_count = 0;
     start_index = i;
-	while (str[i] != '\0')
+	while (g_data->line[i] != '\0')
 	{
-		if (str[i] == '\'' || str[i] == '"')
+		if (g_data->line[i] == '\'' || g_data->line[i] == '"')
 		{
-			c = str[i++];
-			while (str[i] != c  && str[i] != '\0')
+			c = g_data->line[i++];
+			while (g_data->line[i] != c  && g_data->line[i] != '\0')
 				i++;
 		}
-        else if (str[i] == '|')
+        else if (g_data->line[i] == '|')
         {
-            data->pipes[pipes_count] = ft_substr(str, start_index, i - start_index);
+            data->pipes[pipes_count] = ft_substr(g_data->line, start_index, i - start_index);
             pipes_count++;
             start_index = i + 1;
         }
 		i++;
 	}
-    if (str[i] == '\0')
-        data->pipes[pipes_count] = ft_substr(str, start_index, i - start_index);
+    if (g_data->line[i] == '\0')
+        data->pipes[pipes_count] = ft_substr(g_data->line, start_index, i - start_index);
+	g_data->parse_data = data;
 }

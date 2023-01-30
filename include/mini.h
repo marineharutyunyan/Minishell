@@ -17,6 +17,7 @@
 
 typedef struct s_red t_red;
 typedef struct s_pipe t_pipe;
+typedef struct s_parsing t_parsing;
 
 typedef struct s_env
 {
@@ -27,9 +28,11 @@ typedef struct s_env
 
 typedef struct s_general
 {
-	t_env   *head_env;
-	char	**env;
-	t_pipe	*pipes;
+	t_env   	*head_env;
+	char 		*line;
+	char		**env;
+	t_pipe		*pipes;
+	t_parsing	*parse_data;
 }					t_general;
 
 typedef struct s_parsing
@@ -61,9 +64,9 @@ int		check_first_symbol(char *str);
 int 	check_last_symbol(char *str);
 int 	check_opening_closing_quote_pair(char* str);
 int 	has_errors(char *str);
-void 	split_by_pipes(t_parsing *data, char *cmd);
+void 	split_by_pipes(t_general *g_data, t_parsing *data);
+void	init_structs(t_general *g_data);
+void	paresing(t_general *g_data);
 
 //utils
 int	free_array(void	**ptr);
-
-
