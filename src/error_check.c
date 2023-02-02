@@ -68,11 +68,14 @@ int has_errors(char *str)
 	str = ft_trim(str);
 	if (!check_first_symbol(str))
 	{
-		if(!check_opening_closing_quote_pair(str))
+		if (!check_opening_closing_quote_pair(str))
 		{
-			if(!check_last_symbol(str))
+			if (!check_last_symbol(str))
 			{
-				return (0);
+				if (!check_redir_sytax(str))
+				{
+					return (0);
+				}
 			}
 		}
 	}

@@ -34,7 +34,7 @@ void init_structs(t_general *g_data)
 	t_pipe		*pipes;
 
 	g_data->parse_data = pars_data;
-	g_data->pipes = malloc(sizeof(t_pipe) * g_data->parse_data->pipe_count);
+	g_data->pipes = malloc(sizeof(t_pipe) * (g_data->parse_data->pipe_count + 1));
 }
 
 int main(int argc, char **argv, char **env)

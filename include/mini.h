@@ -29,8 +29,8 @@ typedef struct s_env
 typedef struct s_general
 {
 	t_env   	*head_env;
-	char 		*line;
 	char		**env;
+	char 		*line;
 	t_pipe		*pipes;
 	t_parsing	*parse_data;
 }					t_general;
@@ -51,7 +51,7 @@ typedef struct s_pipe //malloc with noumer of pipes +1 , and give initial valuee
 
 typedef struct s_red 
 {
-	int				*flag; // if << flags = Heredoc       for others(>> > < ) man open defined flags numbers 
+	int				flag; // TODO should this be just int ? if << flags = Heredoc       for others(>> > < ) man open defined flags numbers 
 	char			*pathname; // the string that doesn't contain metacharacters starting from <<
 	struct s_red 	*next; //NULL for the firs time 
 }					t_red;
@@ -63,6 +63,7 @@ char	*ft_trim(char *s1);
 int		check_first_symbol(char *str);
 int 	check_last_symbol(char *str);
 int 	check_opening_closing_quote_pair(char* str);
+int 	check_redir_sytax(char *str);
 int 	has_errors(char *str);
 void 	split_by_pipes(t_general *g_data, t_parsing *data);
 void	init_structs(t_general *g_data);
