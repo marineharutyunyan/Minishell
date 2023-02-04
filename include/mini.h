@@ -4,16 +4,17 @@
 #include <stdlib.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <fcntl.h>
 #include <dirent.h>
 #include "libft.h"
 #include "ft_printf.h"
 
-
 # define PROMPT_PIPE_EXAMPLE "|\"ls |-la|\" | cat sgdsgsdg sdgsdgsdg |$dsgsd\"gs|dg\" '|f |f  |g| |'  | ls"
 # define PROMPT_TOKENS_EXAMPLE "<a<b<c>d>\" t    \">>y<<u>i<i \"cat \"ls <\"t \"> u file"
 # define UNEXPECTED "|&;()"
+# define SPACE "\n\t "
 # define METACHARACTERS "|&;()<>\n\t "
-# define HEREDOC 1  // <<
+# define HEREDOC 1  // << // opening file and puting the 
 
 typedef struct s_red t_red;
 typedef struct s_pipe t_pipe;
@@ -26,20 +27,20 @@ typedef struct s_env
 	struct s_env 	*next;
 }					t_env;
 
+typedef struct s_parsing
+{
+	char	**pipes; // containing array of lines in between pipes |  | the quote pipes doesn't count as pipe
+	int 	pipe_count;
+}					t_parsing;
+
 typedef struct s_general
 {
 	t_env   	*head_env;
 	char		**env;
 	char 		*line;
 	t_pipe		*pipes;
-	t_parsing	*parse_data;
+	t_parsing	parse_data;
 }					t_general;
-
-typedef struct s_parsing
-{
-	char	**pipes; // containing array of lines in between pipes |  | the quote pipes doesn't count as pipe
-	int 	pipe_count;
-}					t_parsing;
 
 typedef struct s_pipe //malloc with noumer of pipes +1 , and give initial valuees 
 {
@@ -70,4 +71,7 @@ void	init_structs(t_general *g_data);
 void	paresing(t_general *g_data);
 
 //utils
-int	free_array(void	**ptr);
+int		free_array(void	**ptr);
+
+//temp_utils
+void	ft_redir_iter(t_red *lst);

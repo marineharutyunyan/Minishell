@@ -18,7 +18,7 @@
 #include <dirent.h>
 #include "mini.h"
 
-void	free_pipes(t_parsing *pars_data)
+void	free_parsing(t_parsing *pars_data)
 {
 	int	i;
 
@@ -28,42 +28,35 @@ void	free_pipes(t_parsing *pars_data)
 	free(pars_data->pipes);
 }
 
+void	free_general(t_general *g_data)
+{
+	free_array((void **)&g_data->line);
+}
+
 void init_structs(t_general *g_data)
 {
-	t_parsing	*pars_data;
-	t_pipe		*pipes;
-
-	g_data->parse_data = pars_data;
-	g_data->pipes = malloc(sizeof(t_pipe) * (g_data->parse_data->pipe_count + 1));
+	g_data->pipes = malloc(sizeof(t_pipe) * (g_data->parse_data.pipe_count + 1));
 }
 
 int main(int argc, char **argv, char **env)
 {
 	int			i;
 	char		*cmd;
-	t_parsing	pars_data;
 	t_general 	g_data;
 	while (1)
 	{
 		cmd = readline("Minishell$ ");
 		add_history(cmd);
-		if (!has_errors(cmd))
-			ft_printf(1, "Line is valid\n");
-		g_data.line = ft_strdup(cmd); //  ----------- is this correct ? 
-		split_by_pipes(&g_data, &pars_data);
+		//if (!has_errors(cmd))
+		//	ft_printf(1, "Line is valid\n");
+		g_data.line = cmd;
+		split_by_pipes(&g_data, &g_data.parse_data);
 		init_structs(&g_data);
 		paresing(&g_data);
 
 
-
-		// print bloks splited by pipe ---------------------
-		i = 0;
-		while (pars_data.pipes[i])
-		{
-			printf("[i] =%s\n", pars_data.pipes[i]);
-			i++;
-		}
-		free_pipes(&pars_data);
+		free_parsing(&g_data.parse_data);
+        free_general(&g_data);
 	}
 	return (0);
 }

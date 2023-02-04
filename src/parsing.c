@@ -37,6 +37,41 @@ t_red	*lst_redir_new(void *content, int flag_num)
 	}
 }
 
+int pass_spces(char *line, int i)
+{
+	while (line[i] != '\0' && ft_strchr(SPACE, line[i]))
+		i++;
+	return (i);
+}
+
+int pass_quotes(char *str, int i)
+{
+	char c;
+
+	if (str[i] == '\'' || str[i] == '"')
+	{
+		c = str[i];
+		i++;
+		while (str[i] != c  && str[i] != '\0')
+		{
+			i++;
+		}
+	}
+	return (i);
+}
+
+char *get_pathname(char *line, int i)
+{
+	int start_index = i;
+	
+	while (line[i] != '\0' && !ft_strchr(METACHARACTERS, line[i]))
+	{
+		i = pass_quotes(line, i);
+		i++;
+	}
+	return (ft_substr(line, start_index, i - start_index));
+}
+
 //line = smole lines in between pipes 
 //index = index of the which in between pipe text it is
 void set_rediractions(t_general *g_data, char *line, int index)
@@ -44,41 +79,43 @@ void set_rediractions(t_general *g_data, char *line, int index)
 	int		temp_start_index;
 	int		i;
 	int		flag;
-	char	*pathname;
 
 	flag = 1;
-	i = 0;
+	i = -1;
 	temp_start_index = 0;
-    while (line[i] != '\0')
+    while (line[++i] != '\0')
 	{
-		if(line[i + 1] == '>')
+		flag = 9;
+		// TODO norminet 
+		if (line[i] == '>' && line[i + 1] == '>') 
 		{
-			i++;
-			flag = 0;
-			//TODO chch and change the flag accoring to > < >> << form man open 
-			//TODO add check for redirection validity
-			if (line[i + 1] == '>') 
-			{
-				flag = HEREDOC;
-				i++;
-			}
-			if (!ft_strchr(METACHARACTERS, line[i]))
-				temp_start_index = i;
-			while (line[i] != '\0' && !ft_strchr(METACHARACTERS, line[i]))
-			{
-				i++;
-			}
-			if (temp_start_index != 0)
-			{
-				pathname = ft_substr(line, temp_start_index, i - temp_start_index);
-				//TODO how check that this is the firs redirec head item ? 
-				if (g_data->pipes[index].head_red == NULL)
-					g_data->pipes[index].head_red = lst_redir_new(pathname, flag);
-				else
-					lst_redir_add_back(&g_data->pipes[index].head_red, lst_redir_new(pathname, flag));
-			}
+			flag = O_APPEND; // opening file and seting index  of cursor at very end of file.
+			i = i + 2;
 		}
-		i++;
+		else if (line[i] == '<' && line[i + 1] == '<')
+		{
+			flag = HEREDOC; // opening virtual file and letting write command and maybe u can pass that file as an input to some pipe.
+			i = i + 2;
+		}
+		else if (line[i] == '>')
+		{
+			flag = O_TRUNC; // opening file and deleting everything in it.
+			i++;
+		}
+		else if (line[i] == '<') 
+		{
+			flag = O_RDONLY; // opening file and only reading 
+			i++;
+		}
+		//TODO add check for redirection validity
+		if (flag != 9)
+		{
+			i = pass_spces(line, i);
+			if (g_data->pipes[index].head_red == NULL)
+				g_data->pipes[index].head_red = lst_redir_new(get_pathname(line, i), flag);
+			else
+				lst_redir_add_back(&g_data->pipes[index].head_red, lst_redir_new(get_pathname(line, i), flag));
+		}
     }
 }
 
@@ -87,13 +124,18 @@ void    paresing(t_general *g_data)
 	int	i;
 
 	i = 0;
-	while (g_data->parse_data->pipes[i])
+	while (g_data->parse_data.pipes[i])
 	{
 		g_data->pipes[i].fd_in = 0;
 		g_data->pipes[i].fd_out = 1;
 		g_data->pipes[i].head_red = NULL;
-	//	g_data->pipes[i]->argv = NULL; // TODO--------------------- what should go here? 
-		set_rediractions(g_data, g_data->parse_data->pipes[i], i);
+		g_data->pipes[i].argv = NULL;
+		
+		// TODO--------------------- what should go here? 
+		set_rediractions(g_data, g_data->parse_data.pipes[i], i);
+		//set_args()
+		// for printing 
+		ft_redir_iter(g_data->pipes[i].head_red);
 		i++;
 	}
 }

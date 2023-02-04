@@ -1,24 +1,28 @@
 NAME		=	minishell
 CC			=	cc
-SRCS		=	$(wildcard src/*.c libs/*c)
-OBJS		=	$(patsubst %.c, %.o, $(SRCS))
+SRCS		=	$(wildcard ./src/*.c)
+OBJS		=	$(patsubst ./src/%.c, ./$(OBJECTFOLDER)/%.o, $(SRCS))
 CFLAGS		=	-I./include #-fsanitize=address #-Wall -Wextra -Werror
 LINKER		=	  -lreadline
-RM			=	rm -f
+RM			=	rm -rf
 LIBFT       =   libs/libft/libft.a
 PRINTF      =   libs/printf/libftprintf.a
 
 LIBFT_DIR  = libs/libft
 PRINTF_DIR = libs/printf
+OBJECTFOLDER = temp
+MKDIR = m
 
-
-%.o:%.c
+./$(OBJECTFOLDER)/%.o: ./src/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-all:$(NAME)
+all: $(NAME)
 
-$(NAME): $(LIBFT) $(PRINTF) $(OBJS) 
+$(NAME):$(OBJECTFOLDER) $(LIBFT) $(PRINTF) $(OBJS) 
 	$(CC) $(CFLAGS) $(LINKER) $(OBJS) $(LIBFT) $(PRINTF)  -o $(NAME)
+
+$(OBJECTFOLDER) :
+	mkdir $(OBJECTFOLDER)
 
 $(LIBFT):
 	make -C $(LIBFT_DIR)
@@ -30,6 +34,7 @@ clean:
 	make clean -C $(PRINTF_DIR)
 	make clean -C $(LIBFT_DIR)
 	$(RM) $(OBJS) 
+	$(RM) $(OBJECTFOLDER) 
 
 fclean: clean
 	make fclean -C $(PRINTF_DIR)

@@ -35,9 +35,9 @@ void 	split_by_pipes(t_general *g_data, t_parsing *data)
     int     start_index;
     int     pipes_count;
 
-    data->pipe_count = get_pipes_count(g_data->line);
-    data->pipes = malloc(sizeof(char *) * (data->pipe_count + 2));
-    data->pipes[data->pipe_count + 1] = NULL;
+    g_data->parse_data.pipe_count = get_pipes_count(g_data->line);
+    g_data->parse_data.pipes = malloc(sizeof(char *) * (g_data->parse_data.pipe_count + 2));
+    g_data->parse_data.pipes[g_data->parse_data.pipe_count + 1] = NULL;
 	i = 0;
     pipes_count = 0;
     start_index = i;
@@ -51,13 +51,12 @@ void 	split_by_pipes(t_general *g_data, t_parsing *data)
 		}
         else if (g_data->line[i] == '|')
         {
-            data->pipes[pipes_count] = ft_substr(g_data->line, start_index, i - start_index);
+            g_data->parse_data.pipes[pipes_count] = ft_substr(g_data->line, start_index, i - start_index);
             pipes_count++;
             start_index = i + 1;
         }
 		i++;
 	}
     if (g_data->line[i] == '\0')
-        data->pipes[pipes_count] = ft_substr(g_data->line, start_index, i - start_index);
-	g_data->parse_data = data;
+        g_data->parse_data.pipes[pipes_count] = ft_substr(g_data->line, start_index, i - start_index);
 }
