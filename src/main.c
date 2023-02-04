@@ -54,23 +54,8 @@ int main(int argc, char **argv, char **env)
 		init_structs(&g_data);
 		paresing(&g_data);
 
-
 		free_parsing(&g_data.parse_data);
         free_general(&g_data);
 	}
 	return (0);
 }
-
-// int main()
-// {
-// 	char *ptr;
-// 	ptr = malloc(10);
-// 	ptr[9] = 0;
-// 	printf("\n\n\n\n");
-// 	printf("%p\n", &ptr);
-// 	printf("%p\n", ptr);
-
-// 	// printf("ptr = x%p\n", ptr);
-// 	free_array((void **)&ptr);
-// 	// printf("ptr = %p\n", ptr);
-// }

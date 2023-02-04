@@ -13,6 +13,7 @@
 # define PROMPT_TOKENS_EXAMPLE "<a<b<c>d>\" t    \">>y<<u>i<i \"cat \"ls <\"t \"> u file"
 # define UNEXPECTED "|&;()"
 # define SPACE "\n\t "
+# define REDIRECTIONS "<>"
 # define METACHARACTERS "|&;()<>\n\t "
 # define HEREDOC 1  // << // opening file and puting the 
 
@@ -46,6 +47,7 @@ typedef struct s_pipe //malloc with noumer of pipes +1 , and give initial valuee
 {
 	int		fd_in;  // 0
 	int		fd_out; // 1
+	int 	words_count; // count of words contained in argv below
 	char	**argv; // for execve //NULL
 	t_red	*head_red; //NULL
 }					t_pipe;
