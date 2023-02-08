@@ -52,9 +52,15 @@ int	main(int argc, char **argv, char **env)
 		// if (!has_errors(cmd))
 		// ft_printf(1, "Line is valid\n");
 		g_data.line = cmd;
+		g_data.head_env = NULL; 
 		split_by_pipes(&g_data, &g_data.parse_data);
 		init_structs(&g_data);
 		paresing(&g_data);
+
+		set_env(&g_data, env);
+		//for printing
+		ft_env_iter(g_data.head_env);
+
 		free_parsing(&g_data.parse_data);
 		free_general(&g_data);
 	}

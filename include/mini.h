@@ -36,7 +36,7 @@ typedef struct s_parsing
 typedef struct s_general
 {
 	t_env   	*head_env;
-	char		**env;
+	//char		**env; //TODO Why do I need this ? 
 	char 		*line;
 	t_pipe		*pipes;
 	t_parsing	parse_data;
@@ -78,8 +78,16 @@ int		pass_word(char *line, int i);
 char	*get_word(char *line, int *i);
 int		pass_redir(char *line, int i);
 
+//envparsing
+
+t_env	*lst_env_new(void *value, void *key);
+void	lst_env_add_back(t_env **lst, t_env *new);
+void    set_env(t_general *g_data, char **env);
+
 //utils
 int	free_array(void	**ptr);
 
 //temp_utils
 void	ft_redir_iter(t_red *lst);
+void	ft_env_iter(t_env *lst);
+

@@ -103,15 +103,16 @@ void	paresing(t_general *g_data)
 		g_data->pipes[i].argv = NULL;
 		set_rediractions(&g_data->pipes[i], g_data->parse_data.pipes[i]);
 		set_args(&g_data->pipes[i], g_data->parse_data.pipes[i]);
+
+		//for PRINTING 
+		/*
 		j = 0;
 		while (g_data->pipes[i].argv[j])
 		{
 			printf("argv = %s\n", g_data->pipes[i].argv[j]);
 			j++;
 		}
-		//for printing 
-		//printf("printing redirs !!!!!!!!!!!\n");
-		ft_redir_iter(g_data->pipes[i].head_red);
+		ft_redir_iter(g_data->pipes[i].head_red);*/
 		i++;
 	}
 }

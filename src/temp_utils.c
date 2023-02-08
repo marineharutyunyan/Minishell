@@ -22,3 +22,13 @@ void	ft_redir_iter(t_red *lst)
 		lst = lst->next;
 	}
 }
+
+void	ft_env_iter(t_env *lst)
+{
+	while (lst)
+	{
+		printf("key = %s\n", lst->key);
+		printf("value = %s\n", lst->value);
+		lst = lst->next;
+	}
+}
