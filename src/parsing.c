@@ -30,57 +30,65 @@ void	set_args(t_general *g_data, char *line, int index)
 	}
 }
 
+int	get_redir_flag(char *line, int i)
+{
+	int		flag;
+
+	i = pass_spces(line, i);
+	flag = 9; //some random false flag value 
+	if (line[i] == '>' && line[i + 1] == '>')
+	{
+		flag = O_APPEND; // opening file and seting index  of cursor at very end of file.
+		i = i + 2;
+	}
+	else if (line[i] == '<' && line[i + 1] == '<')
+	{
+		flag = HEREDOC; // opening virtual file and letting write command and maybe u can pass that file as an input to some pipe.
+		i = i + 2;
+	}
+	else if (line[i] == '>')
+	{
+		flag = O_TRUNC; // opening file and deleting everything in it.
+		i++;
+	}
+	else if (line[i] == '<')
+	{
+		flag = O_RDONLY; // opening file and only reading 
+		i++;
+	}
+	return (flag);
+}
+
 // dhgsdfhs >> dfgsd > fhgfgh   |
 //line = smole lines in between pipes 
 //index = index of the which in between pipe text it is
-void	set_rediractions(t_general *g_data, char *line, int index)
+void	set_rediractions(t_pipe pipe, char *line)
 {
 	int		temp_start_index;
 	int		i;
 	int		flag;
+	char	*word;
 
-	flag = 1;
 	i = -1;
 	temp_start_index = 0;
-    while (line[++i] != '\0')
+	while (line[++i] != '\0')
 	{
-		i = pass_spces(line, i);
-		flag = 9; //some random false flag value 
-		// TODO norminet 
-		if (line[i] == '>' && line[i + 1] == '>')
-		{
-			flag = O_APPEND; // opening file and seting index  of cursor at very end of file.
-			i = i + 2;
-		}
-		else if (line[i] == '<' && line[i + 1] == '<')
-		{
-			flag = HEREDOC; // opening virtual file and letting write command and maybe u can pass that file as an input to some pipe.
-			i = i + 2;
-		}
-		else if (line[i] == '>')
-		{
-			flag = O_TRUNC; // opening file and deleting everything in it.
-			i++;
-		}
-		else if (line[i] == '<')
-		{
-			flag = O_RDONLY; // opening file and only reading 
-			i++;
-		}
-		else if (line[i] != '\0')
+		flag = get_redir_flag(line, i);
+		if (line[i] != '\0')
 		{
 			i = pass_spces(line, i);
-			g_data->pipes[index].words_count += 1;
+			pipe.words_count += 1;
 			get_word(line, &i);
 		}
 		//TODO add check for redirection validity
 		if (flag != 9)
 		{
 			i = pass_spces(line, i);
-			if (g_data->pipes[index].head_red == NULL)
-				g_data->pipes[index].head_red = lst_redir_new(get_word(line, &i), flag);
+			word = get_word(line, &i);
+			if (pipe.head_red == NULL)
+				pipe.head_red = lst_redir_new(word, flag);
 			else
-				lst_redir_add_back(&g_data->pipes[index].head_red, lst_redir_new(get_word(line, &i), flag));
+				lst_redir_add_back(&pipe.head_red, lst_redir_new(word, flag));
 		}
 	}
 }
@@ -98,7 +106,7 @@ void	paresing(t_general *g_data)
 		g_data->pipes[i].head_red = NULL;
 		g_data->pipes[i].words_count = 0;
 		g_data->pipes[i].argv = NULL;
-		set_rediractions(g_data, g_data->parse_data.pipes[i], i);
+		set_rediractions(g_data->pipes[i], g_data->parse_data.pipes[i]);
 		set_args(g_data, g_data->parse_data.pipes[i], i);
 		j = 0;
 		while (g_data->pipes[i].argv[j])
