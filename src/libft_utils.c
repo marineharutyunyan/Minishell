@@ -4,7 +4,7 @@ char	*ft_strdup_modif(const char *s1, int startIndex, int len)
 {
 	char	*str;
 	int		i;
-	
+
 	i = 0;
 	str = (char *)malloc((len + 1) * sizeof(char));
 	if (str == 0)
@@ -22,10 +22,10 @@ char	*ft_strdup_modif(const char *s1, int startIndex, int len)
 
 char	*ft_trim(char *s1)
 {
-	int		i;
-	int		len;
-	int		startIndex;
-	int 	endIndex;
+	int	i;
+	int	len;
+	int	start_index;
+	int	end_index;
 
 	len = ft_strlen(s1);
 	if (len > 0)
@@ -35,18 +35,16 @@ char	*ft_trim(char *s1)
 		{
 			i++;
 		}
-		startIndex = i;
-		if(startIndex == len)
-		{
-			return (ft_strdup("")); 
-		}
-		i = len-1;
+		start_index = i;
+		if (start_index == len)
+			return (ft_strdup(""));
+		i = len - 1;
 		while (s1[i] == 32 && i != 0)
 		{
 			i--;
 		}
-		endIndex = i + 1;
-		return (ft_strdup_modif(s1, startIndex, endIndex  - startIndex));
+		end_index = i + 1;
+		return (ft_strdup_modif(s1, start_index, end_index - start_index));
 	}
-	return (ft_strdup("")); 
+	return (ft_strdup(""));
 }

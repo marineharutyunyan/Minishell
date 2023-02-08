@@ -33,29 +33,30 @@ void	free_general(t_general *g_data)
 	free_array((void **)&g_data->line);
 }
 
-void init_structs(t_general *g_data)
+void	init_structs(t_general *g_data)
 {
-	g_data->pipes = malloc(sizeof(t_pipe) * (g_data->parse_data.pipe_count + 1));
+	g_data->pipes = malloc(sizeof(t_pipe)
+			* (g_data->parse_data.pipe_count + 1));
 }
 
-int main(int argc, char **argv, char **env)
+int	main(int argc, char **argv, char **env)
 {
 	int			i;
 	char		*cmd;
-	t_general 	g_data;
+	t_general	g_data;
+
 	while (1)
 	{
 		cmd = readline("Minishell$ ");
 		add_history(cmd);
-		//if (!has_errors(cmd))
-		//	ft_printf(1, "Line is valid\n");
+		// if (!has_errors(cmd))
+		// ft_printf(1, "Line is valid\n");
 		g_data.line = cmd;
 		split_by_pipes(&g_data, &g_data.parse_data);
 		init_structs(&g_data);
 		paresing(&g_data);
-
 		free_parsing(&g_data.parse_data);
-        free_general(&g_data);
+		free_general(&g_data);
 	}
 	return (0);
 }

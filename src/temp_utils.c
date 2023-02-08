@@ -19,7 +19,6 @@ void	ft_redir_iter(t_red *lst)
 	{
 		printf("%s\n", lst->pathname);
 		printf("%d\n", lst->flag);
-
 		lst = lst->next;
 	}
 }

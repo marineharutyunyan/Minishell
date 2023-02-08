@@ -71,6 +71,15 @@ int 	has_errors(char *str);
 void 	split_by_pipes(t_general *g_data, t_parsing *data);
 void	init_structs(t_general *g_data);
 void	paresing(t_general *g_data);
+int		pass_quotes(char *str, int i);
+void	lst_redir_add_back(t_red **lst, t_red *new);
+t_red	*lst_redir_new(void *content, int flag_num);
+int	pass_spces(char *line, int i);
+int	pass_quotes(char *str, int i);
+int	pass_word(char *line, int i);
+char	*get_word(char *line, int *i);
+int	pass_redir(char *line, int i);
+
 
 //utils
 int		free_array(void	**ptr);
