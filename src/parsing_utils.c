@@ -7,6 +7,22 @@ int	pass_spces(char *line, int i)
 	return (i);
 }
 
+int	pass_single_quotes(char *str, int i)
+{
+	char	c;
+
+	if (str[i] == '\'')
+	{
+		c = str[i];
+		i++;
+		while (str[i] != c && str[i] != '\0')
+		{
+			i++;
+		}
+	}
+	return (i);
+}
+
 int	pass_quotes(char *str, int i)
 {
 	char	c;

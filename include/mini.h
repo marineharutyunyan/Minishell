@@ -14,6 +14,7 @@
 # define SPACE "\n\t "
 # define REDIRECTIONS "<>"
 # define METACHARACTERS "|&;()<>\n\t "
+
 # define HEREDOC 1  // << // opening file and puting the 
 
 typedef struct s_red t_red;
@@ -77,12 +78,17 @@ int		pass_quotes(char *str, int i);
 int		pass_word(char *line, int i);
 char	*get_word(char *line, int *i);
 int		pass_redir(char *line, int i);
+int	 	pass_single_quotes(char *str, int i);
+char	*replace_env_var(char *line, t_general *g_data);
+
+
 
 //envparsing
 
 t_env	*lst_env_new(void *value, void *key);
 void	lst_env_add_back(t_env **lst, t_env *new);
 void    set_env(t_general *g_data, char **env);
+
 
 //utils
 int	free_array(void	**ptr);

@@ -58,8 +58,10 @@ int	main(int argc, char **argv, char **env)
 		paresing(&g_data);
 
 		set_env(&g_data, env);
+		// ft_env_iter(g_data.head_env);
+		printf("%s\n",  replace_env_var(g_data.line, &g_data));
+
 		//for printing
-		ft_env_iter(g_data.head_env);
 
 		free_parsing(&g_data.parse_data);
 		free_general(&g_data);

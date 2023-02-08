@@ -11,9 +11,10 @@ PRINTF      =   libs/printf/libftprintf.a
 LIBFT_DIR  = libs/libft
 PRINTF_DIR = libs/printf
 OBJECTFOLDER = temp
-MKDIR = m
+MKDIR = mkdir
+HEADER = $(wildcard ./include/*)
 
-./$(OBJECTFOLDER)/%.o: ./src/%.c
+./$(OBJECTFOLDER)/%.o: ./src/%.c $(HEADER)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 all: $(NAME)
