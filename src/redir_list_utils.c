@@ -1,6 +1,5 @@
 #include "mini.h"
 
-//TODO nothing's functionality is not tested in thes file
 t_red	*lst_redir_last(t_red *lst)
 {
 	while (lst && lst->next)

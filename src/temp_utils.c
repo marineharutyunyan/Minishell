@@ -17,8 +17,8 @@ void	ft_redir_iter(t_red *lst)
 {
 	while (lst)
 	{
-		printf("%s\n", lst->pathname);
-		printf("%d\n", lst->flag);
+		printf("Pathname = %s\n", lst->pathname);
+		printf("flage = %d\n", lst->flag);
 		lst = lst->next;
 	}
 }
