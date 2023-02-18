@@ -50,14 +50,13 @@ char	*process_line(char *line, t_general *g_data)
 }
 
 //$HOME help "hello $aa"$MM text$
+
 char	*replace_env_var(char *line, t_general *g_data)
 {
 	int		i;
-	int		start_index;
 	char	*final_line;
 	char	*temp;
 
-	start_index = 0;
 	i = 0;
 	final_line = NULL;
 	while (line[i] != '\0')
@@ -66,12 +65,9 @@ char	*replace_env_var(char *line, t_general *g_data)
 		{
 			i++;
 			temp = get_variable_name(line, &i);
-			start_index = i;
 			if (temp != NULL)
-			{
-				temp = find_value_by_key(temp, g_data->head_env);
-				final_line = ft_strjoin(final_line, temp);
-			}
+				final_line = ft_strjoin(final_line,
+						find_value_by_key(temp, g_data->head_env));
 			else if (line[i] == '\0')
 				final_line = ft_strjoin(final_line, "$");
 		}

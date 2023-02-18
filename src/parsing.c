@@ -52,7 +52,6 @@ int	get_redir_flag(char *line, int *i)
 	}
 	return (flag);
 }
-
 // dhgsdfhs >> dfgsd > fhgfgh   |
 //line = smole lines in between pipes 
 //index = index of the which in between pipe text it is
@@ -74,7 +73,7 @@ void	set_rediractions(t_pipe *pipe, char *line)
 			i = pass_spces(line, i);
 			pipe->words_count += 1;
 			free(get_word(line, &i));
-		}
+		} //TODO add check for redirection validity
 		if (flag != 9)
 		{
 			i = pass_spces(line, i);
