@@ -44,25 +44,23 @@ int	main(int argc, char **argv, char **env)
 	int			i;
 	char		*cmd;
 	t_general	g_data;
+	char		*str;
 
 	while (1)
 	{
 		cmd = readline("Minishell$ ");
 		add_history(cmd);
-		// if (!has_errors(cmd))
-		// ft_printf(1, "Line is valid\n");
+		// if (!has_errors(cmd)) /* TODO enable erro check */
+		// ft_printf(1, "Line is valid\n"); //TODO add rediraction check
 		g_data.line = cmd;
 		g_data.head_env = NULL; 
 		split_by_pipes(&g_data, &g_data.parse_data);
 		init_structs(&g_data);
 		paresing(&g_data);
-
 		set_env(&g_data, env);
 		// ft_env_iter(g_data.head_env);
-		printf("%s\n",  replace_env_var(g_data.line, &g_data));
-
-		//for printing
-
+		str = process_line(g_data.line, &g_data);
+		printf("str = %s\n", str);
 		free_parsing(&g_data.parse_data);
 		free_general(&g_data);
 	}

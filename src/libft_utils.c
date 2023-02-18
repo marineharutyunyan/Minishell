@@ -48,3 +48,15 @@ char	*ft_trim(char *s1)
 	}
 	return (ft_strdup(""));
 }
+
+char	*char_to_string(char s1)
+{
+	char	*res;
+	size_t	len;
+
+	len = 2;
+	res = malloc(sizeof(char) * len);
+	res[0] = s1;
+	res[1] = '\0';
+	return (res);
+}

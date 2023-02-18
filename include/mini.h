@@ -45,8 +45,8 @@ typedef struct s_general
 
 typedef struct s_pipe //malloc with noumer of pipes +1 , and give initial valuees 
 {
-	int		fd_in;  // 0
-	int		fd_out; // 1
+	int		fd_in;  // 0          // read only goes here  
+	int		fd_out; // 1              // rest reutts of open exept heredoc gors here 
 	int 	words_count; // count of words contained in argv below
 	char	**argv; // for execve //NULL
 	t_red	*head_red; //NULL
@@ -61,6 +61,7 @@ typedef struct s_red
 
 // parsing
 char	*ft_strdup_modif(const char *s1, int startIndex, int len);
+char	*char_to_string(char s1);
 char	*ft_trim(char *s1);
 int		check_first_symbol(char *str);
 int 	check_last_symbol(char *str);
@@ -78,9 +79,11 @@ int		pass_quotes(char *str, int i);
 int		pass_word(char *line, int i);
 char	*get_word(char *line, int *i);
 int		pass_redir(char *line, int i);
-int	 	pass_single_quotes(char *str, int i);
+char	*get_text(char *str, int *i);
+char	*get_inbetween_double_quotes_text(char *str, int *i);
+char	*get_inbetween_single_quotes_text(char *str, int *i);
+char	*process_line (char *line, t_general *g_data);
 char	*replace_env_var(char *line, t_general *g_data);
-
 
 
 //envparsing

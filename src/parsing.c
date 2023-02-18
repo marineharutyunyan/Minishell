@@ -75,7 +75,6 @@ void	set_rediractions(t_pipe *pipe, char *line)
 			pipe->words_count += 1;
 			free(get_word(line, &i));
 		}
-		//TODO add check for redirection validity
 		if (flag != 9)
 		{
 			i = pass_spces(line, i);
@@ -103,8 +102,7 @@ void	paresing(t_general *g_data)
 		g_data->pipes[i].argv = NULL;
 		set_rediractions(&g_data->pipes[i], g_data->parse_data.pipes[i]);
 		set_args(&g_data->pipes[i], g_data->parse_data.pipes[i]);
-
-		//for PRINTING 
+		// for PRINTING 
 		/*
 		j = 0;
 		while (g_data->pipes[i].argv[j])
@@ -112,7 +110,8 @@ void	paresing(t_general *g_data)
 			printf("argv = %s\n", g_data->pipes[i].argv[j]);
 			j++;
 		}
-		ft_redir_iter(g_data->pipes[i].head_red);*/
+		ft_redir_iter(g_data->pipes[i].head_red);
+		*/
 		i++;
 	}
 }

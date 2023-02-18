@@ -7,36 +7,25 @@ int	pass_spces(char *line, int i)
 	return (i);
 }
 
-int	pass_single_quotes(char *str, int i)
+//get everythng that is not in quotes
+char	*get_text(char *str, int *i)
 {
 	char	c;
+	int		start_index;
+	char	*text;
+	int		tmp;
 
-	if (str[i] == '\'')
+	tmp = 0;
+	start_index = (*i);
+	text = NULL;
+	while (str[(*i)] != '\'' && str[(*i)] != '"' && str[(*i)] != '\0')
 	{
-		c = str[i];
-		i++;
-		while (str[i] != c && str[i] != '\0')
-		{
-			i++;
-		}
+		(*i)++;
 	}
-	return (i);
-}
-
-int	pass_quotes(char *str, int i)
-{
-	char	c;
-
-	if (str[i] == '\'' || str[i] == '"')
-	{
-		c = str[i];
-		i++;
-		while (str[i] != c && str[i] != '\0')
-		{
-			i++;
-		}
-	}
-	return (i);
+	if (*i != 0 && str[(*i) - 1] == '$')
+		tmp = -1;
+	text = ft_substr(str, start_index, (*i) - (start_index) + tmp);
+	return (text);
 }
 
 int	pass_word(char *line, int i)
