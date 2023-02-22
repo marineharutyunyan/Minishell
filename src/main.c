@@ -31,12 +31,13 @@ void	free_parsing(t_parsing *pars_data)
 void	free_general(t_general *g_data)
 {
 	free_array((void **)&g_data->line);
+	//TODO free pipes
 }
 
 void	init_structs(t_general *g_data)
 {
 	g_data->pipes = malloc(sizeof(t_pipe)
-			* (g_data->parse_data.pipe_count + 1));
+			* (g_data->pipe_count));
 }
 
 int	main(int argc, char **argv, char **env)
@@ -45,7 +46,7 @@ int	main(int argc, char **argv, char **env)
 	char		*cmd;
 	t_general	g_data;
 	char		*str;
-
+	g_data.env = env;
 	while (1)
 	{
 		cmd = readline("Minishell$ ");
@@ -53,14 +54,14 @@ int	main(int argc, char **argv, char **env)
 		// if (!has_errors(cmd)) /* TODO enable erro check */
 		// ft_printf(1, "Line is valid\n"); //TODO add rediraction check
 		g_data.line = cmd;
-		g_data.head_env = NULL; 
+		g_data.head_env = NULL;
 		split_by_pipes(&g_data, &g_data.parse_data);
 		init_structs(&g_data);
 		paresing(&g_data);
 		set_env(&g_data, env);
-		// ft_env_iter(g_data.head_env);
-		str = process_line(g_data.line, &g_data);
-		printf("str = %s\n", str);
+		//printf("str = %s\n", process_dollar_sign_and_quotes(g_data.line, &g_data));
+		handle_rediractions(&g_data);
+		execute(&g_data);
 		free_parsing(&g_data.parse_data);
 		free_general(&g_data);
 	}

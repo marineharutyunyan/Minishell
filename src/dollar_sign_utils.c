@@ -24,7 +24,7 @@ char	*find_value_by_key(char *key, t_env *lst)
 	return (NULL);
 }
 
-char	*process_line(char *line, t_general *g_data)
+char	*process_dollar_sign_and_quotes(char *line, t_general *g_data)
 {
 	int		i;
 	char	*final_line;

@@ -13,7 +13,7 @@
 	return (i);
 }*/
 
-void	ft_redir_iter(t_red *lst)
+void	ft_redir_temp_iter(t_red *lst)
 {
 	while (lst)
 	{

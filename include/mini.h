@@ -7,6 +7,8 @@
 #include <dirent.h>
 #include "libft.h"
 #include "ft_printf.h"
+#include <errno.h>
+#include <string.h>
 
 # define PROMPT_PIPE_EXAMPLE "|\"ls |-la|\" | cat sgdsgsdg sdgsdgsdg |$dsgsd\"gs|dg\" '|f |f  |g| |'  | ls"
 # define PROMPT_TOKENS_EXAMPLE "<a<b<c>d>\" t    \">>y<<u>i<i \"cat \"ls <\"t \"> u file"
@@ -31,13 +33,14 @@ typedef struct s_env
 typedef struct s_parsing
 {
 	char	**pipes; // containing array of lines in between pipes |  | the quote pipes doesn't count as pipe
-	int 	pipe_count;
+	// int 	pipe_count;
 }					t_parsing;
 
 typedef struct s_general
 {
+	int 		pipe_count;
 	t_env   	*head_env;
-	//char		**env; //TODO Why do I need this ? 
+	char		**env; // this is the same env coming from int main 3th arg 
 	char 		*line;
 	t_pipe		*pipes;
 	t_parsing	parse_data;
@@ -45,8 +48,9 @@ typedef struct s_general
 
 typedef struct s_pipe //malloc with noumer of pipes +1 , and give initial valuees 
 {
+	char	*cmd_name;  // argv[0] like  ls
 	int		fd_in;  // 0          // read only goes here  
-	int		fd_out; // 1              // rest reutts of open exept heredoc gors here 
+	int		fd_out; // 1          // rest reutts of open exept heredoc gors here 
 	int 	words_count; // count of words contained in argv below
 	char	**argv; // for execve //NULL
 	t_red	*head_red; //NULL
@@ -54,9 +58,9 @@ typedef struct s_pipe //malloc with noumer of pipes +1 , and give initial valuee
 
 typedef struct s_red 
 {
-	int		flag; // TODO should this be just int ? if << flags = Heredoc       for others(>> > < ) man open defined flags numbers 
+	int		flag; //  if << flags = Heredoc       for others(>> > < ) man open defined flags numbers 
 	char	*pathname; // the string that doesn't contain metacharacters starting from <<
-	struct	s_red *next; //NULL for the firs time 
+	struct	s_red *next; //NULL for the firs time
 }					t_red;
 
 // parsing
@@ -82,9 +86,8 @@ int		pass_redir(char *line, int i);
 char	*get_text(char *str, int *i);
 char	*get_inbetween_double_quotes_text(char *str, int *i);
 char	*get_inbetween_single_quotes_text(char *str, int *i);
-char	*process_line (char *line, t_general *g_data);
+char	*process_dollar_sign_and_quotes (char *line, t_general *g_data);
 char	*replace_env_var(char *line, t_general *g_data);
-
 
 //envparsing
 
@@ -92,11 +95,16 @@ t_env	*lst_env_new(void *value, void *key);
 void	lst_env_add_back(t_env **lst, t_env *new);
 void    set_env(t_general *g_data, char **env);
 
+// rediractions
+void handle_rediractions(t_general *g_data);
+int	ft_redir_iter(t_pipe *pipe);
 
 //utils
 int	free_array(void	**ptr);
 
 //temp_utils
-void	ft_redir_iter(t_red *lst);
+void	ft_redir_temp_iter(t_red *lst);
 void	ft_env_iter(t_env *lst);
 
+//
+int execute(t_general *g_data);

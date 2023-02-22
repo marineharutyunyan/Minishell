@@ -33,10 +33,10 @@ void	split_by_pipes(t_general *g_data, t_parsing *data)
 	int		strt;
 	int		pipes_count;
 
-	data->pipe_count = get_pipes_count(g_data->line);
+	g_data->pipe_count = (get_pipes_count(g_data->line) + 1);
 	data->pipes = malloc(sizeof(char *)
-			* (data->pipe_count + 2));
-	data->pipes[data->pipe_count + 1] = NULL;
+			* (g_data->pipe_count + 1));
+	data->pipes[g_data->pipe_count] = NULL;
 	i = 0;
 	pipes_count = 0;
 	strt = i;
