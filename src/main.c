@@ -55,7 +55,7 @@ int	main(int argc, char **argv, char **env)
 		if (*cmd == '\0')
 			continue ;
 		add_history(cmd);
-		// if (!has_errors(cmd)) /* TODO enable erro check */
+		// if (!has_errors(cmd)) // TODO enable erro check 
 		// ft_printf(1, "Line is valid\n"); //TODO add rediraction check
 		g_data.line = cmd;
 		split_by_pipes(&g_data, &g_data.parse_data);
@@ -75,10 +75,10 @@ int	main(int argc, char **argv, char **env)
 // 	int	fd[2];
 // 	pipe(fd);
 // 	char c;
-// 	// write(fd[1], "2", 1);
 // 	write(fd[1], "2", 1);
 // 	read(fd[0], &c, 1);
 // 	printf("c = %c\n", c);
+
 // 	// int file1 = open("file1", O_RDWR);
 // 	// int file2 = open("file2", O_RDWR);
 // 	// printf("file1 = %d\n", file1);

@@ -59,6 +59,7 @@ typedef struct s_pipe //malloc with noumer of pipes +1 , and give initial valuee
 typedef struct s_red 
 {
 	int		flag; //  if << flags = Heredoc       for others(>> > < ) man open defined flags numbers 
+	int		heredoc_fd[2];
 	char	*pathname; // the string that doesn't contain metacharacters starting from <<
 	struct	s_red *next; //NULL for the firs time
 }					t_red;
@@ -102,6 +103,7 @@ int	ft_redir_iter(t_pipe *pipe);
 
 //utils
 int	free_array(void	**ptr);
+int	free_double_array(void	***ptr);
 
 //temp_utils
 void	ft_redir_temp_iter(t_red *lst);

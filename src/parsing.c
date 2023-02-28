@@ -25,7 +25,7 @@ void	set_args(t_pipe *pipe, char *line)
 	}
 	if (pipe->words_count > 0)
 	{
-		pipe->cmd_name = pipe->argv[0];
+		pipe->cmd_name = ft_strdup(pipe->argv[0]);
 	}
 }
 
