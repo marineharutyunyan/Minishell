@@ -31,14 +31,17 @@ void	close_all_fd(int	**fd, int n)
 
 void	change_ia(int **fd, int i, int pipe_count)
 {
-	if (i == 0)
-		dup2(fd[i][1], 1);
-	else if (i == pipe_count - 1)
-		dup2(fd[i - 1][0], 0);
-	else
+	if(pipe_count > 1)
 	{
-		dup2(fd[i - 1][0], 0);
-		dup2(fd[i][1], 1);
+		if (i == 0)
+			dup2(fd[i][1], 1);
+		else if (i == pipe_count - 1)
+			dup2(fd[i - 1][0], 0);
+		else
+		{
+			dup2(fd[i - 1][0], 0);
+			dup2(fd[i][1], 1);
+		}
 	}
 }
 
