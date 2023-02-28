@@ -23,6 +23,10 @@ void	set_args(t_pipe *pipe, char *line)
 			j++;
 		}
 	}
+	if (pipe->words_count > 0)
+	{
+		pipe->cmd_name = pipe->argv[0];
+	}
 }
 
 int	get_redir_flag(char *line, int *i)

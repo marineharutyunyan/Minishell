@@ -90,7 +90,6 @@ char	*process_dollar_sign_and_quotes (char *line, t_general *g_data);
 char	*replace_env_var(char *line, t_general *g_data);
 
 //envparsing
-
 t_env	*lst_env_new(void *value, void *key);
 void	lst_env_add_back(t_env **lst, t_env *new);
 void    set_env(t_general *g_data, char **env);
