@@ -89,10 +89,12 @@ char	*get_inbetween_single_quotes_text(char *str, int *i);
 char	*process_dollar_sign_and_quotes (char *line, t_general *g_data);
 char	*replace_env_var(char *line, t_general *g_data);
 
-//envparsing
+//env_parsing
 t_env	*lst_env_new(void *value, void *key);
 void	lst_env_add_back(t_env **lst, t_env *new);
+void	lst_env_delet_by_key(t_env *lst, char	*key);
 void    set_env(t_general *g_data, char **env);
+char	*get_value_by_key(char *key, t_env *lst);
 
 // rediractions
 void handle_rediractions(t_general *g_data);

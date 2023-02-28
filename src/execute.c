@@ -56,6 +56,36 @@ void	print_pipes(int pipe_count, int **fd)
 	}
 }
 
+int set_execv_path(t_general *g_data, t_pipe *pipe)
+{
+	char **paths;
+	int i;
+	char *fullpath;
+	i = 0;
+	if (access(pipe->cmd_name, F_OK) != -1)
+	{
+		//TODO should I  also check if the command is execuatable with X_OK
+		printf("path exist\n");
+		return (0);
+	}
+	else 
+	{
+		paths = ft_split(get_value_by_key(ft_strdup("PATH"), g_data->head_env), ':');
+	}
+	while(paths[i])
+	{
+		fullpath = ft_strjoin(paths[i], ft_strdup("/"));
+		fullpath = ft_strjoin(fullpath, pipe->cmd_name);
+		if (access(fullpath, F_OK) != -1)
+		{
+			pipe->cmd_name = fullpath;
+			return (0);
+		}
+		i++;
+	}
+	return (-1);
+}
+
 //  cat main.c | cat | cat
 int	execute(t_general *g_data)
 {
@@ -73,7 +103,8 @@ int	execute(t_general *g_data)
 		{
 			change_ia(fd, i, g_data->pipe_count);
 			close_all_fd(fd, g_data->pipe_count);
-			execve("/bin/cat", g_data->pipes[i].argv, g_data->env);
+			set_execv_path(g_data, &g_data->pipes[i]);
+			execve(g_data->pipes[i].cmd_name, g_data->pipes[i].argv, g_data->env);
 			exit(5);
 		}
 		i++;

@@ -13,7 +13,7 @@ char	*get_variable_name(char *line, int *i)
 	return (NULL);
 }
 
-char	*find_value_by_key(char *key, t_env *lst)
+char	*get_value_by_key(char *key, t_env *lst)
 {
 	while (lst)
 	{
@@ -67,7 +67,7 @@ char	*replace_env_var(char *line, t_general *g_data)
 			temp = get_variable_name(line, &i);
 			if (temp != NULL)
 				final_line = ft_strjoin(final_line,
-						find_value_by_key(temp, g_data->head_env));
+						get_value_by_key(temp, g_data->head_env));
 			else if (line[i] == '\0')
 				final_line = ft_strjoin(final_line, "$");
 		}
