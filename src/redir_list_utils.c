@@ -28,6 +28,8 @@ t_red	*lst_redir_new(void *content, int flag_num)
 	{	
 		node->flag = flag_num;
 		node->pathname = content;
+		node->heredoc_fd[0] = -1;
+		node->heredoc_fd[1] = -1;
 		node->next = NULL;
 		return (node);
 	}

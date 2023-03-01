@@ -100,6 +100,7 @@ char	*get_value_by_key(char *key, t_env *lst);
 // rediractions
 void handle_rediractions(t_general *g_data);
 int	ft_redir_iter(t_pipe *pipe);
+void heredoc(t_red *head_red);
 
 //utils
 int	free_array(void	**ptr);

@@ -65,7 +65,7 @@ int	main(int argc, char **argv, char **env)
 		handle_rediractions(&g_data);
 		execute(&g_data);
 		free_parsing(&g_data.parse_data);
-		free_general(&g_data);
+		free_general(&g_data); // TODO free red struct and close(heredoc_fd[0])
 	}
 	return (0);
 }
