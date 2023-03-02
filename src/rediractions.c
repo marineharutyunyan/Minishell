@@ -1,7 +1,8 @@
 #include "mini.h"
-void heredoc_iter(t_pipe *pipe)
+
+void	heredoc_iter(t_pipe *pipe)
 {
-	t_red *temp;
+	t_red	*temp;
 
 	temp = pipe->head_red;
 	while (temp)
@@ -14,9 +15,11 @@ void heredoc_iter(t_pipe *pipe)
 	}
 }
 
-void handle_rediractions(t_general *g_data)
+void	handle_rediractions(t_general *g_data)
 {
-    int i = -1;
+	int	i;
+
+	i = -1;
 	while (g_data->pipe_count > ++i)
 	{
 		heredoc_iter(&g_data->pipes[i]);
@@ -24,14 +27,14 @@ void handle_rediractions(t_general *g_data)
 	i = -1;
 	while (g_data->pipe_count > ++i)
 	{
-	    ft_redir_iter(&g_data->pipes[i]);
+		ft_redir_iter(&g_data->pipes[i]);
 	}
 }
 
 int	ft_redir_iter(t_pipe *pipe)
 {
-	t_red *temp;	
-	
+	t_red	*temp;	
+
 	temp = pipe->head_red;
 	while (temp)
 	{
@@ -51,7 +54,7 @@ int	ft_redir_iter(t_pipe *pipe)
 			if (pipe->fd_in != 0)
 				close(pipe->fd_in);
 			pipe->fd_in = open(temp->pathname, temp->flag);
-			if(pipe->fd_in == -1)
+			if (pipe->fd_in == -1)
 			{
 				ft_printf(2, "Minishell: %s: %s\n", temp->pathname, strerror(errno));
 				return (1);

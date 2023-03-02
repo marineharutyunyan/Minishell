@@ -31,40 +31,39 @@ void	close_all_fd(int	**fd, int n)
 
 void	change_io(int **fd, int i, int pipe_count, t_pipe pipe)
 {
-	if(pipe_count > 1)
+	if (pipe_count > 1)
 	{
 		if (i == 0)
 		{
-			if(pipe.fd_in != 0)
+			if (pipe.fd_in != 0)
 				dup2(pipe.fd_in, 0);
-			if(pipe.fd_out != 1)
+			if (pipe.fd_out != 1)
 				dup2(pipe.fd_out, 1);
 			else
 				dup2(fd[i][1], 1);
 		}
 		else if (i == pipe_count - 1)
 		{
-			if(pipe.fd_out != 1)
+			if (pipe.fd_out != 1)
 				dup2(pipe.fd_out, 1);
-			if(pipe.fd_in != 0)
+			if (pipe.fd_in != 0)
 				dup2(pipe.fd_in, 0);
 			else
 				dup2(fd[i - 1][0], 0);
 		}
-			
 		else
 		{
-			if(pipe.fd_in != 0)
+			if (pipe.fd_in != 0)
 				dup2(pipe.fd_in, 0);
 			else
 				dup2(fd[i - 1][0], 0);
-			if(pipe.fd_out != 1)
+			if (pipe.fd_out != 1)
 				dup2(pipe.fd_out, 1);
 			else
 				dup2(fd[i][1], 1);
 		}
-	} 
-	else 
+	}
+	else
 	{
 		dup2(pipe.fd_in, 0);
 		dup2(pipe.fd_out, 1);
@@ -85,11 +84,12 @@ void	print_pipes(int pipe_count, int **fd)
 	}
 }
 
-int set_execv_path(t_general *g_data, t_pipe *pipe)
+int	set_execv_path(t_general *g_data, t_pipe *pipe)
 {
-	char **paths;
-	int i;
-	char *fullpath;
+	char	**paths;
+	int		i;
+	char	*fullpath;
+
 	i = 0;
 	paths = NULL;
 	if (access(pipe->cmd_name, F_OK) != -1)
@@ -102,7 +102,7 @@ int set_execv_path(t_general *g_data, t_pipe *pipe)
 	{
 		paths = ft_split(get_value_by_key("PATH", g_data->head_env), ':');
 	}
-	while(paths[i])
+	while (paths[i])
 	{
 		fullpath = ft_strjoin(paths[i], ft_strdup("/")); // TODO free on second argument insite join  
 		fullpath = ft_strjoin(fullpath, pipe->cmd_name);// TODO free on  first argument insite join 
