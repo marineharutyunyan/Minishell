@@ -120,7 +120,6 @@ int set_execv_path(t_general *g_data, t_pipe *pipe)
 //  cat main.c | cat | cat
 int	execute(t_general *g_data)
 {
-	pid_t	pid;
 	int		status;
 	int		i;
 	int		**fd; //TODO doesn't work with *fd[2]
@@ -129,8 +128,8 @@ int	execute(t_general *g_data)
 	fd = create_pipes(g_data->pipe_count);
 	while (i < g_data->pipe_count)
 	{
-		pid = fork(); // TODO check ret_value and handle exit status;
-		if (pid == 0)
+		g_data->pipes[i].pid = fork(); // TODO check ret_value and handle exit status;
+		if (g_data->pipes[i].pid == 0)
 		{
 			change_io(fd, i, g_data->pipe_count, g_data->pipes[i]);
 			close_all_fd(fd, g_data->pipe_count);
@@ -141,10 +140,16 @@ int	execute(t_general *g_data)
 		}
 		i++;
 	}
+
+	i = 0;
+	while (i < g_data->pipe_count)
+	{
+		waitpid(g_data->pipes[i].pid, &status, 0);
+		i++;
+	}
 	close_all_fd(fd, g_data->pipe_count);
-	waitpid(-1, &status, 0);
-    //printf("status = %d\n", status);
-	//if (WIFEXITED(status))  // TODO exit_status
+    // printf("status = %d\n", status);
+	// if (WIFEXITED(status))  // TODO exit_status
   	//printf("%d\n", WEXITSTATUS(status)); //need to store the cheild exit status for
 	return (0);
 }

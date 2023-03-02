@@ -46,6 +46,7 @@ int	main(int argc, char **argv, char **env)
 	char		*cmd;
 	t_general	g_data;
 	char		*str;
+
 	g_data.env = env;
 	g_data.head_env = NULL;
 	set_env(&g_data, env);
