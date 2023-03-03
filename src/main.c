@@ -52,13 +52,20 @@ int	main(int argc, char **argv, char **env)
 	set_env(&g_data, env);
 	while (1)
 	{
-		cmd = readline("Minishell$ ");
-		if (*cmd == '\0')
+		handle_signals();
+		set_term_attr(1);
+		g_data.line = readline("Minishell$ ");
+		set_term_attr(0);
+		// printf("cmd = %s\n", g_data.line);
+		if (g_data.line == NULL)
+		{
+			exit(0);
+		}
+		if (*(g_data.line) == '\0')
 			continue ;
-		add_history(cmd);
+		add_history(g_data.line);
 		// if (!has_errors(cmd)) // TODO enable erro check 
 		// ft_printf(1, "Line is valid\n"); //TODO add rediraction check
-		g_data.line = cmd;
 		split_by_pipes(&g_data, &g_data.parse_data);
 		init_structs(&g_data);
 		paresing(&g_data);

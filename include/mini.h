@@ -8,12 +8,15 @@
 #include "libft.h"
 #include "ft_printf.h"
 #include <errno.h>
+#include <signal.h>
+#include <sys/ioctl.h>
 #include <string.h>
+#include <termios.h>
 
 # define PROMPT_PIPE_EXAMPLE "|\"ls |-la|\" | cat sgdsgsdg sdgsdgsdg |$dsgsd\"gs|dg\" '|f |f  |g| |'  | ls"
 # define PROMPT_TOKENS_EXAMPLE "<a<b<c>d>\" t    \">>y<<u>i<i \"cat \"ls <\"t \"> u file"
 # define UNEXPECTED "|&;()"
-# define SPACE "\n\t "
+# define FT_SPACE "\n\t "
 # define REDIRECTIONS "<>"
 # define METACHARACTERS "|&;()<>\n\t "
 
@@ -42,6 +45,7 @@ typedef struct s_general
 	t_env   	*head_env;
 	char		**env; // this is the same env coming from int main 3th arg 
 	char 		*line;
+	int 		exit_status;
 	t_pipe		*pipes;
 	t_parsing	parse_data;
 }					t_general;
@@ -112,4 +116,6 @@ void	ft_redir_temp_iter(t_red *lst);
 void	ft_env_iter(t_env *lst);
 
 //
-int execute(t_general *g_data);
+int		execute(t_general *g_data);
+void 	handle_signals();
+void	set_term_attr(int on_off);

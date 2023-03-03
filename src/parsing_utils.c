@@ -2,7 +2,7 @@
 
 int	pass_spces(char *line, int i)
 {
-	while (line[i] != '\0' && ft_strchr(SPACE, line[i]))
+	while (line[i] != '\0' && ft_strchr(FT_SPACE, line[i]))
 		i++;
 	return (i);
 }
