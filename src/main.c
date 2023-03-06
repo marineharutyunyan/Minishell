@@ -40,6 +40,7 @@ void	init_structs(t_general *g_data)
 			* (g_data->pipe_count));
 }
 
+//cat | << mm
 int	main(int argc, char **argv, char **env)
 {
 	int			i;
@@ -52,7 +53,7 @@ int	main(int argc, char **argv, char **env)
 	set_env(&g_data, env);
 	while (1)
 	{
-		handle_signals();
+		handle_signals(INTERACTIVE_MODE);
 		set_term_attr(1);
 		g_data.line = readline("Minishell$ ");
 		set_term_attr(0);

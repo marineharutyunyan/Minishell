@@ -1,11 +1,5 @@
 #include "mini.h"
 
-void    signal_SIGQUIT_handler(int sig)
-{
-	printf("Ctrl + backslash\n");
-	// Do nothing to ignore the signal
-}
-
 void signal_SIGINT_handler(int signum)
 {
 	(void)signum;
@@ -14,16 +8,34 @@ void signal_SIGINT_handler(int signum)
 	rl_replace_line("", 0);
 }
 
-void handle_signals()
+void handle_signals(int mode)
 {
-	if (signal(SIGQUIT, signal_SIGQUIT_handler) == SIG_ERR)
+	if (mode == INTERACTIVE_MODE)
 	{
-		perror("Failed to register signal handler");
-		exit(1);
+		if (signal(SIGQUIT, SIG_IGN) == SIG_ERR) 
+		{
+			perror("Failed to register signal handler");
+			exit(1);
+		}
+		if (signal(SIGINT, signal_SIGINT_handler) == SIG_ERR)
+		{
+			perror("Failed to register signal handler");
+			exit(1);
+		}
 	}
-	if (signal(SIGINT, signal_SIGINT_handler) == SIG_ERR)
+	else
 	{
-		perror("Failed to register signal handler");
-		exit(1);
+		if (signal(SIGQUIT, SIG_DFL) == SIG_ERR) 
+		{
+			perror("Failed to register signal handler");
+			exit(1);
+		}
+		if (signal(SIGINT, SIG_DFL) == SIG_ERR)
+		{
+			perror("Failed to register signal handler");
+			exit(1);
+		}
+
 	}
+	
 }

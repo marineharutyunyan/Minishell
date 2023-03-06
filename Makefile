@@ -3,7 +3,7 @@ CC			=	cc
 SRCS		=	$(wildcard ./src/*.c)
 OBJS		=	$(patsubst ./src/%.c, ./$(OBJECTFOLDER)/%.o, $(SRCS))
 CFLAGS		=	-I./include #-fsanitize=address #-Wall -Wextra -Werror
-LINKER		=	   -L ./lib -lreadline
+LINKER		=	-L ./lib -lreadline
 RM			=	rm -rf
 LIBFT       =   libs/libft/libft.a
 PRINTF      =   libs/printf/libftprintf.a

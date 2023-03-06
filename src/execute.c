@@ -126,13 +126,16 @@ int	execute(t_general *g_data)
 
 	i = 0;
 	fd = create_pipes(g_data->pipe_count);
+	// TODO write func that execute single cmd (bultin cmd)
 	while (i < g_data->pipe_count)
 	{
 		g_data->pipes[i].pid = fork(); // TODO check ret_value and handle exit status;
 		if (g_data->pipes[i].pid == 0)
 		{
+			handle_signals(!INTERACTIVE_MODE);
 			change_io(fd, i, g_data->pipe_count, g_data->pipes[i]);
 			close_all_fd(fd, g_data->pipe_count);
+			// TODO exit(bultin())  if bultin execute bultin func
 			set_execv_path(g_data, &g_data->pipes[i]);
 			execve(g_data->pipes[i].cmd_name, g_data->pipes[i].argv, g_data->env);
 			ft_printf(2, "Minishell: %s: %s\n", g_data->pipes[i].cmd_name, strerror(errno));

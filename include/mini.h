@@ -12,7 +12,6 @@
 #include <sys/ioctl.h>
 #include <string.h>
 #include <termios.h>
-
 # define PROMPT_PIPE_EXAMPLE "|\"ls |-la|\" | cat sgdsgsdg sdgsdgsdg |$dsgsd\"gs|dg\" '|f |f  |g| |'  | ls"
 # define PROMPT_TOKENS_EXAMPLE "<a<b<c>d>\" t    \">>y<<u>i<i \"cat \"ls <\"t \"> u file"
 # define UNEXPECTED "|&;()"
@@ -20,7 +19,13 @@
 # define REDIRECTIONS "<>"
 # define METACHARACTERS "|&;()<>\n\t "
 
+# define INTERACTIVE_MODE 1
+
 # define HEREDOC 1  // << // opening file and puting the 
+
+
+void rl_replace_line (const char *, int);
+
 
 typedef struct s_red t_red;
 typedef struct s_pipe t_pipe;
@@ -44,6 +49,7 @@ typedef struct s_general
 	int 		pipe_count;
 	t_env   	*head_env;
 	char		**env; // this is the same env coming from int main 3th arg 
+	char **exp;
 	char 		*line;
 	int 		exit_status;
 	t_pipe		*pipes;
@@ -117,5 +123,52 @@ void	ft_env_iter(t_env *lst);
 
 //
 int		execute(t_general *g_data);
-void 	handle_signals();
+void 	handle_signals(int mode);
 void	set_term_attr(int on_off);
+
+
+
+
+
+//
+int ft_echo(char *str);
+void ft_pwd();
+void ft_cd(char *str);
+void ft_env(t_general *data);
+void	ft_export(t_general *data, char *str);
+void	ft_exit(char *str);
+void	ft_unset(t_general *data, char *str);
+
+
+size_t	ft_strlen(const char *s);
+char **ft_split(char const *s, char c);
+int ft_strncmp(const char *s1, const char *s2, size_t n);
+char	*ft_strdup(const char *s1);
+void	get_export(t_general *data);
+int ft_check_str(char *str, t_general *data);
+// char *ft_strchr(char *s, int c);
+char *ft_substr(char  const *s, unsigned int start, size_t len);
+int ft_strcmp(char *s1, char *s2);
+char *ft_epstrdup(char *s1);
+void	ft_errors(char *str);
+void	get_env(t_general *data, char *str);
+int		ft_check_str1(char *str, t_general *data);
+char	*ft_strjoin1(char *s1, char *s2);
+// char	*ft_strjoin(char  *s1, char  *s2);
+void	ft_unset_for_env(t_general *data, char *ptr);
+char	*ft_sign(char *s1, int *i, int *j, int *flag);
+unsigned long long int ft_atoi_modifed(const char *str);
+void	ft_exp_func(char **ptr, t_general *data, int j, int i);
+int	ft_cut_for_exp(t_general *data, char *tmp, char *str, int sign);
+void	ft_new_malloc(char *str, char **tmp, int i, int flag);
+int	ft_cut_for_env(t_general *data, char *tmp, char *str, int sign);
+void	ft_check_env(int k, t_general *data, char **tmp);
+void	ft_free_exp(char **tmp, int j);
+void	ft_sort_export(t_general *data, int i);
+void	ft_builtins(t_general data, char *cmd, char **tox);
+int		ft_errors_for_export(char *str);
+int	ft_check_exit(char *str, int i, int j);
+void	ft_check_sign(char **ptr, int i);
+void	ft_check_sign1(char **ptr, int i);
+void	ft_print_error_for_two_arguments(void);
+void	ft_print_error_for_exit(char **ptr, int i);
