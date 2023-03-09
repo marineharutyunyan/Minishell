@@ -12,8 +12,19 @@
 
 #include "mini.h"
 
-void	ft_cd(char *str)
+void	ft_cd(char **ptr)
 {
-	if (chdir(str) < 0)
+	int i;
+
+	i = 0;
+	if(ptr[i] == NULL)
+	{
+		printf("%s\n", ("HOME"));
+	}
+	while(ptr[i])
+	{
+		if (chdir(ptr[i]) < 0)
 		printf("%s\n", strerror(errno));
+		i++;
+	}
 }

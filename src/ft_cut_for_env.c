@@ -29,7 +29,7 @@ int	ft_cut_for_env(t_general *data, char *tmp, char *str, int sign)
 		if (ft_strcmp(ptr, tmp) == 0)
 		{
 			if (str[sign] && str[sign] == '+')
-				data->env[i] = ft_strjoin1(data->env[i], &str[sign + 2]);
+				data->env[i] = ft_strjoin_modifed(data->env[i], &str[sign + 2]);
 			else if (str[sign] == '=')
 				ft_new_malloc(str, data->env, i, 1);
 			free(ptr);

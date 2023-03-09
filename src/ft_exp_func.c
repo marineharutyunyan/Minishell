@@ -15,30 +15,30 @@
 void	ft_exp_func(char **ptr, t_general *data, int j, int i)
 {
 	char	**tmp;
-
-	/*if(ft_errors_for_export(ptr[i]) == 1)
-		return ;*/
 	
 	while (ptr && ptr[i])
 	{
-		if (ft_strchr(ptr[i], '=') != NULL)
-			get_env(data, ptr[i]);
-		if (ft_check_str(ptr[i], data) == 0)
+		if(ft_errors_for_export(ptr[i]) != 1)
 		{
-			tmp = data->exp;
-			j = 0;
-			while (tmp && tmp[j])
-				j++;
-			data->exp = malloc(sizeof(char *) * (j + 2));
-			j = 0;
-			while (tmp[j])
+			if (ft_strchr(ptr[i], '=') != NULL)
+				get_env(data, ptr[i]);
+			if (ft_check_str(ptr[i], data) == 0)
 			{
-				data->exp[j] = ft_strdup(tmp[j]);
-				j++;
+				tmp = data->exp;
+				j = 0;
+				while (tmp && tmp[j])
+					j++;
+				data->exp = malloc(sizeof(char *) * (j + 2));
+				j = 0;
+				while (tmp[j])
+				{
+					data->exp[j] = ft_strdup(tmp[j]);
+					j++;
+				}
+				data->exp[j] = ft_epstrdup(ptr[i]);
+				data->exp[j + 1] = NULL;
+				ft_free_exp(tmp, j);
 			}
-			data->exp[j] = ft_epstrdup(ptr[i]);
-			data->exp[j + 1] = NULL;
-			ft_free_exp(tmp, j);
 		}
 		i++;
 	}

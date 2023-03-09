@@ -24,8 +24,9 @@
 # define HEREDOC 1  // << // opening file and puting the 
 
 
-void rl_replace_line (const char *, int);
+// void rl_replace_line (const char *, int);
 
+extern int g_signal_notifire;
 
 typedef struct s_red t_red;
 typedef struct s_pipe t_pipe;
@@ -49,7 +50,7 @@ typedef struct s_general
 	int 		pipe_count;
 	t_env   	*head_env;
 	char		**env; // this is the same env coming from int main 3th arg 
-	char **exp;
+	char 		**exp;
 	char 		*line;
 	int 		exit_status;
 	t_pipe		*pipes;
@@ -86,7 +87,7 @@ int 	check_redir_sytax(char *str);
 int 	has_errors(char *str);
 void 	split_by_pipes(t_general *g_data, t_parsing *data);
 void	init_structs(t_general *g_data);
-void	paresing(t_general *g_data);
+int		parsing(t_general *g_data);
 int		pass_quotes(char *str, int i);
 void	lst_redir_add_back(t_red **lst, t_red *new);
 t_red	*lst_redir_new(void *content, int flag_num);
@@ -109,9 +110,9 @@ void    set_env(t_general *g_data, char **env);
 char	*get_value_by_key(char *key, t_env *lst);
 
 // rediractions
-void handle_rediractions(t_general *g_data);
+int	 handle_rediractions(t_general *g_data);
 int	ft_redir_iter(t_pipe *pipe);
-void heredoc(t_red *head_red);
+int heredoc(t_red *head_red);
 
 //utils
 int	free_array(void	**ptr);
@@ -131,13 +132,13 @@ void	set_term_attr(int on_off);
 
 
 //
-int ft_echo(char *str);
+int ft_echo(char **ptr);
 void ft_pwd();
-void ft_cd(char *str);
+void ft_cd(char **ptr);
 void ft_env(t_general *data);
-void	ft_export(t_general *data, char *str);
-void	ft_exit(char *str);
-void	ft_unset(t_general *data, char *str);
+void	ft_export(t_general *data, char **ptr);
+void	ft_exit(char **ptr);
+void	ft_unset(t_general *data, char **ptr);
 
 
 size_t	ft_strlen(const char *s);
@@ -154,7 +155,7 @@ void	ft_errors(char *str);
 void	get_env(t_general *data, char *str);
 int		ft_check_str1(char *str, t_general *data);
 char	*ft_strjoin1(char *s1, char *s2);
-// char	*ft_strjoin(char  *s1, char  *s2);
+char	*ft_strjoin_modifed(char  *s1, char  *s2);
 void	ft_unset_for_env(t_general *data, char *ptr);
 char	*ft_sign(char *s1, int *i, int *j, int *flag);
 unsigned long long int ft_atoi_modifed(const char *str);
@@ -167,8 +168,8 @@ void	ft_free_exp(char **tmp, int j);
 void	ft_sort_export(t_general *data, int i);
 void	ft_builtins(t_general data, char *cmd, char **tox);
 int		ft_errors_for_export(char *str);
-int	ft_check_exit(char *str, int i, int j);
+int		ft_check_exit(char **ptr, int i, int j);
 void	ft_check_sign(char **ptr, int i);
 void	ft_check_sign1(char **ptr, int i);
-void	ft_print_error_for_two_arguments(void);
-void	ft_print_error_for_exit(char **ptr, int i);
+void	ft_print_error_for_exit(void);
+void	ft_print_error_for_two_arguments(char **ptr, int i);

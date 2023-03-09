@@ -26,9 +26,9 @@ int	ft_errors_for_export(char *str)
 	else
 	{
 		i++;
-		while(str[i])
+		while(str && str[i] && str[i] != '=' && str[i - 1] != '+')
 		{
-			if((!(str[i] >= 65 && str[i] <= 90)) && (!(str[i] >= 97 && str[i] <= 122)) && (str[i] != '_') && (!(str[i] >= 48 && str[i] <= 57)))
+			if((!(str[i] >= 65 && str[i] <= 90)) && (!(str[i] >= 97 && str[i] <= 122)) && (str[i] != '_') && str[i] != '+' &&  (!(str[i] >= 48 && str[i] <= 57)))
 			{
 				printf("not a valid identifier\n");
 				return (1);

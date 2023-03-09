@@ -37,9 +37,8 @@ int	ft_check_symbol(char *str, int *f, int *flag)
 	return (0);
 }
 
-int	ft_echo(char *str)
+int	ft_echo(char **ptr)
 {
-	char	**ptr;
 	int		flag;
 	int		i;
 	int		f;
@@ -47,7 +46,6 @@ int	ft_echo(char *str)
 	i = 0;
 	flag = 0;
 	f = 0;
-	ptr = ft_split(str, ' ');
 	while (ptr[i])
 	{
 		if (ft_check_symbol(ptr[i], &f, &flag) == 0)

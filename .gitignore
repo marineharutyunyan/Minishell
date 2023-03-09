@@ -1,0 +1,5 @@
+Lusine
+*.json
+*.o
+minishell
+.vscode

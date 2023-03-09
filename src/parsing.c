@@ -90,7 +90,7 @@ void	set_rediractions(t_pipe *pipe, char *line)
 	}
 }
 
-void	paresing(t_general *g_data)
+int	parsing(t_general *g_data)
 {
 	int	i;
 	int	j;
@@ -117,4 +117,6 @@ void	paresing(t_general *g_data)
 		*/
 		i++;
 	}
+	
+	return (handle_rediractions(g_data));
 }

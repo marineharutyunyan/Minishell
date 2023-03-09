@@ -12,25 +12,23 @@
 
 #include "mini.h"
 
-void	ft_exit(char *str)
+void	ft_exit(char **ptr)
 {
 	int						i;
 	int						j;
-	char					**ptr;
 	unsigned long long int	tiv;
 	unsigned char			sign;
 
-	i = 0;
+	i = 1;
 	j = 0;
-	ptr = ft_split(str, ' ');
-	tiv = ft_atoi_modifed(str);
 	sign = tiv;
 	if (!ptr[i])
-		ft_print_error_for_two_arguments();
-	if (ft_strlen(str) > 20)
-		ft_print_error_for_exit(ptr, i);
-	if (ft_check_exit(str, i, j))
+		ft_print_error_for_exit();
+	tiv = ft_atoi_modifed(ptr[i]);
+	if (ft_check_exit(&ptr[i], i, j) != 0)
 		return ;
+	if (ft_strlen(ptr[i]) > 20)
+		ft_print_error_for_two_arguments(ptr, i);
 	if (ptr[i][0] == '-')
 		ft_check_sign1(ptr, i);
 	else if (ptr[i][0] == '+')
@@ -39,28 +37,32 @@ void	ft_exit(char *str)
 	exit(tiv);
 }
 
-int	ft_check_exit(char *str, int i, int j)
+int	ft_check_exit(char **ptr, int i, int j)
 {
-	char	**ptr;
-
-	ptr = ft_split(str, ' ');
-	if (ptr[i][0] == '-' || ptr[i][0] == '+')
+	if (ptr[0][0] == '-' || ptr[0][0] == '+')
 		j++;
-	while (ptr[i][j])
+	//printf("%s\n", ptr[i]);
+	while (ptr[0][j])
 	{
-		if (!(ptr[i][j] >= 48 && ptr[i][j] <= 57))
+		//printf("aaaaaaaaaaa\n");
+		if (!(ptr[0][j] >= 48 && ptr[0][j] <= 57))
 		{
-			printf("exit\n");
+			//printf("aaaaaaaaaa\n");
+			//printf("exit\n");
 			printf("Minishell: exit: %s : numeric argument required\n", ptr[i]);
 			exit(255);
 		}
 		j++;
 	}
-	if (ptr[i + 1] != NULL)
+	if (ptr[i] != NULL)
 	{
+		//printf("llllllll\n");
 		printf("exit\n");
 		printf("Minishell : exit: too many arguments\n");
 		return (1);
 	}
+	//printf("%s\n", ptr[0]);
+	//printf("%s\n", ptr[i]);
+	//printf("%s\n", ptr[i + 1]);
 	return (0);
 }

@@ -10,13 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <dirent.h>
 #include "mini.h"
+
+int g_signal_notifire;
 
 void	free_parsing(t_parsing *pars_data)
 {
@@ -39,8 +35,9 @@ void	init_structs(t_general *g_data)
 	g_data->pipes = malloc(sizeof(t_pipe)
 			* (g_data->pipe_count));
 }
-
+//TODO
 //cat | << mm
+//cat<<a
 int	main(int argc, char **argv, char **env)
 {
 	int			i;
@@ -53,6 +50,7 @@ int	main(int argc, char **argv, char **env)
 	set_env(&g_data, env);
 	while (1)
 	{
+		g_signal_notifire = 0;
 		handle_signals(INTERACTIVE_MODE);
 		set_term_attr(1);
 		g_data.line = readline("Minishell$ ");
@@ -65,13 +63,14 @@ int	main(int argc, char **argv, char **env)
 		if (*(g_data.line) == '\0')
 			continue ;
 		add_history(g_data.line);
-		// if (!has_errors(cmd)) // TODO enable erro check 
-		// ft_printf(1, "Line is valid\n"); //TODO add rediraction check
+		if (has_errors(cmd)) // TODO enable erro check
+			continue ; //TODO add rediraction check
+		// ft_printf(1, "Line is valid\n");
 		split_by_pipes(&g_data, &g_data.parse_data);
 		init_structs(&g_data);
-		paresing(&g_data);
+		if (parsing(&g_data) != 0) //free
+			continue ;
 		//printf("str = %s\n", process_dollar_sign_and_quotes(g_data.line, &g_data));
-		handle_rediractions(&g_data);
 		execute(&g_data);
 		free_parsing(&g_data.parse_data);
 		free_general(&g_data); // TODO free red struct and close(heredoc_fd[0])

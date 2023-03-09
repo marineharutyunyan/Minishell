@@ -49,7 +49,7 @@ char	*ft_epstrdup(char *s1)
 		return (NULL);
 	while (s1[i] != '\0')
 	{
-		if ( s1[i] == '=' && flag == 0 && s1[i + 1] != '\"')
+		if (s1[i] == '=' && flag == 0 && s1[i + 1] != '\"')
 		{
 			if (s1[i - 1] == '+')
 				j--;
@@ -59,8 +59,7 @@ char	*ft_epstrdup(char *s1)
 		}
 		else
 		{
-
-			if (s1[i - 1] == '+' && plus == 0)
+			if (i != 0 && s1[i - 1] == '+' && plus == 0)
 				j--;
 			str[j++] = s1[i++];
 			plus = 1;

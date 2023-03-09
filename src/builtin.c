@@ -6,7 +6,7 @@
 /*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 21:21:42 by maharuty          #+#    #+#             */
-/*   Updated: 2023/03/06 21:57:12 by maharuty         ###   ########.fr       */
+/*   Updated: 2023/03/09 20:49:30 by maharuty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,64 @@ int is_builtin(char **argv)
 int builtin(t_general *g_data, char **argv)
 {
     if(ft_strncmp(*argv, "echo", 4) == 0)
-        return(ft_echo(*argv)); // TODO return from funcions
+        return(ft_echo(argv + 1)); // TODO return from funcions
     else if(ft_strncmp(*argv, "pwd", 3) == 0)
         ft_pwd(*argv);
     else if(ft_strncmp(*argv, "cd", 2) == 0)
-        ft_cd(*argv);
+        ft_cd(argv + 1);
     else if(ft_strncmp(*argv, "env", 3) == 0)
         ft_env(g_data);
     else if(ft_strncmp(*argv, "export", 6) == 0)
-        ft_export(g_data, *argv);
+        ft_export(g_data, (argv));
     else if(ft_strncmp(*argv, "unset", 5) == 0)
-        ft_unset(g_data, *argv);
+        ft_unset(g_data, (argv));
     else if(ft_strncmp(*argv, "exit", 4) == 0)
-        ft_exit(*argv);
+        ft_exit(argv);
     return (0);
 }
+
+void ft_malloc_for_env(t_general *g_data, char **env)
+{
+    int i;
+
+    i = 0;
+
+    while(env[i])
+    {
+        i++;
+    }
+    g_data->env = (char **)malloc((i + 1)*sizeof(char *));
+
+    i = 0;
+
+    while(env[i])
+    {
+        g_data->env[i] = ft_strdup(env[i]);
+        i++;
+    } 
+
+    g_data->env[i] = NULL;
+}
+
+// int	main(int argc, char **argv, char **env)
+// {
+// 	int			i;
+// 	char		*cmd;
+// 	t_general	g_data;
+// 	char		*str;
+
+// 	ft_malloc_for_env(&g_data, env);
+// 	g_data.head_env = NULL;
+//     g_data.exp = NULL;
+// 	set_env(&g_data, env);
+//     get_export(&g_data);
+// 	while (1)
+// 	{
+// 		g_data.line = readline("Minishell$ ");
+// 		if (*(g_data.line) == '\0')
+// 			continue ;
+// 		add_history(g_data.line);
+//         builtin(&g_data, ft_split(g_data.line, ' '));
+// 	}
+// 	return (0);
+// }

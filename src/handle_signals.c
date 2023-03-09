@@ -3,6 +3,7 @@
 void signal_SIGINT_handler(int signum)
 {
 	(void)signum;
+	g_signal_notifire = 1;
 	ioctl(STDIN_FILENO, TIOCSTI, "\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);

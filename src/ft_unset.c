@@ -95,24 +95,21 @@ void	ft_check_exp(int k, t_general *data)
 	}
 }
 
-void	ft_unset(t_general *data, char *str)
+void	ft_unset(t_general *data, char **ptr)
 {
 	int		i;
 	int		j;
-	char	**ptr;
 	int		k;
 	int		l;
 
 	i = 0;
 	k = 0;
-	ptr = ft_split(str, ' ');
 	while (ptr && ptr[i])
 	{
 		ft_unset_for_env(data, ptr[i]);
 		l = 0;
 		j = 0;
 		k = ft_check_str2(ptr[i], data->exp);
-		//k = ft_free(ptr, data->exp, &i);
 		ft_check_exp(k, data);
 		i++;
 	}

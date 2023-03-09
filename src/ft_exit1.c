@@ -15,8 +15,10 @@ void	ft_check_sign1(char **ptr, int i)
 {
 	if(ft_strcmp(&ptr[i][1], "9223372036854775808") > 0)
 	{
+		printf("aaaaaaaaa\n");
 		printf("exit\n");
 		printf("Minishell: exit %s : numeric argument required\n", ptr[i]);
+
 		exit(255);
 	}
 }
@@ -25,26 +27,30 @@ void	ft_check_sign(char **ptr, int i)
 {
 	if (ft_strcmp(&ptr[i][1], "9223372036854775807") > 0)
 	{
+		printf("wwwwwwwwwww\n");
 		printf("exit\n");
 		printf("Minishell: exit %s : numeric argument  required\n", ptr[i]);
 		exit(255);
 	}
 	else if (ft_strcmp(ptr[i], "9223372036854775807") > 0)
 	{
+		printf("eeeeeeeeeeeee\n");
 		printf("Minishell : exit %s : numeric argument required\n", ptr[i]);
 		printf("exit\n");
 		exit(255);
 	}
 }
 
-void	ft_print_error_for_exit(char **ptr, int i)
+void	ft_print_error_for_two_arguments(char **ptr, int i)
 {
+	printf("tttttttttttt\n");
 	printf("Minishell: exit %s : numeric argument required\n", ptr[i]);
 	exit(255);
 }
 
-void	ft_print_error_for_two_arguments(void)
+void	ft_print_error_for_exit(void)
 {
+	//printf("ssssss\n");
 	printf("exit\n");
 	exit(0);
 }

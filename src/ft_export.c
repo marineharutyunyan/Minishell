@@ -6,7 +6,7 @@
 /*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 17:45:39 by tumolabs          #+#    #+#             */
-/*   Updated: 2023/03/06 21:12:40 by maharuty         ###   ########.fr       */
+/*   Updated: 2023/03/09 20:51:44 by maharuty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,20 +49,17 @@ void	ft_sort_export(t_general *data, int i)
 		}
 		j++;
 	}
-	i = 5;
 }
 
-void	ft_export(t_general *data, char *str)
+void	ft_export(t_general *data, char **ptr)
 {
 	int		i;
 	int		j;
-	char	**ptr;
 
 	i = 0;
 	j = 0;
-	ptr = ft_split(str, ' ');
 	while (ptr && ptr[i])
-		i++;
+			i++;
 	if (i < 2)
 	{
 		while (data->exp[i])
