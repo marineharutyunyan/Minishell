@@ -6,13 +6,13 @@
 /*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 13:56:44 by tumolabs          #+#    #+#             */
-/*   Updated: 2023/03/06 21:19:07 by maharuty         ###   ########.fr       */
+/*   Updated: 2023/03/09 23:24:54 by maharuty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini.h"
 
-void	ft_exit(char **ptr)
+int	ft_exit(char **ptr)
 {
 	int						i;
 	int						j;
@@ -26,7 +26,7 @@ void	ft_exit(char **ptr)
 		ft_print_error_for_exit();
 	tiv = ft_atoi_modifed(ptr[i]);
 	if (ft_check_exit(&ptr[i], i, j) != 0)
-		return ;
+		return (-1); // TODO review return value
 	if (ft_strlen(ptr[i]) > 20)
 		ft_print_error_for_two_arguments(ptr, i);
 	if (ptr[i][0] == '-')
@@ -35,6 +35,7 @@ void	ft_exit(char **ptr)
 		ft_check_sign(ptr, i);
 	printf("exit\n");
 	exit(tiv);
+	// return (0);
 }
 
 int	ft_check_exit(char **ptr, int i, int j)

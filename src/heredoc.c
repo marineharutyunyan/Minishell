@@ -43,12 +43,7 @@ int	heredoc(t_red *head_red)
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 	waitpid(pid, &status, 0);
-	// handle_signals(INTERACTIVE_MODE);
-	// handle_signals(INTERACTIVE_MODE);
-	// printf("%d\n", WTERMSIG(status));
 	if (WIFSIGNALED(status) && write(1, "\n", 1))
 		return (WTERMSIG(status));
 	return (WEXITSTATUS(status));
-	// c[read(head_red->heredoc_fd[0], c, 5)] = 0;
-	// printf("c = %s\n", c);
 }

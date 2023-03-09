@@ -6,16 +6,17 @@
 /*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 17:14:53 by tumolabs          #+#    #+#             */
-/*   Updated: 2023/03/06 21:37:57 by maharuty         ###   ########.fr       */
+/*   Updated: 2023/03/09 23:25:16 by maharuty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini.h"
 
-void	ft_pwd(void)
+int	ft_pwd(void)
 {
 	char	str[1024];
 
 	getcwd(str, sizeof(str));
 	printf("%s\n", str);
+	return (0);
 }

@@ -6,25 +6,29 @@
 /*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 15:33:21 by tumolabs          #+#    #+#             */
-/*   Updated: 2023/03/06 21:10:36 by maharuty         ###   ########.fr       */
+/*   Updated: 2023/03/09 23:20:00 by maharuty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini.h"
 
-void	ft_cd(char **ptr)
+int	ft_cd(char **ptr)
 {
 	int i;
 
 	i = 0;
 	if(ptr[i] == NULL)
 	{
-		printf("%s\n", ("HOME"));
+		printf("%s\n", ("HOME")); // delete
 	}
 	while(ptr[i])
 	{
 		if (chdir(ptr[i]) < 0)
-		printf("%s\n", strerror(errno));
+		{
+			printf("%s\n", strerror(errno));
+			return (1);
+		}
 		i++;
 	}
+	return (0);
 }

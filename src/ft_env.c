@@ -6,13 +6,13 @@
 /*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 15:45:52 by tumolabs          #+#    #+#             */
-/*   Updated: 2023/03/06 21:15:51 by maharuty         ###   ########.fr       */
+/*   Updated: 2023/03/09 23:20:20 by maharuty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini.h"
 
-void	ft_env(t_general *data)
+int	ft_env(t_general *data)
 {
 	int	i;
 
@@ -22,6 +22,7 @@ void	ft_env(t_general *data)
 		printf("%s\n", data->env[i]);
 		i++;
 	}
+	return (0);
 }
 
 void	ft_check_env(int k, t_general *data, char **tmp)

@@ -6,41 +6,41 @@
 /*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 21:21:42 by maharuty          #+#    #+#             */
-/*   Updated: 2023/03/09 20:49:30 by maharuty         ###   ########.fr       */
+/*   Updated: 2023/03/09 23:25:23 by maharuty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini.h"
 
-int is_builtin(char **argv)
+int is_builtin(char *argv_0)
 {
-    if(ft_strncmp(*argv, "echo", 4) == 0 
-        || ft_strncmp(*argv, "pwd", 3) == 0
-        || ft_strncmp(*argv, "cd", 2) == 0
-        || ft_strncmp(*argv, "env", 3) == 0
-        || ft_strncmp(*argv, "export", 6) == 0
-        || ft_strncmp(*argv, "unset", 5) == 0
-        || ft_strncmp(*argv, "exit", 4) == 0)
+    if(ft_strncmp(argv_0, "echo", 4) == 0 
+        || ft_strncmp(argv_0, "pwd", 3) == 0
+        || ft_strncmp(argv_0, "cd", 2) == 0
+        || ft_strncmp(argv_0, "env", 3) == 0
+        || ft_strncmp(argv_0, "export", 6) == 0
+        || ft_strncmp(argv_0, "unset", 5) == 0
+        || ft_strncmp(argv_0, "exit", 4) == 0)
         return (1);
     return (0);
 }
 
 int builtin(t_general *g_data, char **argv)
 {
-    if(ft_strncmp(*argv, "echo", 4) == 0)
-        return(ft_echo(argv + 1)); // TODO return from funcions
-    else if(ft_strncmp(*argv, "pwd", 3) == 0)
+    if (ft_strncmp(*argv, "echo", 4) == 0)
+        return (ft_echo(argv + 1));
+    else if (ft_strncmp(*argv, "pwd", 3) == 0)
         ft_pwd(*argv);
-    else if(ft_strncmp(*argv, "cd", 2) == 0)
-        ft_cd(argv + 1);
-    else if(ft_strncmp(*argv, "env", 3) == 0)
-        ft_env(g_data);
-    else if(ft_strncmp(*argv, "export", 6) == 0)
-        ft_export(g_data, (argv));
-    else if(ft_strncmp(*argv, "unset", 5) == 0)
-        ft_unset(g_data, (argv));
-    else if(ft_strncmp(*argv, "exit", 4) == 0)
-        ft_exit(argv);
+    else if (ft_strncmp(*argv, "cd", 2) == 0)
+        return (ft_cd(argv + 1));
+    else if (ft_strncmp(*argv, "env", 3) == 0)
+        return (ft_env(g_data));
+    else if (ft_strncmp(*argv, "export", 6) == 0)
+        return (ft_export(g_data, (argv)));
+    else if (ft_strncmp(*argv, "unset", 5) == 0)
+        return (ft_unset(g_data, (argv)));
+    else if (ft_strncmp(*argv, "exit", 4) == 0)
+        return (ft_exit(argv));
     return (0);
 }
 

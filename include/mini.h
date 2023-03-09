@@ -132,13 +132,15 @@ void	set_term_attr(int on_off);
 
 
 //
+int is_builtin(char *argv_0);
+int builtin(t_general *g_data, char **argv);
 int ft_echo(char **ptr);
-void ft_pwd();
-void ft_cd(char **ptr);
-void ft_env(t_general *data);
-void	ft_export(t_general *data, char **ptr);
-void	ft_exit(char **ptr);
-void	ft_unset(t_general *data, char **ptr);
+int ft_pwd();
+int ft_cd(char **ptr);
+int ft_env(t_general *data);
+int	ft_export(t_general *data, char **ptr);
+int	ft_exit(char **ptr);
+int	ft_unset(t_general *data, char **ptr);
 
 
 size_t	ft_strlen(const char *s);

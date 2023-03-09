@@ -1,16 +1,21 @@
 #include "mini.h"
 
-int	**create_pipes(int pipe_count)
+static int	**create_pipes(int pipe_count)
 {
 	int	i;
-	int	**fd; //TODO doesn't work with *fd[2]
+	int	**fd;
 
 	i = 0;
 	fd = malloc(sizeof(int) * (pipe_count - 1));
+	if (fd == NULL)
+		exit (1);
 	while (i < pipe_count - 1)
 	{
 		fd[i] = malloc(sizeof(int) * 2);
-		pipe(fd[i]);
+		if (fd[i] == NULL)
+			exit (1);
+		if (pipe(fd[i]) == -1)
+			return (NULL);
 		i++;
 	}
 	return (fd);
@@ -122,11 +127,13 @@ int	execute(t_general *g_data)
 {
 	int		status;
 	int		i;
-	int		**fd; //TODO doesn't work with *fd[2]
+	int		**fd;
 
 	i = 0;
 	fd = create_pipes(g_data->pipe_count);
-	// TODO write func that execute single cmd (bultin cmd)
+	if (g_data->pipe_count == 1)
+		if (is_builtin(g_data->pipes[0].argv[0]))
+			return (builtin(g_data, g_data->pipes[0].argv));
 	while (i < g_data->pipe_count)
 	{
 		g_data->pipes[i].pid = fork(); // TODO check ret_value and handle exit status;
@@ -136,6 +143,8 @@ int	execute(t_general *g_data)
 			change_io(fd, i, g_data->pipe_count, g_data->pipes[i]);
 			close_all_fd(fd, g_data->pipe_count);
 			// TODO exit(bultin())  if bultin execute bultin func
+			if (is_builtin(g_data->pipes[i].argv[0]))
+				exit (builtin(g_data, g_data->pipes[i].argv));
 			set_execv_path(g_data, &g_data->pipes[i]);
 			execve(g_data->pipes[i].cmd_name, g_data->pipes[i].argv, g_data->env);
 			ft_printf(2, "Minishell: %s: %s\n", g_data->pipes[i].cmd_name, strerror(errno));
@@ -143,7 +152,6 @@ int	execute(t_general *g_data)
 		}
 		i++;
 	}
-
 	i = 0;
 	while (i < g_data->pipe_count)
 	{
@@ -151,8 +159,7 @@ int	execute(t_general *g_data)
 		i++;
 	}
 	close_all_fd(fd, g_data->pipe_count);
-    // printf("status = %d\n", status);
-	// if (WIFEXITED(status))  // TODO exit_status
-  	//printf("%d\n", WEXITSTATUS(status)); //need to store the cheild exit status for
-	return (0);
+	if (WIFSIGNALED(status)/* && write(1, "\n", 1)*/)
+		return (WTERMSIG(status) + 127);
+	return (WIFEXITED(status));
 }
