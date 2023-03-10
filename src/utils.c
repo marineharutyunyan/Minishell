@@ -3,31 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 13:31:28 by tumolabs          #+#    #+#             */
-/*   Updated: 2023/03/06 21:17:17 by maharuty         ###   ########.fr       */
+/*   Updated: 2023/03/10 21:54:13 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini.h"
-char	*ft_strdup(const char *s1)
-{
-	char	*str;
-	int		i;
-
-	i = 0;
-	str = (char *)malloc((ft_strlen(s1) + 1) * sizeof(char));
-	if (str == 0)
-		return (0);
-	while (s1 && s1[i] != '\0')
-	{
-		str[i] = s1[i];
-		i++;
-	}
-	str[i] = '\0';
-	return (str);
-}
 
 char	*ft_epstrdup(char *s1)
 {

@@ -6,7 +6,7 @@
 /*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 21:21:42 by maharuty          #+#    #+#             */
-/*   Updated: 2023/03/09 23:25:23 by maharuty         ###   ########.fr       */
+/*   Updated: 2023/03/10 10:44:21 by maharuty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int is_builtin(char *argv_0)
 {
-    if(ft_strncmp(argv_0, "echo", 4) == 0 
+    if (ft_strncmp(argv_0, "echo", 4) == 0 
         || ft_strncmp(argv_0, "pwd", 3) == 0
         || ft_strncmp(argv_0, "cd", 2) == 0
         || ft_strncmp(argv_0, "env", 3) == 0
@@ -25,12 +25,12 @@ int is_builtin(char *argv_0)
     return (0);
 }
 
-int builtin(t_general *g_data, char **argv)
+int builtin(t_general *g_data, char **argv, int i)
 {
     if (ft_strncmp(*argv, "echo", 4) == 0)
-        return (ft_echo(argv + 1));
+        return (ft_echo(argv + 1, g_data, i));
     else if (ft_strncmp(*argv, "pwd", 3) == 0)
-        ft_pwd(*argv);
+        ft_pwd(g_data->pipes[i].fd_out);
     else if (ft_strncmp(*argv, "cd", 2) == 0)
         return (ft_cd(argv + 1));
     else if (ft_strncmp(*argv, "env", 3) == 0)
@@ -55,15 +55,12 @@ void ft_malloc_for_env(t_general *g_data, char **env)
         i++;
     }
     g_data->env = (char **)malloc((i + 1)*sizeof(char *));
-
     i = 0;
-
     while(env[i])
     {
         g_data->env[i] = ft_strdup(env[i]);
         i++;
     } 
-
     g_data->env[i] = NULL;
 }
 

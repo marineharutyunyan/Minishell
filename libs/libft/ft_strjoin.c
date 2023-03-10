@@ -24,7 +24,7 @@ char	*ft_strjoin(char const *s1, char const *s2) // TODO add flag to free or not
 	{
 		if (!s1)
 			return (ft_strdup(s2));
-		else if (!free_arr((char *)s1))
+		else/* if (!free_arr((char *)s1))*/
 			return (ft_strdup(s1));
 	}
 	s1_len = ft_strlen(s1);

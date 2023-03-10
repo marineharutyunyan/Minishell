@@ -1,0 +1,41 @@
+bash-3.2$ cat << a
+> $PWD
+> a
+/Users/vaghazar/Downloads/Minishell
+bash-3.2$ cat << a
+> $PWD
+> a
+/Users/vaghazar/Downloads/Minishell
+bash-3.2$ cat << a''
+> $PWD
+> a
+$PWD
+bash-3.2$ cat << a""
+> $PWD
+> a
+$PWD
+bash-3.2$ cat << ''a
+> $PWD
+> a
+$PWD
+bash-3.2$ cat << ""a
+> $PWD
+> a
+$PWD
+bash-3.2$ cat << "a"
+> $PWD
+> a
+$PWD
+bash-3.2$ cat << 'a'
+> $PWD
+> a
+$PWD
+bash-3.2$ cat << ''a
+> $PWD
+> a
+$PWD
+bash-3.2$ cat << a
+> $PWD
+> a
+/Users/vaghazar/Downloads/Minishell
+bash-3.2$ 

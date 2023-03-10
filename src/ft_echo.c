@@ -6,7 +6,7 @@
 /*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 15:41:20 by tumolabs          #+#    #+#             */
-/*   Updated: 2023/03/06 21:53:07 by maharuty         ###   ########.fr       */
+/*   Updated: 2023/03/10 09:31:52 by maharuty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	ft_check_symbol(char *str, int *f, int *flag)
 	return (0);
 }
 
-int	ft_echo(char **ptr)
+int	ft_echo(char **ptr, t_general *g_data, int index)
 {
 	int		flag;
 	int		i;
@@ -50,13 +50,13 @@ int	ft_echo(char **ptr)
 	{
 		if (ft_check_symbol(ptr[i], &f, &flag) == 0)
 		{
-			write(1, ptr[i], ft_strlen(ptr[i]));
+			write(g_data->pipes[index].fd_out, ptr[i], ft_strlen(ptr[i]));
 			if (ptr[i + 1] != '\0')
-				write(1, " ", 1);
+				write(g_data->pipes[index].fd_out, " ", 1);
 		}
 		i++;
 	}
 	if (flag == 0)
-		write(1, "\n", 1);
+		write(g_data->pipes[index].fd_out, "\n", 1);
 	return (0);
 }

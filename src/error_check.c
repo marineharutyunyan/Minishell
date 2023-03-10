@@ -25,9 +25,8 @@ int	check_first_symbol(char *str)
 int	check_last_symbol(char *str)
 {
 	int	len;
-
 	len = ft_strlen(str);
-	if (str[len - 1] == '|')
+	if (len != 0 && str[len - 1] == '|')
 	{
 		print_unexpected_error(str[len - 1]);
 		return (1);

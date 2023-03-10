@@ -65,12 +65,11 @@ int	main(int argc, char **argv, char **env)
 		add_history(g_data.line);
 		if (has_errors(cmd)) // TODO enable erro check
 			continue ; //TODO add rediraction check
-		// ft_printf(1, "Line is valid\n");
+		ft_printf(1, "Line is valid\n");
 		split_by_pipes(&g_data, &g_data.parse_data);
 		init_structs(&g_data);
 		if (parsing(&g_data) != 0) //free
 			continue ;
-		//printf("str = %s\n", process_dollar_sign_and_quotes(g_data.line, &g_data));
 		execute(&g_data);
 		free_parsing(&g_data.parse_data);
 		free_general(&g_data); // TODO free red struct and close(heredoc_fd[0])

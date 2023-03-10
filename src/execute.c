@@ -97,10 +97,12 @@ int	set_execv_path(t_general *g_data, t_pipe *pipe)
 
 	i = 0;
 	paths = NULL;
+	if (pipe->words_count > 0)
+		pipe->cmd_name = ft_strdup(pipe->argv[0]);
 	if (access(pipe->cmd_name, F_OK) != -1)
 	{
 		//TODO should I  also check if the command is execuatable with X_OK
-		printf("path exist\n");
+		// printf("path exist\n");
 		return (free_double_array((void ***)&paths));
 	}
 	else
@@ -131,9 +133,11 @@ int	execute(t_general *g_data)
 
 	i = 0;
 	fd = create_pipes(g_data->pipe_count);
+	if (fd == NULL)
+		return (127);
 	if (g_data->pipe_count == 1)
 		if (is_builtin(g_data->pipes[0].argv[0]))
-			return (builtin(g_data, g_data->pipes[0].argv));
+			return (builtin(g_data, g_data->pipes[0].argv, 0));
 	while (i < g_data->pipe_count)
 	{
 		g_data->pipes[i].pid = fork(); // TODO check ret_value and handle exit status;
@@ -142,9 +146,8 @@ int	execute(t_general *g_data)
 			handle_signals(!INTERACTIVE_MODE);
 			change_io(fd, i, g_data->pipe_count, g_data->pipes[i]);
 			close_all_fd(fd, g_data->pipe_count);
-			// TODO exit(bultin())  if bultin execute bultin func
 			if (is_builtin(g_data->pipes[i].argv[0]))
-				exit (builtin(g_data, g_data->pipes[i].argv));
+				exit (builtin(g_data, g_data->pipes[i].argv, i));
 			set_execv_path(g_data, &g_data->pipes[i]);
 			execve(g_data->pipes[i].cmd_name, g_data->pipes[i].argv, g_data->env);
 			ft_printf(2, "Minishell: %s: %s\n", g_data->pipes[i].cmd_name, strerror(errno));
@@ -152,14 +155,15 @@ int	execute(t_general *g_data)
 		}
 		i++;
 	}
+	close_all_fd(fd, g_data->pipe_count);
 	i = 0;
 	while (i < g_data->pipe_count)
 	{
 		waitpid(g_data->pipes[i].pid, &status, 0);
 		i++;
 	}
-	close_all_fd(fd, g_data->pipe_count);
 	if (WIFSIGNALED(status)/* && write(1, "\n", 1)*/)
 		return (WTERMSIG(status) + 127);
+	// printf("waitpid2\n");
 	return (WIFEXITED(status));
 }

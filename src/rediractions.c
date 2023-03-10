@@ -50,7 +50,7 @@ int	ft_redir_iter(t_pipe *pipe)
 			pipe->fd_out = open(temp->pathname, O_CREAT | temp->flag | O_RDWR, 0777);
 			if(pipe->fd_out == -1)
 			{
-				ft_printf(2, "Minishell: %s: %s\n", temp->pathname, strerror(errno));
+				ft_printf(2, "Minishell: open: %s: %s\n", temp->pathname, strerror(errno));
 				return (1);
 			}
 		}
@@ -61,7 +61,7 @@ int	ft_redir_iter(t_pipe *pipe)
 			pipe->fd_in = open(temp->pathname, temp->flag);
 			if (pipe->fd_in == -1)
 			{
-				ft_printf(2, "Minishell: %s: %s\n", temp->pathname, strerror(errno));
+				ft_printf(2, "Minishell: open: %s: %s\n", temp->pathname, strerror(errno));
 				return (1);
 			}
 		}

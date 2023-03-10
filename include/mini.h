@@ -68,9 +68,14 @@ typedef struct s_pipe //malloc with noumer of pipes +1 , and give initial valuee
 	t_red	*head_red; //NULL
 }					t_pipe;
 
-typedef struct s_red 
+#define EXPAND_VAR 1
+#define NO_EXPAND_VAR 2
+
+typedef struct s_red
 {
-	int		flag; //  if << flags = Heredoc       for others(>> > < ) man open defined flags numbers 
+	int		expand_mode_heredoc; // for heredoc only TODO (cmd = cat << END) expand for example END(delimiter)
+	//,  otherwise END'' END"" ""END  END"" "END" 'END'  pointer to file_a
+ 	int		flag; //  if << flags = Heredoc       for others(>> > < ) man open defined flags numbers 
 	int		heredoc_fd[2];
 	char	*pathname; // the string that doesn't contain metacharacters starting from <<
 	struct	s_red *next; //NULL for the firs time
@@ -133,8 +138,8 @@ void	set_term_attr(int on_off);
 
 //
 int is_builtin(char *argv_0);
-int builtin(t_general *g_data, char **argv);
-int ft_echo(char **ptr);
+int builtin(t_general *g_data, char **argv, int i);
+int	ft_echo(char **ptr, t_general *g_data, int i);
 int ft_pwd();
 int ft_cd(char **ptr);
 int ft_env(t_general *data);
