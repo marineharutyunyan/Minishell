@@ -37,19 +37,20 @@ void	ft_exp_func(char **ptr, t_general *data, int j, int i)
 				}
 				data->exp[j] = ft_epstrdup(ptr[i]);
 				data->exp[j + 1] = NULL;
-				ft_free_exp(tmp, j);
+				ft_free_exp(&tmp, j);
 			}
 		}
 		i++;
 	}
 }
 
-void	ft_free_exp(char **tmp, int j)
+void	ft_free_exp(char ***tmp, int j)
 {
-	while (tmp[j])
+	j = 0;
+	while ((*tmp)[j])
 	{
-		free(tmp[j]);
+		free((*tmp)[j]);
 		j++;
 	}
-	free(tmp);
+	free(*tmp);
 }

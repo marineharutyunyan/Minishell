@@ -38,6 +38,37 @@ void	init_structs(t_general *g_data)
 //TODO
 //cat | << mm
 //cat<<a
+
+void	env_get(t_general *g_data, char **env)
+{
+	int	i;
+
+	i = -1;
+	while (env[++i])
+		;
+	g_data->env = (char **)malloc((i * sizeof(char *)) + 1);
+	i = -1;
+	while (env[++i])
+		g_data->env[i] = ft_strdup(env[i]);
+	g_data->env[i] = NULL;
+}
+
+/*TODO ERROR cases
+Minishell$ sdiufsuidd
+Minishell: sdiufsuidd: No such file or directory
+should be 
+bash: sdiufsuidd: command not found
+
+//ls | ls | ls | ls | ls | ls | ls | ls | ls  |  ls | ls | ls
+avel a ls tpum 
+
+
+$PWD
+/Users/maharuty/Downloads/Minishell: Permission denied
+should be 
+bash: /Users/maharuty/Downloads/Minishell: is a directory
+*/
+
 int	main(int argc, char **argv, char **env)
 {
 	int			i;
@@ -45,9 +76,10 @@ int	main(int argc, char **argv, char **env)
 	t_general	g_data;
 	char		*str;
 
-	g_data.env = env;
+	env_get(&g_data, env);
 	g_data.head_env = NULL;
 	set_env(&g_data, env);
+	get_export(&g_data);
 	while (1)
 	{
 		g_signal_notifire = 0;
@@ -63,9 +95,9 @@ int	main(int argc, char **argv, char **env)
 		if (*(g_data.line) == '\0')
 			continue ;
 		add_history(g_data.line);
-		if (has_errors(cmd)) // TODO enable erro check
-			continue ; //TODO add rediraction check
-		ft_printf(1, "Line is valid\n");
+		//if (has_errors(cmd)) // TODO enable erro check
+			//continue ; //TODO add rediraction check
+		//ft_printf(1, "Line is valid\n");
 		split_by_pipes(&g_data, &g_data.parse_data);
 		init_structs(&g_data);
 		if (parsing(&g_data) != 0) //free

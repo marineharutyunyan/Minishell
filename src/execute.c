@@ -99,16 +99,7 @@ int	set_execv_path(t_general *g_data, t_pipe *pipe)
 	paths = NULL;
 	if (pipe->words_count > 0)
 		pipe->cmd_name = ft_strdup(pipe->argv[0]);
-	if (access(pipe->cmd_name, F_OK) != -1)
-	{
-		//TODO should I  also check if the command is execuatable with X_OK
-		// printf("path exist\n");
-		return (free_double_array((void ***)&paths));
-	}
-	else
-	{
-		paths = ft_split(get_value_by_key("PATH", g_data->head_env), ':');
-	}
+	paths = ft_split(get_value_by_key("PATH", g_data->head_env), ':');
 	while (paths[i])
 	{
 		fullpath = ft_strjoin(paths[i], ft_strdup("/")); // TODO free on second argument insite join  
@@ -121,6 +112,8 @@ int	set_execv_path(t_general *g_data, t_pipe *pipe)
 		}
 		i++;
 	}
+	if (access(pipe->cmd_name, F_OK) != -1)
+		return (free_double_array((void ***)&paths));
 	return (free_double_array((void ***)&paths));
 }
 

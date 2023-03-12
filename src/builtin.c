@@ -6,7 +6,7 @@
 /*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 21:21:42 by maharuty          #+#    #+#             */
-/*   Updated: 2023/03/10 10:44:21 by maharuty         ###   ########.fr       */
+/*   Updated: 2023/03/12 20:08:11 by maharuty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void ft_malloc_for_env(t_general *g_data, char **env)
 // 		if (*(g_data.line) == '\0')
 // 			continue ;
 // 		add_history(g_data.line);
-//         builtin(&g_data, ft_split(g_data.line, ' '));
+//         builtin(&g_data, ft_split(g_data.line, ' '), 1);
 // 	}
 // 	return (0);
 // }

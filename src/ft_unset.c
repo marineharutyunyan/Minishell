@@ -6,7 +6,7 @@
 /*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 14:42:39 by tumolabs          #+#    #+#             */
-/*   Updated: 2023/03/09 23:23:10 by maharuty         ###   ########.fr       */
+/*   Updated: 2023/03/11 18:25:30 by lohanyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,10 @@ int	ft_check_str2(char *str, char **exp)
 		j = ft_free(&ptr, &tmp, &i);
 		free(ptr);
 		if(j > -1)
+		{
+			free(tmp);
 			return (j);
+		}
 		i++;
 	}
 	free(tmp);
@@ -92,6 +95,7 @@ void	ft_check_exp(int k, t_general *data)
 				data->exp[++l] = ft_strdup(tmp[j++]);
 		}
 		data->exp[l + 1] = NULL;
+		ft_free_exp(&tmp, j);
 	}
 }
 
@@ -104,11 +108,16 @@ int	ft_unset(t_general *data, char **ptr)
 
 	i = 0;
 	k = 0;
+	j = 0;
 	while (ptr && ptr[i])
 	{
+		if(ft_strrchr(ptr[i], '=') != 0)
+		{
+			printf("not a valid identifier\n");
+			return (1);
+		}
 		ft_unset_for_env(data, ptr[i]);
 		l = 0;
-		j = 0;
 		k = ft_check_str2(ptr[i], data->exp);
 		ft_check_exp(k, data);
 		i++;

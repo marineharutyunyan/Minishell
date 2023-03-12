@@ -6,7 +6,7 @@
 /*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 18:50:23 by tumolabs          #+#    #+#             */
-/*   Updated: 2023/03/06 21:12:40 by maharuty         ###   ########.fr       */
+/*   Updated: 2023/03/11 19:17:06 by lohanyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,16 @@ void	ft_new_malloc(char *str, char **tmp, int i, int flag)
 	tmp[i] = 0;
 	if (flag == 1)
 		tmp[i] = ft_epstrdup(str);
+	else if (flag == 0)
+		tmp[i] = ft_strdup(str);
+}
+
+void	ft_new_malloc1(char *str, char **tmp, int i, int flag)
+{
+	free(tmp[i]);
+	tmp[i] = 0;
+	if (flag == 1)
+		tmp[i] = ft_strdup(str);
 	else if (flag == 0)
 		tmp[i] = ft_strdup(str);
 }
@@ -36,7 +46,10 @@ int	ft_check_str(char *str, t_general *data)
 	tmp = ft_substr(str, 0, i);
 	sign = i;
 	if (ft_cut_for_exp(data, tmp, str, sign) == 1)
+	{
+		free(tmp);
 		return (1);
+	}
 	free(tmp);
 	return (0);
 }
@@ -56,7 +69,10 @@ int	ft_check_str1(char *str, t_general *data)
 	sign = i;
 	i = 0;
 	if (ft_cut_for_env(data, tmp, str, sign) == 1)
+	{
+		free(tmp);
 		return (1);
+	}
 	free(tmp);
 	return (0);
 }
