@@ -123,7 +123,8 @@ int	parsing(t_general *g_data)
 		g_data->pipes[i].head_red = NULL;
 		g_data->pipes[i].words_count = 0;
 		g_data->pipes[i].argv = NULL;
-		g_data->pipes[i].cmd_name = NULL;		set_rediractions(&g_data->pipes[i], g_data->parse_data.pipes[i]);
+		g_data->pipes[i].cmd_name = NULL;		
+		set_rediractions(&g_data->pipes[i], g_data->parse_data.pipes[i]);
 		set_args(&g_data->pipes[i], g_data->parse_data.pipes[i]);
 		// for PRINTING
 		/*

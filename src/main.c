@@ -39,14 +39,14 @@ void	init_structs(t_general *g_data)
 //cat | << mm
 //cat<<a
 
-void	env_get(t_general *g_data, char **env)
+void	set_env(t_general *g_data, char **env)
 {
 	int	i;
 
 	i = -1;
 	while (env[++i])
 		;
-	g_data->env = (char **)malloc((i * sizeof(char *)) + 1);
+	g_data->env = (char **)malloc((i + 1) * sizeof(char *));
 	i = -1;
 	while (env[++i])
 		g_data->env[i] = ft_strdup(env[i]);
@@ -69,6 +69,16 @@ should be
 bash: /Users/maharuty/Downloads/Minishell: is a directory
 */
 
+int	exit_status_setter(t_env **head_env, int status)
+{
+	char *str_status;
+
+	str_status = ft_itoa(status);
+	lst_env_add(head_env, lst_env_new("?", str_status));
+	free_array((void **)&str_status);
+	return (1);
+}
+
 int	main(int argc, char **argv, char **env)
 {
 	int			i;
@@ -76,10 +86,10 @@ int	main(int argc, char **argv, char **env)
 	t_general	g_data;
 	char		*str;
 
-	env_get(&g_data, env);
-	g_data.head_env = NULL;
 	set_env(&g_data, env);
-	get_export(&g_data);
+	g_data.head_env = NULL;
+	set_env_t_list(&g_data, env);
+	// get_export(&g_data);
 	while (1)
 	{
 		g_signal_notifire = 0;
@@ -88,21 +98,22 @@ int	main(int argc, char **argv, char **env)
 		g_data.line = readline("Minishell$ ");
 		set_term_attr(0);
 		// printf("cmd = %s\n", g_data.line);
+		if (g_signal_notifire == 1 && exit_status_setter(&g_data.head_env, 1))
+			continue ;
 		if (g_data.line == NULL)
-		{
 			exit(0);
-		}
 		if (*(g_data.line) == '\0')
 			continue ;
 		add_history(g_data.line);
-		//if (has_errors(cmd)) // TODO enable erro check
+		//if (has_errors(cmd)) // TODO enable erro check  // exit_status  = 258
 			//continue ; //TODO add rediraction check
 		//ft_printf(1, "Line is valid\n");
 		split_by_pipes(&g_data, &g_data.parse_data);
 		init_structs(&g_data);
-		if (parsing(&g_data) != 0) //free
+		if (parsing(&g_data) != 0 && exit_status_setter(&g_data.head_env, 1)) //free
 			continue ;
-		execute(&g_data);
+		int a = execute(&g_data);
+		exit_status_setter(&g_data.head_env, a);
 		free_parsing(&g_data.parse_data);
 		free_general(&g_data); // TODO free red struct and close(heredoc_fd[0])
 	}

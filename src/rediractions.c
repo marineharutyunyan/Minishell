@@ -1,6 +1,6 @@
 #include "mini.h"
 
-int	heredoc_iter(t_pipe *pipe)
+static int	heredoc_iter(t_pipe *pipe)
 {
 	t_red	*temp;
 

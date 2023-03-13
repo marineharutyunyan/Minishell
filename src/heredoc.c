@@ -24,15 +24,15 @@ int	heredoc(t_red *head_red)
 			if (line == NULL)
 			{
 				if (full_line[0] != '\0')
-					full_line = ft_strjoin(full_line, "\n");
+					full_line = ft_strjoin(full_line, "\n", 0);
 				break ;
 			}
 			if ((full_line[0] != '\0' && full_line[0] != '\n') || line[0] == '\0')// TODO make readable
-				full_line = ft_strjoin(full_line, "\n");
+				full_line = ft_strjoin(full_line, "\n", 0);
 			if (ft_strcmp(line, head_red->pathname) == 0)
 				break ;
 			else
-				full_line = ft_strjoin(full_line, line);
+				full_line = ft_strjoin(full_line, line, 0);
 		}
 		ft_printf(head_red->heredoc_fd[1], "%s", full_line);
 		// close(head_red->heredoc_fd[0]);

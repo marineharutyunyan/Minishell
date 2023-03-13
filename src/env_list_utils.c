@@ -7,7 +7,49 @@ t_env	*lst_env_last(t_env *lst)
 	return (lst);
 }
 
-void	lst_env_add_back(t_env **lst, t_env *new)
+void del_node (t_env *node)
+{
+	free(node->key);
+	free(node->value);
+	free(node);
+}
+
+int find_and_replace_node(t_env *lst, t_env *new)
+{
+	t_env *prev;
+
+	prev = NULL;
+	while (lst)
+	{
+		if (ft_strcmp(lst->key, new->key) == 0)
+		{
+			new->next = lst->next;	
+			del_node(lst);
+			prev->next = new;
+			return (1);
+		}
+		prev = lst;
+		lst = lst->next;
+	}
+	return(0);
+}
+
+void	lst_env_add(t_env **lst, t_env *new)
+{
+	if (!new || !lst)
+		return ;
+	if (!*lst)
+	{
+		*lst = new;
+		return ;
+	}
+	if (find_and_replace_node(*lst, new) == 0)
+	{
+		lst_env_last(*lst)->next = new;
+	}
+}
+
+/*void	lst_env_add_back(t_env **lst, t_env *new)
 {	
 	if (!new || !lst)
 		return ;
@@ -16,8 +58,7 @@ void	lst_env_add_back(t_env **lst, t_env *new)
 		*lst = new;
 		return ;
 	}
-	lst_env_last(*lst)->next = new;
-}
+}*/
 
 t_env	*lst_env_new(void *key, void *value)
 {
@@ -25,16 +66,13 @@ t_env	*lst_env_new(void *key, void *value)
 
 	node = (t_env *)malloc(sizeof(t_env));
 	if (node)
-	{	
-		node->key = key;
-		node->value = value;
+	{
+		node->key = ft_strdup(key);
+		node->value = ft_strdup(value);
 		node->next = NULL;
 		return (node);
 	}
-	else
-	{
-		return (NULL);
-	}
+	return (NULL);
 }
 
 void	lst_env_delet_by_key(t_env *lst, char	*key)

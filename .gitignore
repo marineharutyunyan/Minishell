@@ -1,5 +1,6 @@
 Lusine
 *.json
 *.o
+*.a
 minishell
 .vscode

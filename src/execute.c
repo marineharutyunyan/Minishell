@@ -102,8 +102,8 @@ int	set_execv_path(t_general *g_data, t_pipe *pipe)
 	paths = ft_split(get_value_by_key("PATH", g_data->head_env), ':');
 	while (paths[i])
 	{
-		fullpath = ft_strjoin(paths[i], ft_strdup("/")); // TODO free on second argument insite join  
-		fullpath = ft_strjoin(fullpath, pipe->cmd_name);// TODO free on  first argument insite join 
+		fullpath = ft_strjoin(paths[i], ft_strdup("/"), 0); // TODO free on second argument insite join  
+		fullpath = ft_strjoin(fullpath, pipe->cmd_name, 0);// TODO free on  first argument insite join 
 		if (access(fullpath, F_OK) != -1)
 		{
 			pipe->cmd_name = fullpath;
@@ -121,11 +121,12 @@ int	set_execv_path(t_general *g_data, t_pipe *pipe)
 int	execute(t_general *g_data)
 {
 	int		status;
+	int 	exit_status;
 	int		i;
 	int		**fd;
 
 	i = 0;
-	fd = create_pipes(g_data->pipe_count);
+	fd = create_pipes(g_data->pipe_count); // TODO protect multiple pipes
 	if (fd == NULL)
 		return (127);
 	if (g_data->pipe_count == 1)
@@ -153,10 +154,11 @@ int	execute(t_general *g_data)
 	while (i < g_data->pipe_count)
 	{
 		waitpid(g_data->pipes[i].pid, &status, 0);
+		if (i == g_data->pipe_count - 1)
+			exit_status = WEXITSTATUS(status);
 		i++;
 	}
-	if (WIFSIGNALED(status)/* && write(1, "\n", 1)*/)
+	if (WIFSIGNALED(status)/* && write(1, "\n", 1)*/) // TODO review
 		return (WTERMSIG(status) + 127);
-	// printf("waitpid2\n");
-	return (WIFEXITED(status));
+	return (exit_status);
 }

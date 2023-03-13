@@ -6,7 +6,7 @@
 /*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 21:21:42 by maharuty          #+#    #+#             */
-/*   Updated: 2023/03/12 20:08:11 by maharuty         ###   ########.fr       */
+/*   Updated: 2023/03/12 21:18:29 by maharuty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void ft_malloc_for_env(t_general *g_data, char **env)
 // 	ft_malloc_for_env(&g_data, env);
 // 	g_data.head_env = NULL;
 //     g_data.exp = NULL;
-// 	set_env(&g_data, env);
+// 	set_env_t_list(&g_data, env);
 //     get_export(&g_data);
 // 	while (1)
 // 	{
