@@ -6,7 +6,7 @@ static int	**create_pipes(int pipe_count)
 	int	**fd;
 
 	i = 0;
-	fd = malloc(sizeof(int) * (pipe_count - 1));
+	fd = malloc(sizeof(int *) * (pipe_count));
 	if (fd == NULL)
 		exit (1);
 	while (i < pipe_count - 1)
@@ -15,9 +15,19 @@ static int	**create_pipes(int pipe_count)
 		if (fd[i] == NULL)
 			exit (1);
 		if (pipe(fd[i]) == -1)
+		{
+			perror("Minishell: pipe:");
+			while (i != -1)
+			{
+				close(fd[i][0]);
+				close(fd[i][1]);
+				i--;
+			}
 			return (NULL);
+		}
 		i++;
 	}
+	fd[i] = NULL;
 	return (fd);
 }
 
@@ -129,28 +139,35 @@ int	execute(t_general *g_data)
 	fd = create_pipes(g_data->pipe_count); // TODO protect multiple pipes
 	if (fd == NULL)
 		return (127);
-	if (g_data->pipe_count == 1)
+	if (g_data->pipe_count == 1 && g_data->pipes[0].argv)
 		if (is_builtin(g_data->pipes[0].argv[0]))
 			return (builtin(g_data, g_data->pipes[0].argv, 0));
 	while (i < g_data->pipe_count)
 	{
-		g_data->pipes[i].pid = fork(); // TODO check ret_value and handle exit status;
-		if (g_data->pipes[i].pid == 0)
+		if (g_data->pipes[i].argv)
 		{
-			handle_signals(!INTERACTIVE_MODE);
-			change_io(fd, i, g_data->pipe_count, g_data->pipes[i]);
-			close_all_fd(fd, g_data->pipe_count);
-			if (is_builtin(g_data->pipes[i].argv[0]))
-				exit (builtin(g_data, g_data->pipes[i].argv, i));
-			set_execv_path(g_data, &g_data->pipes[i]);
-			execve(g_data->pipes[i].cmd_name, g_data->pipes[i].argv, g_data->env);
-			ft_printf(2, "Minishell: %s: %s\n", g_data->pipes[i].cmd_name, strerror(errno));
-			exit(127);
+			g_data->pipes[i].pid = fork();
+			if (g_data->pipes[i].pid == -1)
+				exit (1); // TODO review
+			if (g_data->pipes[i].pid == 0)
+			{
+				handle_signals(!INTERACTIVE_MODE);
+				change_io(fd, i, g_data->pipe_count, g_data->pipes[i]);
+				close_all_fd(fd, g_data->pipe_count);
+				if (is_builtin(g_data->pipes[i].argv[0]))
+					exit (builtin(g_data, g_data->pipes[i].argv, i));
+				set_execv_path(g_data, &g_data->pipes[i]);
+				execve(g_data->pipes[i].cmd_name, g_data->pipes[i].argv, g_data->env);
+				ft_printf(2, "Minishell: %s: %s\n", g_data->pipes[i].cmd_name, strerror(errno));
+				exit(127);
+			}
 		}
 		i++;
 	}
 	close_all_fd(fd, g_data->pipe_count);
 	i = 0;
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	while (i < g_data->pipe_count)
 	{
 		waitpid(g_data->pipes[i].pid, &status, 0);
@@ -158,7 +175,11 @@ int	execute(t_general *g_data)
 			exit_status = WEXITSTATUS(status);
 		i++;
 	}
-	if (WIFSIGNALED(status)/* && write(1, "\n", 1)*/) // TODO review
-		return (WTERMSIG(status) + 127);
+	if (WIFSIGNALED(status)) // TODO review
+	{
+		if (WTERMSIG(status) == SIGQUIT)
+			ft_printf(2, "Quit: 3");
+		return ((!write(1, "\n", 1)) || WTERMSIG(status) + 127);
+	}
 	return (exit_status);
 }

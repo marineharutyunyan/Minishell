@@ -14,7 +14,7 @@
 #include <termios.h>
 # define PROMPT_PIPE_EXAMPLE "|\"ls |-la|\" | cat sgdsgsdg sdgsdgsdg |$dsgsd\"gs|dg\" '|f |f  |g| |'  | ls"
 # define PROMPT_TOKENS_EXAMPLE "<a<b<c>d>\" t    \">>y<<u>i<i \"cat \"ls <\"t \"> u file"
-# define UNEXPECTED "|&;()"
+# define UNEXPECTED "|&;"
 # define FT_SPACE "\n\t "
 # define REDIRECTIONS "<>"
 # define METACHARACTERS "|&;()<>\n\t "
@@ -105,6 +105,7 @@ char	*get_text(char *str, int *i);
 char	*get_inbetween_double_quotes_text(char *str, int *i);
 char	*get_inbetween_single_quotes_text(char *str, int *i);
 char	*process_dollar_sign_and_quotes (char *line, t_general *g_data);
+int 	replace_dollar_varables(t_general *g_data, int i);
 char	*replace_env_var(char *line, t_general *g_data);
 
 //env_parsing

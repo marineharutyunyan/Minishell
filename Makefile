@@ -14,7 +14,7 @@ OBJECTFOLDER = temp
 MKDIR = mkdir
 HEADER = $(wildcard ./include/*)
 
-./$(OBJECTFOLDER)/%.o: ./src/%.c $(HEADER)
+./$(OBJECTFOLDER)/%.o: ./src/%.c $(HEADER) Makefile
 	$(CC) $(CFLAGS) -c $< -o $@
 
 all: $(NAME)

@@ -1,0 +1,5 @@
+//ls | ls | ls | ls | ls | ls | ls | ls | ls  |  ls | ls | ls
+                              close_all_fd() 
+//TODO
+//cat | << mm
+//cat<<a
