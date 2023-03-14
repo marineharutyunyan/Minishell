@@ -14,7 +14,7 @@
 #include <termios.h>
 # define PROMPT_PIPE_EXAMPLE "|\"ls |-la|\" | cat sgdsgsdg sdgsdgsdg |$dsgsd\"gs|dg\" '|f |f  |g| |'  | ls"
 # define PROMPT_TOKENS_EXAMPLE "<a<b<c>d>\" t    \">>y<<u>i<i \"cat \"ls <\"t \"> u file"
-# define UNEXPECTED "|&;"
+# define UNEXPECTED "|&;()"
 # define FT_SPACE "\n\t "
 # define REDIRECTIONS "<>"
 # define METACHARACTERS "|&;()<>\n\t "
@@ -134,6 +134,8 @@ void	ft_env_iter(t_env *lst);
 int		execute(t_general *g_data);
 void 	handle_signals(int mode);
 void	set_term_attr(int on_off);
+void	set_execv_path(t_general *g_data, t_pipe *pipe);
+int		is_path_abs_or_relative(char *path);
 
 
 

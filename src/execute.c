@@ -127,34 +127,31 @@ void	print_pipes(int pipe_count, int **fd)
 	}
 }
 
-int	set_execv_path(t_general *g_data, t_pipe *pipe)
+int is_dir(char *cmd)
 {
-	char	**paths;
-	int		i;
-	char	*fullpath;
-
-	i = 0;
-	paths = NULL;
-	if (pipe->words_count > 0)
-		pipe->cmd_name = ft_strdup(pipe->argv[0]);
-	if (pipe->cmd_name[0] == '\0')
-		return (0);
-	paths = ft_split(get_value_by_key("PATH", g_data->head_env), ':');
-	while (paths[i])
+	if (opendir(cmd))
 	{
-		fullpath = ft_strjoin(paths[i], "/");
-		fullpath = ft_strjoin_free_first_arg(fullpath, pipe->cmd_name);
-		if (access(fullpath, F_OK) != -1)
-		{
-			pipe->cmd_name = fullpath;
-			paths = NULL;
-			return (free_double_array((void ***)&paths));
-		}
-		i++;
+		ft_printf(2, "minishell: %s: is a directory\n", cmd);
+		exit (126);
 	}
-	if (access(pipe->cmd_name, F_OK) != -1)
-		return (free_double_array((void ***)&paths));
-	return (free_double_array((void ***)&paths));
+	return (0);
+}
+
+int	is_for_execve(char *cmd, t_general *g_data, t_pipe *pipe)
+{
+	if (cmd[0] == '.' && cmd[1] == '\0')
+	{
+		ft_printf(2, "minishell: .: filename argument required\n\
+.: usage: . filename [arguments]\n");
+		exit (2);
+	}
+	if (!is_dir(pipe->cmd_name)
+		&& (!is_path_abs_or_relative(pipe->cmd_name)
+			|| !ft_strchr(pipe->cmd_name,'/')))
+	{
+		set_execv_path(g_data, pipe);
+	}
+	return(1);
 }
 
 //  cat main.c | cat | cat
@@ -186,9 +183,11 @@ int	execute(t_general *g_data)
 				close_all_fd(fd, g_data->pipe_count);
 				if (is_builtin(g_data->pipes[i].argv[0]))
 					exit (builtin(g_data, g_data->pipes[i].argv, i));
-				set_execv_path(g_data, &g_data->pipes[i]);
-				execve(g_data->pipes[i].cmd_name, g_data->pipes[i].argv, g_data->env);
-				ft_printf(2, "Minishell: %s: %s\n", g_data->pipes[i].cmd_name, strerror(errno));
+				if (g_data->pipes[i].words_count > 0)
+					g_data->pipes[i].cmd_name = ft_strdup(g_data->pipes[i].argv[0]);
+				if (is_for_execve(g_data->pipes[i].cmd_name, g_data, &g_data->pipes[i]))	
+					execve(g_data->pipes[i].cmd_name, g_data->pipes[i].argv, g_data->env);
+				ft_printf(2, "Minishell!!: %s: %s\n", g_data->pipes[i].cmd_name, strerror(errno));
 				exit(127);
 			}
 		}
@@ -210,7 +209,7 @@ int	execute(t_general *g_data)
 	{
 		if (WTERMSIG(status) == SIGQUIT)
 			ft_printf(2, "Quit: 3");
-		return ((!write(1, "\n", 1)) || WTERMSIG(status) + 127);
+		return ((!write(1, "\n", 1)) | WTERMSIG(status) + 128);
 	}
 	return (exit_status);
 }

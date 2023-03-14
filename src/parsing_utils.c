@@ -22,7 +22,7 @@ char	*get_text(char *str, int *i)
 	{
 		(*i)++;
 	}
-	if (*i != 0 && str[(*i) - 1] == '$')
+	if (*i != 0 && str[(*i) - 1] == '$' && str[(*i)] != '\0')
 		tmp = -1;
 	text = ft_substr(str, start_index, (*i) - (start_index) + tmp);
 	return (text);

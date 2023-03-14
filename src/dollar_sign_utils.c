@@ -35,7 +35,6 @@ char	*process_dollar_sign_and_quotes(char *line, t_general *g_data)
 	i = 0;
 	temp = NULL;
 	final_line = NULL;
-
 	while (line[i] != '\0')
 	{
 		temp = get_inbetween_single_quotes_text(line, &i);
