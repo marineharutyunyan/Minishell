@@ -6,7 +6,7 @@
 /*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 14:42:39 by tumolabs          #+#    #+#             */
-/*   Updated: 2023/03/14 11:15:52 by maharuty         ###   ########.fr       */
+/*   Updated: 2023/03/15 01:35:39 by maharuty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ int	ft_unset(t_general *data, char **ptr)
 			l = 0;
 			k = ft_check_str2(ptr[i], data->exp);
 			ft_check_exp(k, data);
+			del_all_env(data);
 			set_env_t_list(data, data->env);
 		}
 		i++;

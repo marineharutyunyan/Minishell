@@ -149,7 +149,8 @@ int	is_for_execve(char *cmd, t_general *g_data, t_pipe *pipe)
 		&& (!is_path_abs_or_relative(pipe->cmd_name)
 			|| !ft_strchr(pipe->cmd_name,'/')))
 	{
-		set_execv_path(g_data, pipe);
+		if (get_value_by_key("PATH", g_data->head_env))
+			set_execv_path(g_data, pipe);
 	}
 	return(1);
 }

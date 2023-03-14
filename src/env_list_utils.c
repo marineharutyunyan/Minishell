@@ -14,6 +14,22 @@ void del_node (t_env *node)
 	free(node);
 }
 
+void del_all_env(t_general *g_data)
+{
+	t_env *prev;
+	t_env *temp;
+
+	temp = g_data->head_env;
+	prev = NULL;
+	while (temp)
+	{
+		prev = temp;
+		temp = temp->next;
+		del_node(prev);
+	}
+	g_data->head_env = NULL;
+}
+
 int find_and_replace_node(t_env *lst, t_env *new)
 {
 	while (lst)
@@ -74,28 +90,4 @@ t_env	*lst_env_new(void *key, void *value)
 	return (NULL);
 }
 
-void	lst_env_delet_by_key(t_env *lst, char	*key)
-{
-/*
-// Store head node
-	t_env *prev;
-	t_env *temp = *lst;
 
-	// If head node itself holds the key to be deleted
-	if (temp != NULL && temp->key == key) {
-		*lst = *(temp->next); // Changed head
-		free(temp); // free old head
-		return ;
-	}
-	// Search for the key to be deleted, keep track of the
-	// previous node as we need to change 'prev->next'
-	while (temp != NULL && temp->key != key) {
-		prev = temp;
-		temp = temp->next;
-	}
-	// If key was not present in linked list
-	if (temp == NULL)
-		return ;
-	prev->next = temp->next;
-	free(temp);*/
-}

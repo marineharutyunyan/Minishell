@@ -113,9 +113,10 @@ char	*replace_env_var(char *line, t_general *g_data);
 //env_parsing
 t_env	*lst_env_new(void *value, void *key);
 void	lst_env_add(t_env **lst, t_env *new);
-void	lst_env_delet_by_key(t_env *lst, char	*key);
 void    set_env_t_list(t_general *g_data, char **env);
 char	*get_value_by_key(char *key, t_env *lst);
+void	del_all_env(t_general *g_data);
+
 
 // rediractions
 int	 handle_rediractions(t_general *g_data);
