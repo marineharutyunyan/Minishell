@@ -109,7 +109,7 @@ int	parsing(t_general *g_data)
 		set_args(&g_data->pipes[i], g_data->parse_data.pipes[i]);
 		// for PRINTING
 		replace_dollar_varables(g_data, i);
-		j = 0;
+		/*j = 0;
 		printf("---------------------------------------------\n");
 		printf("argv\n");
 		// g_data->pipes[i].argv[j] = remove_qutoes( g_data->pipes[i].argv[j]);
@@ -123,13 +123,12 @@ int	parsing(t_general *g_data)
 		printf("red\n");
 		t_red *tmp =  g_data->pipes[i].head_red;
 		while (tmp)
-		
 		{
 			printf("%s\n", tmp->pathname);
 			printf("flag = %d\n", tmp->flag);
 			tmp = tmp->next;
 		}
-		printf("*********************************************\n");
+		printf("*********************************************\n");*/
 		i++;
 	}
 	return (handle_rediractions(g_data));

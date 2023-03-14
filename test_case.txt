@@ -8,3 +8,5 @@ cat << a
 // $PWD
 // "$PWD"
 // '$PWD'
+
+export a=5 b=8 .=899 c=7

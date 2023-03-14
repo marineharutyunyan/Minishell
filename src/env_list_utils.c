@@ -16,19 +16,18 @@ void del_node (t_env *node)
 
 int find_and_replace_node(t_env *lst, t_env *new)
 {
-	t_env *prev;
-
-	prev = NULL;
 	while (lst)
 	{
 		if (ft_strcmp(lst->key, new->key) == 0)
 		{
-			new->next = lst->next;	
-			del_node(lst);
-			prev->next = new;
+			if (ft_strcmp(lst->value, new->value) != 0)
+			{
+				free(lst->value);
+				lst->value = ft_strdup(new->value);
+			}
+			del_node(new);
 			return (1);
 		}
-		prev = lst;
 		lst = lst->next;
 	}
 	return(0);

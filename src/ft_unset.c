@@ -6,7 +6,7 @@
 /*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 14:42:39 by tumolabs          #+#    #+#             */
-/*   Updated: 2023/03/11 18:25:30 by lohanyan         ###   ########.fr       */
+/*   Updated: 2023/03/14 11:15:52 by maharuty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,15 +111,16 @@ int	ft_unset(t_general *data, char **ptr)
 	j = 0;
 	while (ptr && ptr[i])
 	{
-		if(ft_strrchr(ptr[i], '=') != 0)
+		if((ft_strrchr(ptr[i], '=') != 0
+			&& ft_printf(2, "Minishell: `%s\': not a valid identifier\n", ptr[i]))
+			|| ft_errors_for_export(ptr[i]) != 1) // 
 		{
-			printf("not a valid identifier\n");
-			return (1);
+			ft_unset_for_env(data, ptr[i]);
+			l = 0;
+			k = ft_check_str2(ptr[i], data->exp);
+			ft_check_exp(k, data);
+			set_env_t_list(data, data->env);
 		}
-		ft_unset_for_env(data, ptr[i]);
-		l = 0;
-		k = ft_check_str2(ptr[i], data->exp);
-		ft_check_exp(k, data);
 		i++;
 	}
 	return (0);

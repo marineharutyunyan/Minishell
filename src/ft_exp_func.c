@@ -6,7 +6,7 @@
 /*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 16:27:40 by tumolabs          #+#    #+#             */
-/*   Updated: 2023/03/06 21:12:40 by maharuty         ###   ########.fr       */
+/*   Updated: 2023/03/14 11:09:22 by maharuty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	ft_exp_func(char **ptr, t_general *data, int j, int i)
 				data->exp[j + 1] = NULL;
 				ft_free_exp(&tmp, j);
 			}
+			set_env_t_list(data, data->env);
 		}
 		i++;
 	}
