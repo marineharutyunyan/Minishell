@@ -26,7 +26,7 @@ int	get_pipes_count(char *str)
 	return (count);
 }
 
-void	split_by_pipes(t_general *g_data, t_parsing *data)
+void	split_by_pipes(t_general *g_data, t_parsing *data) //TODO does parsing data free breac the env functionality 
 {
 	int		i;
 	char	c;

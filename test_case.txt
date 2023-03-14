@@ -10,3 +10,14 @@ cat << a
 // '$PWD'
 
 export a=5 b=8 .=899 c=7
+
+
+$PDW
+
+
+
+// "dgfdfgd>>dfdff<<dsg"
+// ^[[200~"dgfdfgd>>dfdff<<dsg"~  segv
+
+
+;ls

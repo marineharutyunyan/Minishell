@@ -28,7 +28,7 @@ t_red	*lst_redir_new(void *content, int flag_num)
 	{
 		node->expand_mode_heredoc = EXPAND_VAR;
 		node->flag = flag_num;
-		node->pathname = content;
+		node->pathname = ft_strdup(content);
 		node->heredoc_fd[0] = -1;
 		node->heredoc_fd[1] = -1;
 		node->next = NULL;

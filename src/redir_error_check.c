@@ -28,7 +28,7 @@ int	check_redir_sytax(char *str)
 				i++;
 			i++;
 			i = pass_spces(str, i);
-			if (ft_strchr(METACHARACTERS, str[i]))
+			if (str[i] && ft_strchr(METACHARACTERS, str[i]))
 				return (1);
 		}
 		if (str[i])

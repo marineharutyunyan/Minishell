@@ -60,7 +60,7 @@ typedef struct s_general
 typedef struct s_pipe //malloc with noumer of pipes +1 , and give initial valuees 
 {
 	char	*cmd_name;  // argv[0] like  ls
-	pid_t	pid;
+	pid_t	pid;	
 	int		fd_in;  // 0          // read only goes here  
 	int		fd_out; // 1          // rest reutts of open exept heredoc gors here 
 	int 	words_count; // count of words contained in argv below
@@ -121,8 +121,9 @@ int	 handle_rediractions(t_general *g_data);
 int	ft_redir_iter(t_pipe *pipe);
 int	heredoc(t_red *head_red, t_general *g_data);
 //utils
-int	free_array(void	**ptr);
-int	free_double_array(void	***ptr);
+int		free_array(void	**ptr);
+int		free_double_array(void	***ptr);
+char	*ft_strjoin_free_first_arg(char *s1, char const *s2);
 
 //temp_utils
 void	ft_redir_temp_iter(t_red *lst);

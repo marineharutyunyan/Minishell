@@ -48,7 +48,6 @@ char	*get_value(char *line)
 	return (ft_strdup(""));
 }
 
-//Variable decleration - variables are limityed to be letters _ and numbers 
 void	set_env_t_list(t_general *g_data, char **env)
 {
 	int		i;
@@ -68,12 +67,5 @@ void	set_env_t_list(t_general *g_data, char **env)
 		free(key);
 		free(value);
 	}
-	lst_env_add(&g_data->head_env, lst_env_new("?", "0")); // TODO review
-	// t_env * tmp = g_data->head_env;
-	// while (tmp)
-	// {
-	// 	printf("tmp = %s\n",tmp->key);
-	// 	printf("tmp = %s\n",tmp->value);
-	// 	tmp = tmp->next;
-	// }
+	lst_env_add(&g_data->head_env, lst_env_new("?", "0"));
 }

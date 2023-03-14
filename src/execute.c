@@ -1,5 +1,31 @@
 #include "mini.h"
 
+char	*ft_strjoin_free_first_arg(char *s1, char const *s2) // TODO add flag to free or not to free
+{
+	int		s1_len;
+	int		s2_len;
+	char	*newstr;
+
+	if (!(s1) && !(s2))
+		return (NULL);
+	else if (!(s1) || !(s2))
+	{
+		if (!s1)
+			return (ft_strdup(s2));
+		else/* if (!free_arr((char *)s1))*/
+			return (ft_strdup(s1));
+	}
+	s1_len = ft_strlen(s1);
+	s2_len = ft_strlen(s2);
+	newstr = (char *)malloc(sizeof(char) * (s1_len + s2_len + 1));
+	if (!(newstr))
+		return (NULL);
+	ft_strlcpy(newstr, s1, s1_len + 1);
+	ft_strlcat(newstr + (s1_len), s2, s2_len + 1);
+	free(s1);
+	return (newstr);
+}
+
 static int	**create_pipes(int pipe_count)
 {
 	int	i;
@@ -21,8 +47,10 @@ static int	**create_pipes(int pipe_count)
 			{
 				close(fd[i][0]);
 				close(fd[i][1]);
+				free(fd[i]);
 				i--;
 			}
+			free(fd);
 			return (NULL);
 		}
 		i++;
@@ -109,11 +137,13 @@ int	set_execv_path(t_general *g_data, t_pipe *pipe)
 	paths = NULL;
 	if (pipe->words_count > 0)
 		pipe->cmd_name = ft_strdup(pipe->argv[0]);
+	if (pipe->cmd_name[0] == '\0')
+		return (0);
 	paths = ft_split(get_value_by_key("PATH", g_data->head_env), ':');
 	while (paths[i])
 	{
-		fullpath = ft_strjoin(paths[i], ft_strdup("/"), 0); // TODO free on second argument insite join  
-		fullpath = ft_strjoin(fullpath, pipe->cmd_name, 0);// TODO free on  first argument insite join 
+		fullpath = ft_strjoin(paths[i], "/");
+		fullpath = ft_strjoin_free_first_arg(fullpath, pipe->cmd_name);
 		if (access(fullpath, F_OK) != -1)
 		{
 			pipe->cmd_name = fullpath;
@@ -165,6 +195,7 @@ int	execute(t_general *g_data)
 		i++;
 	}
 	close_all_fd(fd, g_data->pipe_count);
+	free_double_array((void***)&fd);
 	i = 0;
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);

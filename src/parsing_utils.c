@@ -56,7 +56,7 @@ char	*get_word(char *line, int *i)
 
 int	pass_redir(char *line, int i)
 {
-	if (ft_strchr(REDIRECTIONS, line[i]))
+	if (line[i] && ft_strchr(REDIRECTIONS, line[i]))
 	{
 		while (line[i] != '\0' && ft_strchr(REDIRECTIONS, line[i]))
 			i++;

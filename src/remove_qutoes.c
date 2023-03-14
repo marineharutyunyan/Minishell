@@ -6,7 +6,7 @@
 /*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 09:14:07 by maharuty          #+#    #+#             */
-/*   Updated: 2023/03/14 09:29:11 by maharuty         ###   ########.fr       */
+/*   Updated: 2023/03/14 17:49:13 by maharuty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,6 @@ char	*remove_qutoes(char *s, int *expand_mode_heredoc)
 		i++;
 	}
 	result[j] = '\0';
+	free(s);
 	return (result);
 }

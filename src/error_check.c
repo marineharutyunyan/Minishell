@@ -49,10 +49,10 @@ int check_unexpected(char *str)
 			flag = 1;
 		}
 		if (str[i] && (flag == 0 || (str[i + 1] == '\0')) && ft_strchr(UNEXPECTED, str[i]))
-			return (1); // should I return 1 and only onece print sytax error ?
-		if (!ft_strchr(METACHARACTERS, str[i]))
+			return (1);
+		if (str[i] && !ft_strchr(METACHARACTERS, str[i]))
 			flag = 1;
-		else if (flag == 1 && ft_strchr(UNEXPECTED, str[i]))
+		else if (flag == 1 &&  str[i] && ft_strchr(UNEXPECTED, str[i]))
 			flag = 0;
 		if (str[i])
 			i++;
@@ -74,5 +74,3 @@ int has_errors(char *str)
 	free(str);
 	return (0);
 }
-// "dgfdfgd>>dfdff<<dsg"
-// ^[[200~"dgfdfgd>>dfdff<<dsg"~  segv

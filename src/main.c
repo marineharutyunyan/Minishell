@@ -16,21 +16,45 @@ int g_signal_notifire;
 
 void	free_parsing(t_parsing *pars_data)
 {
-	int	i;
+	free_double_array((void***)&pars_data->pipes);
+}
+
+void	free_red(t_red *head_red)
+{
+	while (head_red)
+	{
+		if (head_red->flag == HEREDOC)
+			close(head_red->heredoc_fd[0]);
+		free_array((void**)&head_red->pathname);
+		head_red = head_red->next;
+	}
+}
+
+void	free_pipes(t_pipe *pipes, int pipe_count)
+{
+	int i;
 
 	i = 0;
-	while (pars_data->pipes[i])
+	if (pipes == NULL)
+		return ;
+	while (i < pipe_count)
 	{
-		free_array((void **)&pars_data->pipes[i++]);
+		free_array((void **)&pipes[i].cmd_name);
+		free_red(pipes[i].head_red);
+		free_double_array((void***)&pipes[i].argv);
+		i++;
 	}
-	free(pars_data->pipes);
 }
 
 void	free_general(t_general *g_data)
 {
+	free_parsing(&g_data->parse_data);
 	free_array((void **)&g_data->line);
-	//TODO free pipes
+	free_pipes(g_data->pipes, g_data->pipe_count);
+	free_array((void **)&g_data->pipes);
+	g_data->pipes = NULL;
 }
+
 
 void	init_structs(t_general *g_data)
 {
@@ -63,6 +87,18 @@ should be
 bash: /Users/maharuty/Downloads/Minishell: is a directory
 */
 
+void general_init(t_general *g_data)
+{
+	g_data->head_env = NULL;
+	g_data->pipe_count = 0;
+	g_data->env = NULL;
+	g_data->exp = NULL;
+	g_data->line = NULL;
+	g_data->exit_status = 0;
+	g_data->pipes = NULL;
+	g_data->parse_data.pipes = NULL;
+}
+
 int	exit_status_setter(t_env **head_env, int status)
 {
 	char *str_status;
@@ -75,15 +111,12 @@ int	exit_status_setter(t_env **head_env, int status)
 
 int	main(int argc, char **argv, char **env)
 {
-	int			i;
 	t_general	g_data;
-	char		*str;
-	int a;
 
+	general_init(&g_data);
 	set_env(&g_data, env);
-	g_data.head_env = NULL;
 	set_env_t_list(&g_data, env);
-	get_export(&g_data);
+	get_export(&g_data); //TODO free and leaks unchecked
 	while (1)
 	{
 		g_signal_notifire = 0;
@@ -92,22 +125,33 @@ int	main(int argc, char **argv, char **env)
 		g_data.line = readline("Minishell$ ");
 		set_term_attr(0);
 		if (g_signal_notifire == 1 && exit_status_setter(&g_data.head_env, 1))
+		{
+			free_general(&g_data);
 			continue ;
+		}	
 		if (g_data.line == NULL)
 			exit(0);
 		if (*(g_data.line) == '\0')
+		{
+			free_general(&g_data);
 			continue ;
+		}
 		add_history(g_data.line);
 		if (has_errors(g_data.line) && exit_status_setter(&g_data.head_env, 258)) 
+		{
+			free_general(&g_data);
 			continue ;
+		}
 		split_by_pipes(&g_data, &g_data.parse_data);
 		init_structs(&g_data);
-		if (parsing(&g_data) != 0 && exit_status_setter(&g_data.head_env, 1)) //free
+		if (parsing(&g_data) != 0 && exit_status_setter(&g_data.head_env, 1))
+		{
+			free_general(&g_data);
 			continue ;
-		if (g_data.pipes[0].argv)
+		}
+		if (g_data.pipes[0].argv && g_data.pipes[0].argv[0])
 			exit_status_setter(&g_data.head_env, execute(&g_data));
-		free_parsing(&g_data.parse_data);
-		free_general(&g_data); // TODO free red struct and close(heredoc_fd[0])
+		free_general(&g_data);
 	}
 	return (0);
 }

@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-char	*ft_strjoin(char const *s1, char const *s2, int flag) // TODO add flag to free or not to free
+char	*ft_strjoin(char const *s1, char const *s2)
 {
 	int		s1_len;
 	int		s2_len;
@@ -34,18 +34,5 @@ char	*ft_strjoin(char const *s1, char const *s2, int flag) // TODO add flag to f
 		return (NULL);
 	ft_strlcpy(newstr, s1, s1_len + 1);
 	ft_strlcat(newstr + (s1_len), s2, s2_len + 1);
-	if (flag == 1)
-	{
-		free((char *)s1);
-		free((char *)s2);
-	}
-	else if (flag == 2)
-	{
-		free((char *)s1);
-	}
-	else if (flag == 3)
-	{
-		free((char *)s2);
-	}
 	return (newstr);
 }

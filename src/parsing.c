@@ -82,6 +82,7 @@ void	set_rediractions(t_pipe *pipe, char *line)
 				pipe->head_red = lst_redir_new(word, flag);
 			else
 				lst_redir_add_back(&pipe->head_red, lst_redir_new(word, flag));
+			free(word);
 		}
 		// if (line[i] || ft_strchr(METACHARACTERS))
 		// 	i++;
@@ -108,6 +109,8 @@ int	parsing(t_general *g_data)
 		set_rediractions(&g_data->pipes[i], g_data->parse_data.pipes[i]);
 		set_args(&g_data->pipes[i], g_data->parse_data.pipes[i]);
 		// for PRINTING
+		//system("leaks minishell");
+		// sleep(1);
 		replace_dollar_varables(g_data, i);
 		/*j = 0;
 		printf("---------------------------------------------\n");

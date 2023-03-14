@@ -6,7 +6,7 @@
 /*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 17:40:41 by maharuty          #+#    #+#             */
-/*   Updated: 2023/03/14 09:53:37 by maharuty         ###   ########.fr       */
+/*   Updated: 2023/03/14 18:12:49 by maharuty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 int replace_dollar_varables(t_general *g_data, int i)
 {
 	int 	j;
-	char	*tmp_pathname;
 	t_red 	*temp;
 
 	j = 0;
@@ -25,9 +24,12 @@ int replace_dollar_varables(t_general *g_data, int i)
 		while (g_data->pipes[i].argv[j])
 		{
 			g_data->pipes[i].argv[j] = process_dollar_sign_and_quotes(g_data->pipes[i].argv[j], g_data);
+			if (g_data->pipes[i].argv[j] == NULL)
+				g_data->pipes[i].argv[j] = ft_strdup("");
 			j++;
 		}
 	}
+
 	temp = g_data->pipes[i].head_red;
 	while (temp)
 	{
