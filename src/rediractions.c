@@ -71,11 +71,7 @@ int	ft_redir_iter(t_pipe *pipe)
 				close(pipe->fd_in);
 			pipe->fd_in = temp->heredoc_fd[0];
 		}
-		// printf("Pathname = %s\n", temp->pathname);
-		// printf("flage = %d\n", temp->flag);
 		temp = temp->next;
 	}
-	// printf("in = %d\n", pipe->fd_in);
-	// printf("out = %d\n", pipe->fd_out);
 	return (0);
 }

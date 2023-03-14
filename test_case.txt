@@ -21,3 +21,14 @@ $PDW
 
 
 ;ls
+
+
+TODO ERROR cases
+Minishell$ sdiufsuidd
+Minishell: sdiufsuidd: No such file or directory
+should be 
+bash: sdiufsuidd: command not found
+$PWD
+/Users/maharuty/Downloads/Minishell: Permission denied
+should be 
+bash: /Users/maharuty/Downloads/Minishell: is a directory

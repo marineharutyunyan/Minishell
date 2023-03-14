@@ -12,11 +12,11 @@
 
 #include "mini.h"
 
-int g_signal_notifire;
+int	g_signal_notifire;
 
 void	free_parsing(t_parsing *pars_data)
 {
-	free_double_array((void***)&pars_data->pipes);
+	free_double_array((void ***)&pars_data->pipes);
 }
 
 void	free_red(t_red *head_red)
@@ -25,14 +25,14 @@ void	free_red(t_red *head_red)
 	{
 		if (head_red->flag == HEREDOC)
 			close(head_red->heredoc_fd[0]);
-		free_array((void**)&head_red->pathname);
+		free_array((void **)&head_red->pathname);
 		head_red = head_red->next;
 	}
 }
 
 void	free_pipes(t_pipe *pipes, int pipe_count)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (pipes == NULL)
@@ -76,18 +76,7 @@ void	set_env(t_general *g_data, char **env)
 	g_data->env[i] = NULL;
 }
 
-/*TODO ERROR cases
-Minishell$ sdiufsuidd
-Minishell: sdiufsuidd: No such file or directory
-should be 
-bash: sdiufsuidd: command not found
-$PWD
-/Users/maharuty/Downloads/Minishell: Permission denied
-should be 
-bash: /Users/maharuty/Downloads/Minishell: is a directory
-*/
-
-void general_init(t_general *g_data)
+void	general_init(t_general *g_data)
 {
 	g_data->head_env = NULL;
 	g_data->pipe_count = 0;
@@ -101,7 +90,7 @@ void general_init(t_general *g_data)
 
 int	exit_status_setter(t_env **head_env, int status)
 {
-	char *str_status;
+	char	*str_status;
 
 	str_status = ft_itoa(status);
 	lst_env_add(head_env, lst_env_new("?", str_status));

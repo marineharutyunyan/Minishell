@@ -82,6 +82,7 @@ typedef struct s_red
 }					t_red;
 
 // parsing
+int		check_unexpected(char *str);
 char	*ft_strdup_modif(const char *s1, int startIndex, int len);
 char	*char_to_string(char s1);
 char	*ft_trim(char *s1);
