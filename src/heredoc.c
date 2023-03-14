@@ -1,6 +1,6 @@
 #include "mini.h"
 
-int	heredoc(t_red *head_red)
+int	heredoc(t_red *head_red, t_general *g_data)
 {
 	pid_t	pid;
 	char	*line;
@@ -34,6 +34,8 @@ int	heredoc(t_red *head_red)
 			else
 				full_line = ft_strjoin(full_line, line, 0);
 		}
+		if (head_red->expand_mode_heredoc == EXPAND_VAR)
+			full_line = replace_env_var(full_line, g_data);
 		ft_printf(head_red->heredoc_fd[1], "%s", full_line);
 		// close(head_red->heredoc_fd[0]);
 		close(head_red->heredoc_fd[1]);

@@ -17,6 +17,7 @@ char	*get_inbetween_double_quotes_text(char *str, int *i)
 			(*i)++;
 		}
 		text = ft_substr(str, start_index + 1, (*i) - (start_index + 1));
+		(*i)++;
 	}
 	return (text);
 }
@@ -38,6 +39,7 @@ char	*get_inbetween_single_quotes_text(char *str, int *i)
 			(*i)++;
 		}
 		text = ft_substr(str, start_index + 1, (*i) - (start_index + 1));
+		(*i)++;
 	}
 	return (text);
 }

@@ -25,7 +25,8 @@ t_red	*lst_redir_new(void *content, int flag_num)
 
 	node = (t_red *)malloc(sizeof(t_red));
 	if (node)
-	{	
+	{
+		node->expand_mode_heredoc = EXPAND_VAR;
 		node->flag = flag_num;
 		node->pathname = content;
 		node->heredoc_fd[0] = -1;
@@ -33,8 +34,5 @@ t_red	*lst_redir_new(void *content, int flag_num)
 		node->next = NULL;
 		return (node);
 	}
-	else
-	{
-		return (NULL);
-	}
+	return (NULL);
 }

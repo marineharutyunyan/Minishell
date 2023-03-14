@@ -102,6 +102,7 @@ int		pass_word(char *line, int i);
 char	*get_word(char *line, int *i);
 int		pass_redir(char *line, int i);
 char	*get_text(char *str, int *i);
+char	*remove_qutoes(char *s, int *expand_mode_heredoc);
 char	*get_inbetween_double_quotes_text(char *str, int *i);
 char	*get_inbetween_single_quotes_text(char *str, int *i);
 char	*process_dollar_sign_and_quotes (char *line, t_general *g_data);
@@ -118,8 +119,7 @@ char	*get_value_by_key(char *key, t_env *lst);
 // rediractions
 int	 handle_rediractions(t_general *g_data);
 int	ft_redir_iter(t_pipe *pipe);
-int heredoc(t_red *head_red);
-
+int	heredoc(t_red *head_red, t_general *g_data);
 //utils
 int	free_array(void	**ptr);
 int	free_double_array(void	***ptr);

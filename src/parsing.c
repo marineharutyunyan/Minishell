@@ -108,29 +108,28 @@ int	parsing(t_general *g_data)
 		set_rediractions(&g_data->pipes[i], g_data->parse_data.pipes[i]);
 		set_args(&g_data->pipes[i], g_data->parse_data.pipes[i]);
 		// for PRINTING
-		
-		j = 0;
-		// printf("---------------------------------------------\n");
-		// printf("argv\n");
-		// while (g_data->pipes[i].argv && g_data->pipes[i].argv[j])
-		// {
-		// 	printf("argv = %s\n", g_data->pipes[i].argv[j]);
-		// 	j++;
-		// }
-		// ft_redir_iter(g_data->pipes[i].head_red);
-		// printf("*********************************************\n");
-		// printf("---------------------------------------------\n");
-		// printf("red\n");
-		// t_red *tmp =  g_data->pipes[i].head_red;
-		// while (tmp)
-		
-		// {
-		// 	printf("%s\n", tmp->pathname);
-		// 	printf("flag = %d\n", tmp->flag);
-		// 	tmp = tmp->next;
-		// }
-		// printf("*********************************************\n");
 		replace_dollar_varables(g_data, i);
+		j = 0;
+		printf("---------------------------------------------\n");
+		printf("argv\n");
+		// g_data->pipes[i].argv[j] = remove_qutoes( g_data->pipes[i].argv[j]);
+		while (g_data->pipes[i].argv && g_data->pipes[i].argv[j])
+		{
+			printf("argv = %s\n", g_data->pipes[i].argv[j]);
+			j++;
+		}
+		printf("*********************************************\n");
+		printf("---------------------------------------------\n");
+		printf("red\n");
+		t_red *tmp =  g_data->pipes[i].head_red;
+		while (tmp)
+		
+		{
+			printf("%s\n", tmp->pathname);
+			printf("flag = %d\n", tmp->flag);
+			tmp = tmp->next;
+		}
+		printf("*********************************************\n");
 		i++;
 	}
 	return (handle_rediractions(g_data));

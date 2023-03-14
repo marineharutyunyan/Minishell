@@ -1,6 +1,6 @@
 #include "mini.h"
 
-static int	heredoc_iter(t_pipe *pipe)
+static int	heredoc_iter(t_pipe *pipe, t_general *g_data)
 {
 	t_red	*temp;
 
@@ -9,7 +9,7 @@ static int	heredoc_iter(t_pipe *pipe)
 	{
 		if (temp->flag == HEREDOC)
 		{
-			if (heredoc(temp))
+			if (heredoc(temp, g_data))
 				return (1);
 		}
 		temp = temp->next;
@@ -24,7 +24,7 @@ int	handle_rediractions(t_general *g_data)
 	i = -1;
 	while (g_data->pipe_count > ++i)
 	{
-		if (heredoc_iter(&g_data->pipes[i]))
+		if (heredoc_iter(&g_data->pipes[i], g_data))
 			return (1);
 	}	
 	i = -1;

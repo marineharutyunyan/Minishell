@@ -3,3 +3,8 @@
 //TODO
 //cat | << mm
 //cat<<a
+
+cat << a
+// $PWD
+// "$PWD"
+// '$PWD'
