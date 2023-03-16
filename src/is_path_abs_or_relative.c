@@ -6,17 +6,16 @@
 /*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 22:10:47 by maharuty          #+#    #+#             */
-/*   Updated: 2023/03/14 22:10:58 by maharuty         ###   ########.fr       */
+/*   Updated: 2023/03/16 23:54:48 by maharuty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini.h"
 
-
 int	is_path_abs_or_relative(char *path)
 {
 	if (path[0] == '\0')
-		return(0);
+		return (0);
 	if (path[0] == '/'
 		|| (path[0] == '.' && path[1] == '/')
 		|| (path[0] == '.' && path[1] == '.' && path[2] == '/'))

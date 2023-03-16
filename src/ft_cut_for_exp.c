@@ -6,7 +6,7 @@
 /*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 17:46:39 by tumolabs          #+#    #+#             */
-/*   Updated: 2023/03/06 21:12:40 by maharuty         ###   ########.fr       */
+/*   Updated: 2023/03/16 23:25:32 by maharuty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,7 @@ int	ft_cut_for_exp(t_general *data, char *tmp, char *str, int sign)
 		if (ft_strcmp(ptr, tmp) == 0)
 		{
 			if (str[sign] && str[sign] == '+')
-			{
 				data->exp[i] = ft_strjoin1(data->exp[i], &str[sign + 2]);
-
-			}
 			else if (str[sign] == '=')
 				ft_new_malloc(str, data->exp, i, 1);
 			free(ptr);

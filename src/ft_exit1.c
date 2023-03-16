@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/06 15:13:53 by lohanyan          #+#    #+#             */
-/*   Updated: 2023/03/16 20:04:08 by maharuty         ###   ########.fr       */
+/*   Created: 2023/03/16 23:28:04 by maharuty          #+#    #+#             */
+/*   Updated: 2023/03/16 23:28:06 by maharuty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ static int	pass_zero(char *ptr)
 	i = 0;
 	if (ptr[0] == '-' || ptr[0] == '+')
 		i++;
-	while(ptr[i] == '0')
+	while (ptr[i] == '0')
 		i += 1;
 	return (i);
 }
 
 void	ft_check_sign1(char **ptr, int i)
 {
-	if(ft_strcmp(&ptr[1][pass_zero(ptr[1])], "9223372036854775808") > 0)
+	if (ft_strcmp(&ptr[1][pass_zero(ptr[1])], "9223372036854775808") > 0)
 	{
 		ft_printf(2, "exit\n");
 		ft_printf(2, "Minishell: exit %s : numeric argument required\n", ptr[i]);

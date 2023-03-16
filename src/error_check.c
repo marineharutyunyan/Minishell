@@ -11,12 +11,6 @@
 /* ************************************************************************** */
 #include "mini.h"
 
-// void print_unexpected_error(char c)
-// {
-// 	ft_printf(2, "syntax error near unexpected token '%c'", c);
-// }
-
-// if returning '1' closing pair missing if '0' either the the quote dose not exist in str at all or have closing symbol and is valid
 int	check_opening_closing_quote_pair(char *str)
 {
 	int		i;
@@ -43,7 +37,7 @@ int	check_opening_closing_quote_pair(char *str)
 
 int	has_errors(char *str)
 {
-	str = ft_trim(str); // TODO free
+	str = ft_trim(str);
 	if (check_opening_closing_quote_pair(str) == 1
 		|| (check_unexpected(str) == 1)
 		|| check_redir_sytax(str) == 1)

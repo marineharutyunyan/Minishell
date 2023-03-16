@@ -48,7 +48,7 @@ int	ft_redir_iter(t_pipe *pipe)
 			if (pipe->fd_out != 1)
 				close(pipe->fd_out);
 			pipe->fd_out = open(temp->pathname, O_CREAT | temp->flag | O_RDWR, 0777);
-			if(pipe->fd_out == -1)
+			if (pipe->fd_out == -1)
 			{
 				ft_printf(2, "Minishell: open: %s: %s\n", temp->pathname, strerror(errno));
 				return (1);

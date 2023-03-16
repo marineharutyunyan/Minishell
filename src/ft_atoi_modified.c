@@ -5,37 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/14 17:14:54 by tumolabs          #+#    #+#             */
-/*   Updated: 2023/03/16 16:51:20 by lohanyan         ###   ########.fr       */
+/*   Created: 2023/03/16 23:23:55 by maharuty          #+#    #+#             */
+/*   Updated: 2023/03/16 23:24:16 by maharuty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini.h"
-// char	*ft_strchr(char *s, int c)
-// {
-// 	int		i;
-
-// 	i = 0;
-// 	while (s[i] != '\0')
-// 	{
-// 		if (s[i] == (char) c)
-// 			return ((char *)s + i);
-// 		i++;
-// 	}
-// 	if (c != '\0')
-// 		return (0);
-// 	return ((char *)s + i);
-// }
-
-// int	ft_strcmp(char *s1, char *s2)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (s1[i] && s2[i] && s1[i] == s2[i])
-// 		i++;
-// 	return (s1[i] - s2[i]);
-// }
 
 unsigned long long int	ft_atoi_modifed(const char *str)
 {
@@ -61,17 +36,3 @@ unsigned long long int	ft_atoi_modifed(const char *str)
 	}
 	return (sign * value);
 }
-
-// int	ft_strncmp(const char *s1, const char *s2, size_t n)
-// {
-// 	size_t	i;
-
-// 	i = 0;
-// 	while ((s1[i] != '\0' || s2[i] != '\0') && i < n)
-// 	{
-// 		if (s1[i] != s2[i])
-// 			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-// 		i++;
-// 	}
-// 	return (0);
-// }

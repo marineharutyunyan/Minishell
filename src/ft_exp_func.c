@@ -6,19 +6,30 @@
 /*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 16:27:40 by tumolabs          #+#    #+#             */
-/*   Updated: 2023/03/16 14:23:48 by lohanyan         ###   ########.fr       */
+/*   Updated: 2023/03/16 23:28:54 by maharuty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini.h"
 
+void	ft_free_exp(char ***tmp, int j)
+{
+	j = 0;
+	while ((*tmp)[j])
+	{
+		free((*tmp)[j]);
+		j++;
+	}
+	free(*tmp);
+}
+
 void	ft_exp_func(char **ptr, t_general *data, int j, int i)
 {
 	char	**tmp;
-	
+
 	while (ptr && ptr[i])
 	{
-		if(ft_errors_for_export(ptr[i]) != 1)
+		if (ft_errors_for_export(ptr[i]) != 1)
 		{
 			if (ft_strchr(ptr[i], '=') != NULL)
 				get_env(data, ptr[i]);
@@ -43,15 +54,4 @@ void	ft_exp_func(char **ptr, t_general *data, int j, int i)
 		}
 		i++;
 	}
-}
-
-void	ft_free_exp(char ***tmp, int j)
-{
-	j = 0;
-	while ((*tmp)[j])
-	{
-		free((*tmp)[j]);
-		j++;
-	}
-	free(*tmp);
 }

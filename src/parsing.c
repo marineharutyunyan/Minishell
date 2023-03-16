@@ -1,6 +1,5 @@
 #include "mini.h"
 
-//line = smole lines in between pipes
 void	set_args(t_pipe *pipe, char *line)
 {
 	int		i;
@@ -52,9 +51,6 @@ int	get_redir_flag(char *line, int *i)
 	return (flag);
 }
 
-// dhgsdfhs >> dfgsd > fhgfgh   |
-//line = smole lines in between pipes 
-//index = index of the which in between pipe text it is
 void	set_rediractions(t_pipe *pipe, char *line)
 {
 	int		temp_start_index;
@@ -73,7 +69,7 @@ void	set_rediractions(t_pipe *pipe, char *line)
 			i = pass_spces(line, i);
 			pipe->words_count += 1;
 			free(get_word(line, &i));
-		} //TODO add check for redirection validity
+		}
 		if (flag != 9)
 		{
 			i = pass_spces(line, i);
@@ -89,13 +85,10 @@ void	set_rediractions(t_pipe *pipe, char *line)
 	}
 }
 
-// export a="barev" // segv in export 
-// TODO error case     cat|ls pipe count isn't neing counted correctly -fix -segfault with sanitazer
 int	parsing(t_general *g_data)
 {
 	int	i;
 	int	j;
-	int a, b;
 
 	i = 0;
 	while (g_data->parse_data.pipes[i])
@@ -105,14 +98,11 @@ int	parsing(t_general *g_data)
 		g_data->pipes[i].head_red = NULL;
 		g_data->pipes[i].words_count = 0;
 		g_data->pipes[i].argv = NULL;
-		g_data->pipes[i].cmd_name = NULL;		
+		g_data->pipes[i].cmd_name = NULL;
 		set_rediractions(&g_data->pipes[i], g_data->parse_data.pipes[i]);
 		set_args(&g_data->pipes[i], g_data->parse_data.pipes[i]);
-		// for PRINTING
-		//system("leaks minishell");
-		// sleep(1);
 		replace_dollar_varables(g_data, i);
-		/*j = 0;
+		/* j = 0;
 		printf("---------------------------------------------\n");
 		printf("argv\n");
 		// g_data->pipes[i].argv[j] = remove_qutoes( g_data->pipes[i].argv[j]);

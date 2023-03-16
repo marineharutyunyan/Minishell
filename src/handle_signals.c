@@ -1,6 +1,6 @@
 #include "mini.h"
 
-void signal_SIGINT_handler(int signum)
+void	signal_sigint_handler(int signum)
 {
 	(void)signum;
 	g_signal_notifire = 1;
@@ -9,34 +9,27 @@ void signal_SIGINT_handler(int signum)
 	rl_replace_line("", 0);
 }
 
-void handle_signals(int mode)
+void	print_and_exit(void)
+{
+	perror("Failed to register signal handler");
+	exit(1);
+}
+
+void	handle_signals(int mode)
 {
 	if (mode == INTERACTIVE_MODE)
 	{
-		if (signal(SIGQUIT, SIG_IGN) == SIG_ERR) 
-		{
-			perror("Failed to register signal handler");
-			exit(1);
-		}
-		if (signal(SIGINT, signal_SIGINT_handler) == SIG_ERR)
-		{
-			perror("Failed to register signal handler");
-			exit(1);
-		}
+		if (signal(SIGQUIT, SIG_IGN) == SIG_ERR)
+			print_and_exit();
+		if (signal(SIGINT, signal_sigint_handler) == SIG_ERR)
+			print_and_exit();
 	}
 	else
 	{
-		if (signal(SIGQUIT, SIG_DFL) == SIG_ERR) 
-		{
-			perror("Failed to register signal handler");
-			exit(1);
-		}
-		if (signal(SIGINT, SIG_DFL) == SIG_ERR)
-		{
-			perror("Failed to register signal handler");
-			exit(1);
-		}
+		if (signal(SIGQUIT, SIG_DFL) == SIG_ERR)
+			print_and_exit();
 
+		if (signal(SIGINT, SIG_DFL) == SIG_ERR)
+			print_and_exit();
 	}
-	
 }

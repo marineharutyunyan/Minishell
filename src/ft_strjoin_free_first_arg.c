@@ -6,7 +6,7 @@
 /*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 21:14:38 by maharuty          #+#    #+#             */
-/*   Updated: 2023/03/16 21:27:03 by maharuty         ###   ########.fr       */
+/*   Updated: 2023/03/16 23:30:31 by maharuty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_strjoin_free_first_arg(char *s1, char const *s2)
 	char	*ptr1;
 	char	*s1_for_free;
 
-    s1_for_free = s1;
+	s1_for_free = s1;
 	ptr = (char *) malloc(ft_strlen(s1) + ft_strlen((char *)s2) + 1);
 	if (ptr == 0)
 		return (0);
@@ -37,11 +37,11 @@ char	*ft_strjoin_free_both_arg(char *s1, char *s2)
 {
 	char	*ptr;
 	char	*ptr1;
-    char	*s1_for_free;
+	char	*s1_for_free;
 	char	*s2_for_free;
 
-    s1_for_free = s1;
-    s2_for_free = s2;
+	s1_for_free = s1;
+	s2_for_free = s2;
 	ptr = (char *) malloc(ft_strlen(s1) + ft_strlen((char *)s2) + 1);
 	if (ptr == 0)
 		return (0);

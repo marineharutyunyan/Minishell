@@ -6,25 +6,15 @@
 /*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 14:42:39 by tumolabs          #+#    #+#             */
-/*   Updated: 2023/03/15 01:35:39 by maharuty         ###   ########.fr       */
+/*   Updated: 2023/03/16 23:53:36 by maharuty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini.h"
 
-int ep_strlen(char *s)
-{
-	int	i;
-
-	i = 0;
-	while (s && s[i] && s[i] != '=')
-		i++;
-	return (i);
-}
-
 int	ft_free(char **ptr, char **tmp, int *i)
 {
-	int len;
+	int	len;
 
 	if (ep_strlen(*ptr) <= ep_strlen(*tmp))
 		len = ep_strlen(*tmp);
@@ -61,7 +51,7 @@ int	ft_check_str2(char *str, char **exp)
 		ptr = ft_substr(exp[i], 0, j);
 		j = ft_free(&ptr, &tmp, &i);
 		free(ptr);
-		if(j > -1)
+		if (j > -1)
 		{
 			free(tmp);
 			return (j);
@@ -111,9 +101,9 @@ int	ft_unset(t_general *data, char **ptr)
 	j = 0;
 	while (ptr && ptr[i])
 	{
-		if((ft_strrchr(ptr[i], '=') != 0
-			&& ft_printf(2, "Minishell: `%s\': not a valid identifier\n", ptr[i]))
-			|| ft_errors_for_export(ptr[i]) != 1) // 
+		if ((ft_strrchr(ptr[i], '=') != 0 
+				&& ft_printf(2, "Minishell: `%s\': not a valid identifier\n", ptr[i]))
+			|| ft_errors_for_export(ptr[i]) != 1)
 		{
 			ft_unset_for_env(data, ptr[i]);
 			l = 0;
@@ -147,7 +137,7 @@ void	ft_unset_for_env(t_general *data, char *ptr)
 		j = 0;
 		ft_check_env(k, data, tmp);
 		j = -1;
-		while(tmp[++j])
+		while (tmp[++j])
 		{
 			free(tmp[j]);
 			tmp[j] = NULL;

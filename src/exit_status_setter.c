@@ -1,47 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   exit_status_setter.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/16 23:26:14 by maharuty          #+#    #+#             */
-/*   Updated: 2023/03/16 23:26:17 by maharuty         ###   ########.fr       */
+/*   Created: 2023/03/16 23:40:04 by maharuty          #+#    #+#             */
+/*   Updated: 2023/03/16 23:40:27 by maharuty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini.h"
 
-int	ft_env(t_general *data)
+int	exit_status_setter(t_env **head_env, int status)
 {
-	int	i;
+	char	*str_status;
 
-	i = 0;
-	while (data->env[i])
-	{
-		printf("%s\n", data->env[i]);
-		i++;
-	}
-	return (0);
-}
-
-void	ft_check_env(int k, t_general *data, char **tmp)
-{
-	int	j;
-	int	l;
-
-	j = 0;
-	l = 0;
-	while (tmp && tmp[j])
-	{
-		if (j == k)
-			j++;
-		else
-		{
-			data->env[l] = ft_strdup(tmp[j]);
-			j++;
-			l++;
-		}
-	}
-	data->env[l] = NULL;
+	str_status = ft_itoa(status);
+	lst_env_add(head_env, lst_env_new("?", str_status));
+	free_array((void **)&str_status);
+	return (1);
 }

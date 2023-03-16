@@ -6,16 +6,17 @@
 /*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 20:15:02 by maharuty          #+#    #+#             */
-/*   Updated: 2023/03/16 21:01:28 by maharuty         ###   ########.fr       */
+/*   Updated: 2023/03/16 23:37:22 by maharuty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini.h"
 
-int child_heredoc(t_red *head_red, t_general *g_data)
+int	child_heredoc(t_red *head_red, t_general *g_data)
 {
 	char	*line;
 	char	*full_line;
+
 	full_line = ft_strdup("");
 	handle_signals(!INTERACTIVE_MODE);
 	signal(SIGQUIT, SIG_IGN);
@@ -30,7 +31,7 @@ int child_heredoc(t_red *head_red, t_general *g_data)
 				full_line = ft_strjoin_free_first_arg(full_line, "\n");
 			break ;
 		}
-		if ((full_line[0] != '\0' && full_line[0] != '\n') || line[0] == '\0')// TODO make readable
+		if ((full_line[0] != '\0' && full_line[0] != '\n') || line[0] == '\0')
 			full_line = ft_strjoin_free_first_arg(full_line, "\n");
 		if (ft_strcmp(line, head_red->pathname) == 0)
 			break ;
@@ -44,12 +45,12 @@ int child_heredoc(t_red *head_red, t_general *g_data)
 	close(head_red->heredoc_fd[1]);
 	exit(0);
 }
+
 int	heredoc(t_red *head_red, t_general *g_data)
 {
 	pid_t	pid;
 	int		status;
 
-	
 	if (pipe(head_red->heredoc_fd) == -1)
 		return (1);
 	pid = fork();

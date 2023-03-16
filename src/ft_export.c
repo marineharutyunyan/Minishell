@@ -6,7 +6,7 @@
 /*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 17:45:39 by tumolabs          #+#    #+#             */
-/*   Updated: 2023/03/16 16:05:27 by lohanyan         ###   ########.fr       */
+/*   Updated: 2023/03/16 23:29:18 by maharuty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,21 +52,21 @@ void	ft_sort_export(t_general *data, int i)
 	}
 }
 
-int double_size(char **ptr)
+int	double_size(char **ptr)
 {
 	int	k;
 
 	k = 0;
-	while(ptr && ptr[k])
+	while (ptr && ptr[k])
 		k++;
-	return(k);
+	return (k);
 }
 
 int	ft_export(t_general *data, char **ptr)
 {
 	int		i;
 	int		j;
-	// TODO return (exit_codes)
+
 	i = 0;
 	j = 0;
 	while (ptr && ptr[i])

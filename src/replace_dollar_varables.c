@@ -6,7 +6,7 @@
 /*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 17:40:41 by maharuty          #+#    #+#             */
-/*   Updated: 2023/03/16 22:49:48 by maharuty         ###   ########.fr       */
+/*   Updated: 2023/03/16 23:44:35 by maharuty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ size_t	arr_double_len(char	**arr)
 	return (i);
 }
 
-char ** slice_arr(char **argv, char **arr, int index)
+char	**slice_arr(char **argv, char **arr, int index)
 {
 	char	**result;
 	int		i;
@@ -35,14 +35,14 @@ char ** slice_arr(char **argv, char **arr, int index)
 	result = malloc(sizeof(char *) * (arr_double_len(argv) + arr_double_len(arr) + 1));
 	while (i < index)
 	{
-		result[i] =  argv[i];
+		result[i] = argv[i];
 		i++;
 	}
 	while (arr[j])
-		result[index++] =  arr[j++];
+		result[index++] = arr[j++];
 	i++;
 	while (argv[i])
-		result[index++] =  argv[i++];
+		result[index++] = argv[i++];
 	result[index] = NULL;
 	free(argv[index_for_free]);
 	free(arr);
@@ -50,10 +50,10 @@ char ** slice_arr(char **argv, char **arr, int index)
 	return (result);
 }
 
-int replace_dollar_varables(t_general *g_data, int i)
+int	replace_dollar_varables(t_general *g_data, int i)
 {
-	int 	j;
-	t_red 	*temp;
+	int		j;
+	t_red	*temp;
 
 	j = 0;
 	if (g_data->pipes[i].argv)
@@ -81,5 +81,5 @@ int replace_dollar_varables(t_general *g_data, int i)
 			temp->pathname = remove_qutoes(temp->pathname, &temp->expand_mode_heredoc);
 		temp = temp->next;
 	}
-	return(0);
+	return (0);
 }

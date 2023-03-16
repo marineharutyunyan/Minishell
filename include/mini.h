@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mini.h                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/17 00:11:38 by maharuty          #+#    #+#             */
+/*   Updated: 2023/03/17 00:11:38 by maharuty         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -12,8 +24,6 @@
 #include <sys/ioctl.h>
 #include <string.h>
 #include <termios.h>
-# define PROMPT_PIPE_EXAMPLE "|\"ls |-la|\" | cat sgdsgsdg sdgsdgsdg |$dsgsd\"gs|dg\" '|f |f  |g| |'  | ls"
-# define PROMPT_TOKENS_EXAMPLE "<a<b<c>d>\" t    \">>y<<u>i<i \"cat \"ls <\"t \"> u file"
 # define UNEXPECTED "|&;()"
 # define FT_SPACE "\n\t "
 # define REDIRECTIONS "<>"
@@ -25,9 +35,6 @@
 # define NO_SPLITE 0
 
 # define HEREDOC 1  // << // opening file and puting the 
-
-
-// void rl_replace_line (const char *, int);
 
 extern int g_signal_notifire;
 
@@ -112,6 +119,9 @@ char	*get_inbetween_single_quotes_text(char *str, int *i);
 char	*process_dollar_sign_and_quotes (char *line, t_general *g_data);
 int 	replace_dollar_varables(t_general *g_data, int i);
 char	*replace_env_var(char *line, t_general *g_data);
+int	**create_pipes(int pipe_count);
+void	change_io(int **fd, int i, int pipe_count, t_pipe pipe);
+int	exit_status_setter(t_env **head_env, int status);
 
 //env_parsing
 t_env	*lst_env_new(void *value, void *key);
@@ -119,12 +129,13 @@ void	lst_env_add(t_env **lst, t_env *new);
 void    set_env_t_list(t_general *g_data, char **env);
 char	*get_value_by_key(char *key, t_env *lst);
 void	del_all_env(t_general *g_data);
-
+int	find_and_replace_env_node(t_env *lst, t_env *new);
 
 // rediractions
 int	 handle_rediractions(t_general *g_data);
 int	ft_redir_iter(t_pipe *pipe);
 int	heredoc(t_red *head_red, t_general *g_data);
+
 //utils
 int		free_array(void	**ptr);
 int		free_double_array(void	***ptr);
@@ -135,22 +146,22 @@ char	*ft_strjoin_free_both_arg(char *s1, char *s2);
 void	ft_redir_temp_iter(t_red *lst);
 void	ft_env_iter(t_env *lst);
 
-//
+//execute
 int		execute(t_general *g_data);
 void 	handle_signals(int mode);
 void	set_term_attr(int on_off);
 void	set_execv_path(t_general *g_data, t_pipe *pipe);
 int		is_path_abs_or_relative(char *path);
 
+//free
+void	free_general(t_general *g_data);
 
-
-
-
-//
+//builtin
 int is_builtin(char *argv_0);
 int builtin(t_general *g_data, char **argv, int i);
 int	ft_echo(char **ptr, t_general *g_data, int i);
 int ft_pwd();
+int	ep_strlen(char *s);
 int ft_cd(char **ptr, t_general *data);
 int ft_env(t_general *data);
 int	ft_export(t_general *data, char **ptr);
@@ -165,7 +176,6 @@ char	*ft_strdup(const char *s1);
 char	*ft_strdup1(char *s1);
 void	get_export(t_general *data);
 int ft_check_str(char *str, t_general *data);
-// char *ft_strchr(char *s, int c);
 char *ft_substr(char  const *s, unsigned int start, size_t len);
 int ft_strcmp(char *s1, char *s2);
 char *ft_epstrdup(char *s1);

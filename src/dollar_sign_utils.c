@@ -6,7 +6,7 @@
 /*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:34:52 by lohanyan          #+#    #+#             */
-/*   Updated: 2023/03/16 22:02:40 by maharuty         ###   ########.fr       */
+/*   Updated: 2023/03/16 23:08:13 by maharuty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*get_variable_name(char *line, int *i)
 
 	start_num = (*i);
 	if (line[*i] == '?' && ++(*i))
-		return (ft_strdup("?")); // or ft_strdup("?");
+		return (ft_strdup("?"));
 	while (line[(*i)] != '\0' && (ft_isalpha(line[(*i)])
 			|| ft_isdigit(line[(*i)]) || line[(*i)] == '_'))
 		(*i)++;
@@ -43,11 +43,11 @@ char	*process_dollar_sign_and_quotes(char *line, t_general *g_data)
 	int		i;
 	char	*final_line;
 	char	*temp;
-	//TODO take kare avout freeing temp
+
 	i = 0;
 	temp = NULL;
 	final_line = NULL;
-	
+
 	while (line[i] != '\0')
 	{
 		temp = get_inbetween_single_quotes_text(line, &i);

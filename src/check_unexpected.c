@@ -6,7 +6,7 @@
 /*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:33:07 by lohanyan          #+#    #+#             */
-/*   Updated: 2023/03/16 22:51:13 by maharuty         ###   ########.fr       */
+/*   Updated: 2023/03/16 23:04:22 by maharuty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	loop_untill_unexpected(char *str, int *i, int *flag)
 		(*i)++;
 	}
 }
-// cat <<
+
 int	check_unexpected(char *str)
 {
 	int	i;

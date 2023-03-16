@@ -6,16 +6,12 @@
 /*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 20:28:34 by maharuty          #+#    #+#             */
-/*   Updated: 2023/03/16 20:28:34 by maharuty         ###   ########.fr       */
+/*   Updated: 2023/03/16 23:46:07 by maharuty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini.h"
 
-// 0 line is valid and invalid if returning 1
-//TODO is this correct way to check the rediractions 
-//TODO functions functionality is not tested 
-// ""ssdfs "sdgdf ">>ddfg 
 int	check_redir_sytax(char *str)
 {
 	int		i;
@@ -31,7 +27,7 @@ int	check_redir_sytax(char *str)
 			j = i;
 			i = pass_quotes(str, i);
 		}
-		if (str[i] && ft_strchr(REDIRECTIONS, str[i]))//TODO all defined's like  REDIRECTIONS have \0 in last character case, make sure this conndition doesn't disturb any logic  
+		if (str[i] && ft_strchr(REDIRECTIONS, str[i]))
 		{
 			c = str[i];
 			if (str[i + 1] == '\0')
