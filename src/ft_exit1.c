@@ -6,18 +6,30 @@
 /*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 15:13:53 by lohanyan          #+#    #+#             */
-/*   Updated: 2023/03/06 21:10:36 by maharuty         ###   ########.fr       */
+/*   Updated: 2023/03/16 20:04:08 by maharuty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini.h"
+
+static int	pass_zero(char *ptr)
+{
+	int	i;
+
+	i = 0;
+	if (ptr[0] == '-' || ptr[0] == '+')
+		i++;
+	while(ptr[i] == '0')
+		i += 1;
+	return (i);
+}
+
 void	ft_check_sign1(char **ptr, int i)
 {
-	if(ft_strcmp(&ptr[i][1], "9223372036854775808") > 0)
+	if(ft_strcmp(&ptr[1][pass_zero(ptr[1])], "9223372036854775808") > 0)
 	{
-		printf("aaaaaaaaa\n");
-		printf("exit\n");
-		printf("Minishell: exit %s : numeric argument required\n", ptr[i]);
+		ft_printf(2, "exit\n");
+		ft_printf(2, "Minishell: exit %s : numeric argument required\n", ptr[i]);
 
 		exit(255);
 	}
@@ -25,32 +37,16 @@ void	ft_check_sign1(char **ptr, int i)
 
 void	ft_check_sign(char **ptr, int i)
 {
-	if (ft_strcmp(&ptr[i][1], "9223372036854775807") > 0)
+	if (ft_strcmp(&ptr[i][pass_zero(ptr[1])], "9223372036854775807") > 0)
 	{
-		printf("wwwwwwwwwww\n");
 		printf("exit\n");
 		printf("Minishell: exit %s : numeric argument  required\n", ptr[i]);
-		exit(255);
-	}
-	else if (ft_strcmp(ptr[i], "9223372036854775807") > 0)
-	{
-		printf("eeeeeeeeeeeee\n");
-		printf("Minishell : exit %s : numeric argument required\n", ptr[i]);
-		printf("exit\n");
 		exit(255);
 	}
 }
 
 void	ft_print_error_for_two_arguments(char **ptr, int i)
 {
-	printf("tttttttttttt\n");
-	printf("Minishell: exit %s : numeric argument required\n", ptr[i]);
+	ft_printf(2, "Minishell: exit %s : numeric argument required\n", ptr[i]);
 	exit(255);
-}
-
-void	ft_print_error_for_exit(void)
-{
-	//printf("ssssss\n");
-	printf("exit\n");
-	exit(0);
 }

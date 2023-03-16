@@ -6,13 +6,15 @@
 /*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 13:56:44 by tumolabs          #+#    #+#             */
-/*   Updated: 2023/03/12 20:51:33 by maharuty         ###   ########.fr       */
+/*   Updated: 2023/03/16 20:03:50 by maharuty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini.h"
 
-int	ft_exit(char **ptr)
+// 9223372036854775808
+
+int	ft_exit(char **ptr, t_env *head_env)
 {
 	int						i;
 	int						j;
@@ -21,49 +23,38 @@ int	ft_exit(char **ptr)
 
 	i = 1;
 	j = 0;
-	sign = tiv;
-	if (!ptr[i])
-		ft_print_error_for_exit();
+	if (!ptr[i] && ft_printf(2, "exit\n"))
+		exit(ft_atoi(get_value_by_key("?", head_env)));
 	tiv = ft_atoi_modifed(ptr[i]);
 	if (ft_check_exit(&ptr[i], i, j) != 0)
-		return (-1); // TODO review return value
-	if (ft_strlen(ptr[i]) > 20)
-		ft_print_error_for_two_arguments(ptr, i);
+		return (1);
 	if (ptr[i][0] == '-')
 		ft_check_sign1(ptr, i);
-	else if (ptr[i][0] == '+')
+	else if (ptr[i][0] == '+' || ptr[i][0] != '-')
 		ft_check_sign(ptr, i);
-	printf("exit\n");
+	ft_printf(2, "exit\n");
 	exit(tiv);
-	// return (0);
+	return (0);
 }
 
 int	ft_check_exit(char **ptr, int i, int j)
 {
 	if (ptr[0][0] == '-' || ptr[0][0] == '+')
 		j++;
-	//printf("%s\n", ptr[i]);
 	while (ptr[0][j])
 	{
-		//printf("aaaaaaaaaaa\n");
 		if (!(ptr[0][j] >= 48 && ptr[0][j] <= 57))
 		{
-			//printf("aaaaaaaaaa\n");
-			//printf("exit\n");
-			printf("Minishell: exit: %s : numeric argument required\n", ptr[i]);
+			printf("Minishell: exit: %s : numeric argument required\n", ptr[0]);
 			exit(255);
 		}
 		j++;
 	}
 	if (ptr[i] != NULL)
 	{
-		//printf("llllllll\n");
 		printf("exit\n");
 		printf("Minishell : exit: too many arguments\n");
 		return (1);
 	}
-	//printf("%s\n", ptr[0]);
-	//printf("%s\n", ptr[i]);
-	//printf("%s\n", ptr[i + 1]);
 	return (0);
 }

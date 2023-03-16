@@ -147,10 +147,10 @@ int is_builtin(char *argv_0);
 int builtin(t_general *g_data, char **argv, int i);
 int	ft_echo(char **ptr, t_general *g_data, int i);
 int ft_pwd();
-int ft_cd(char **ptr);
+int ft_cd(char **ptr, t_general *data);
 int ft_env(t_general *data);
 int	ft_export(t_general *data, char **ptr);
-int	ft_exit(char **ptr);
+int	ft_exit(char **ptr, t_env *head_env);
 int	ft_unset(t_general *data, char **ptr);
 
 
@@ -158,6 +158,7 @@ size_t	ft_strlen(const char *s);
 char **ft_split(char const *s, char c);
 int ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*ft_strdup(const char *s1);
+char	*ft_strdup1(char *s1);
 void	get_export(t_general *data);
 int ft_check_str(char *str, t_general *data);
 // char *ft_strchr(char *s, int c);

@@ -1,4 +1,16 @@
-#include "mini.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execute.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/16 16:43:08 by lohanyan          #+#    #+#             */
+/*   Updated: 2023/03/16 20:18:54 by maharuty         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include  "mini.h"
 
 char	*ft_strjoin_free_first_arg(char *s1, char const *s2) // TODO add flag to free or not to free
 {
@@ -113,21 +125,7 @@ void	change_io(int **fd, int i, int pipe_count, t_pipe pipe)
 	}
 }
 
-void	print_pipes(int pipe_count, int **fd)
-{
-	int	i;
-
-	printf("\n");
-	i = 0;
-	while (i < pipe_count - 1)
-	{
-		printf("fd[%d][0] = %d\n", i, fd[i][0]);
-		printf("fd[%d][1] = %d\n", i, fd[i][1]);
-		i++;
-	}
-}
-
-int is_dir(char *cmd)
+int	is_dir(char *cmd)
 {
 	if (opendir(cmd))
 	{
@@ -168,7 +166,7 @@ int	execute(t_general *g_data)
 	if (fd == NULL)
 		return (127);
 	if (g_data->pipe_count == 1 && g_data->pipes[0].argv)
-		if (is_builtin(g_data->pipes[0].argv[0]))
+		if (is_builtin(g_data->pipes[0].argv[0]) && 	free_double_array((void***)&fd))
 			return (builtin(g_data, g_data->pipes[0].argv, 0));
 	while (i < g_data->pipe_count)
 	{

@@ -1,4 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/16 20:15:02 by maharuty          #+#    #+#             */
+/*   Updated: 2023/03/16 20:21:37 by maharuty         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "mini.h"
+
 int child_heredoc(t_red *head_red, t_general *g_data)
 {
 	char	*line;
@@ -25,8 +38,8 @@ int child_heredoc(t_red *head_red, t_general *g_data)
 	}
 	if (head_red->expand_mode_heredoc == EXPAND_VAR)
 		full_line = replace_env_var(full_line, g_data);
-	ft_printf(head_red->heredoc_fd[1], "%s", full_line);
-	// close(head_red->heredoc_fd[0]);
+	if (full_line)
+		ft_printf(head_red->heredoc_fd[1], "%s", full_line);
 	close(head_red->heredoc_fd[1]);
 	exit(0);
 }
@@ -48,6 +61,6 @@ int	heredoc(t_red *head_red, t_general *g_data)
 	signal(SIGQUIT, SIG_IGN);
 	waitpid(pid, &status, 0);
 	if (WIFSIGNALED(status) && write(1, "\n", 1))
-		return (WTERMSIG(status));
+		return (WTERMSIG(status));	
 	return (WEXITSTATUS(status));
 }

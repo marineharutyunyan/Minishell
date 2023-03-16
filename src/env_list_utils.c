@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env_list_utils.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lohanyan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/16 16:37:54 by lohanyan          #+#    #+#             */
+/*   Updated: 2023/03/16 16:40:51 by lohanyan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "mini.h"
 
 t_env	*lst_env_last(t_env *lst)
@@ -7,17 +18,17 @@ t_env	*lst_env_last(t_env *lst)
 	return (lst);
 }
 
-void del_node (t_env *node)
+void	del_node(t_env *node)
 {
 	free(node->key);
 	free(node->value);
 	free(node);
 }
 
-void del_all_env(t_general *g_data)
+void	del_all_env(t_general *g_data)
 {
-	t_env *prev;
-	t_env *temp;
+	t_env	*prev;
+	t_env	*temp;
 
 	temp = g_data->head_env;
 	prev = NULL;
@@ -30,7 +41,7 @@ void del_all_env(t_general *g_data)
 	g_data->head_env = NULL;
 }
 
-int find_and_replace_node(t_env *lst, t_env *new)
+int	find_and_replace_node(t_env *lst, t_env *new)
 {
 	while (lst)
 	{
@@ -46,7 +57,7 @@ int find_and_replace_node(t_env *lst, t_env *new)
 		}
 		lst = lst->next;
 	}
-	return(0);
+	return (0);
 }
 
 void	lst_env_add(t_env **lst, t_env *new)
@@ -89,5 +100,3 @@ t_env	*lst_env_new(void *key, void *value)
 	}
 	return (NULL);
 }
-
-

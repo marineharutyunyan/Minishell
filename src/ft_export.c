@@ -6,7 +6,7 @@
 /*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 17:45:39 by tumolabs          #+#    #+#             */
-/*   Updated: 2023/03/14 11:07:56 by maharuty         ###   ########.fr       */
+/*   Updated: 2023/03/16 16:05:27 by lohanyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,19 @@ void	ft_sort_export(t_general *data, int i)
 			data->exp[j + 1] = tmp;
 			j = 0;
 		}
-		j++;
+		else
+			j++;
 	}
+}
+
+int double_size(char **ptr)
+{
+	int	k;
+
+	k = 0;
+	while(ptr && ptr[k])
+		k++;
+	return(k);
 }
 
 int	ft_export(t_general *data, char **ptr)
@@ -62,6 +73,7 @@ int	ft_export(t_general *data, char **ptr)
 			i++;
 	if (i < 2)
 	{
+		i = 0;
 		while (data->exp[i])
 		{
 			printf("declare -x ");
@@ -73,6 +85,7 @@ int	ft_export(t_general *data, char **ptr)
 	{
 		i = 1;
 		ft_exp_func(ptr, data, j, i);
+		ft_sort_export(data, double_size(data->exp));
 	}
 	return (0);
 }
@@ -92,7 +105,7 @@ void	get_env(t_general *data, char *str)
 		i = -1;
 		while (tmp && tmp[++i])
 			data->env[i] = ft_strdup(tmp[i]);
-		data->env[i] = ft_strdup(str);
+		data->env[i] = ft_strdup1(str);
 		data->env[i + 1] = NULL;
 		i = -1;
 		while (tmp[++i])

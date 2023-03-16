@@ -6,7 +6,7 @@
 /*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 18:20:52 by tumolabs          #+#    #+#             */
-/*   Updated: 2023/03/10 09:58:08 by maharuty         ###   ########.fr       */
+/*   Updated: 2023/03/16 14:57:07 by lohanyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@ int	ft_errors_for_export(char *str)
 		i++;
 		while(str && str[i] && str[i] != '=' && str[i - 1] != '+')
 		{
+			if(str[i] == '+' && str[i + 1] != '=')
+			{
+				printf("minishell: export: %s: not a valid identifier\n", str);
+				return (1);
+			}
 			if((!(str[i] >= 65 && str[i] <= 90)) && (!(str[i] >= 97 && str[i] <= 122)) && (str[i] != '_') && str[i] != '+' &&  (!(str[i] >= 48 && str[i] <= 57)))
 			{
 				printf("not a valid identifier\n");

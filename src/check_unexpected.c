@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_unexpected.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/16 16:33:07 by lohanyan          #+#    #+#             */
+/*   Updated: 2023/03/16 20:10:50 by maharuty         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "mini.h"
 
-static void loop_untill_unexpected(char *str, int *i, int *flag)
+static void	loop_untill_unexpected(char *str, int *i, int *flag)
 {
 	int	j;
 
@@ -16,19 +28,20 @@ static void loop_untill_unexpected(char *str, int *i, int *flag)
 		(*i)++;
 	}
 }
-
-int check_unexpected(char *str)
+// cat <<
+int	check_unexpected(char *str)
 {
-	int i;
-	int j;
-	int flag;
+	int	i;
+	int	j;
+	int	flag;
 
 	i = 0;
 	j = -1;
 	flag = 0;
 	while (str[i])
 	{
-		if (str[i] && (flag == 0 || str[i + 1] == '\0') && ft_strchr(UNEXPECTED, str[i]))
+		if (str[i] && (flag == 0 || str[i + 1] == '\0')
+			&& ft_strchr(UNEXPECTED, str[i]))
 			return (1);
 		else if (i != 0)
 			i++;

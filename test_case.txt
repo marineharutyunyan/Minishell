@@ -32,3 +32,5 @@ $PWD
 /Users/maharuty/Downloads/Minishell: Permission denied
 should be 
 bash: /Users/maharuty/Downloads/Minishell: is a directory
+
+
