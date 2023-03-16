@@ -34,3 +34,10 @@ should be
 bash: /Users/maharuty/Downloads/Minishell: is a directory
 
 
+
+
+export a=" " - with sanitiser 
+
+export a=""
+Minishell$ $a
+[1]    19788 segmentation fault  ./minishell

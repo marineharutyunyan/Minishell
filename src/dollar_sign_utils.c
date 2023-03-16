@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   dollar_sign_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lohanyan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:34:52 by lohanyan          #+#    #+#             */
-/*   Updated: 2023/03/16 16:35:23 by lohanyan         ###   ########.fr       */
+/*   Updated: 2023/03/16 22:02:40 by maharuty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "mini.h"
 
 char	*get_variable_name(char *line, int *i)
@@ -46,18 +47,18 @@ char	*process_dollar_sign_and_quotes(char *line, t_general *g_data)
 	i = 0;
 	temp = NULL;
 	final_line = NULL;
+	
 	while (line[i] != '\0')
 	{
 		temp = get_inbetween_single_quotes_text(line, &i);
-		final_line = ft_strjoin_free_first_arg(final_line, temp);
+		final_line = ft_strjoin_free_both_arg(final_line, temp);
 		temp = get_inbetween_double_quotes_text(line, &i);
 		if (!temp)
 			temp = get_text(line, &i);
 		if (temp)
 		{
 			temp = replace_env_var(temp, g_data);
-			final_line = ft_strjoin_free_first_arg(final_line, temp);
-			free_array((void **)&temp);
+			final_line = ft_strjoin_free_both_arg(final_line, temp);
 		}
 	}
 	free(line);
@@ -79,6 +80,7 @@ char	*replace_env_var(char *line, t_general *g_data)
 	{
 		if (line[i] == '$')
 		{
+			g_signal_notifire = SPLITE;
 			i++;
 			temp = get_variable_name(line, &i);
 			if (temp != NULL)

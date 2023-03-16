@@ -21,12 +21,17 @@ void	free_parsing(t_parsing *pars_data)
 
 void	free_red(t_red *head_red)
 {
+	t_red *prev;
+
+	prev = head_red;
 	while (head_red)
 	{
 		if (head_red->flag == HEREDOC)
 			close(head_red->heredoc_fd[0]);
 		free_array((void **)&head_red->pathname);
+		prev = head_red;
 		head_red = head_red->next;
+		free(prev);
 	}
 }
 

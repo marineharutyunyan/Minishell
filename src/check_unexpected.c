@@ -6,7 +6,7 @@
 /*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:33:07 by lohanyan          #+#    #+#             */
-/*   Updated: 2023/03/16 20:10:50 by maharuty         ###   ########.fr       */
+/*   Updated: 2023/03/16 22:51:13 by maharuty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	loop_untill_unexpected(char *str, int *i, int *flag)
 		(*i) = pass_quotes(str, (*i));
 		if (j != (*i) && ++(*i))
 			*flag = 1;
-		if (!ft_strchr(METACHARACTERS, str[(*i)]))
+		if (str[(*i)] && !ft_strchr(METACHARACTERS, str[(*i)]))
 			*flag = 1;
 		(*i)++;
 	}

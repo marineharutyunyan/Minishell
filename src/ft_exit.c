@@ -6,7 +6,7 @@
 /*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 13:56:44 by tumolabs          #+#    #+#             */
-/*   Updated: 2023/03/16 20:03:50 by maharuty         ###   ########.fr       */
+/*   Updated: 2023/03/16 20:30:05 by maharuty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	ft_exit(char **ptr, t_env *head_env)
 		return (1);
 	if (ptr[i][0] == '-')
 		ft_check_sign1(ptr, i);
-	else if (ptr[i][0] == '+' || ptr[i][0] != '-')
+	else
 		ft_check_sign(ptr, i);
 	ft_printf(2, "exit\n");
 	exit(tiv);

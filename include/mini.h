@@ -21,6 +21,9 @@
 
 # define INTERACTIVE_MODE 1
 
+# define SPLITE 111
+# define NO_SPLITE 0
+
 # define HEREDOC 1  // << // opening file and puting the 
 
 
@@ -126,6 +129,7 @@ int	heredoc(t_red *head_red, t_general *g_data);
 int		free_array(void	**ptr);
 int		free_double_array(void	***ptr);
 char	*ft_strjoin_free_first_arg(char *s1, char const *s2);
+char	*ft_strjoin_free_both_arg(char *s1, char *s2);
 
 //temp_utils
 void	ft_redir_temp_iter(t_red *lst);

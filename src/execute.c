@@ -6,37 +6,13 @@
 /*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:43:08 by lohanyan          #+#    #+#             */
-/*   Updated: 2023/03/16 20:18:54 by maharuty         ###   ########.fr       */
+/*   Updated: 2023/03/16 21:15:21 by maharuty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include  "mini.h"
 
-char	*ft_strjoin_free_first_arg(char *s1, char const *s2) // TODO add flag to free or not to free
-{
-	int		s1_len;
-	int		s2_len;
-	char	*newstr;
 
-	if (!(s1) && !(s2))
-		return (NULL);
-	else if (!(s1) || !(s2))
-	{
-		if (!s1)
-			return (ft_strdup(s2));
-		else/* if (!free_arr((char *)s1))*/
-			return (ft_strdup(s1));
-	}
-	s1_len = ft_strlen(s1);
-	s2_len = ft_strlen(s2);
-	newstr = (char *)malloc(sizeof(char) * (s1_len + s2_len + 1));
-	if (!(newstr))
-		return (NULL);
-	ft_strlcpy(newstr, s1, s1_len + 1);
-	ft_strlcat(newstr + (s1_len), s2, s2_len + 1);
-	free(s1);
-	return (newstr);
-}
 
 static int	**create_pipes(int pipe_count)
 {

@@ -6,7 +6,7 @@
 /*   By: maharuty <maharuty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 20:15:02 by maharuty          #+#    #+#             */
-/*   Updated: 2023/03/16 20:21:37 by maharuty         ###   ########.fr       */
+/*   Updated: 2023/03/16 21:01:28 by maharuty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int child_heredoc(t_red *head_red, t_general *g_data)
 	char	*full_line;
 	full_line = ft_strdup("");
 	handle_signals(!INTERACTIVE_MODE);
+	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		set_term_attr(1);
@@ -61,6 +62,6 @@ int	heredoc(t_red *head_red, t_general *g_data)
 	signal(SIGQUIT, SIG_IGN);
 	waitpid(pid, &status, 0);
 	if (WIFSIGNALED(status) && write(1, "\n", 1))
-		return (WTERMSIG(status));	
+		return (WTERMSIG(status));
 	return (WEXITSTATUS(status));
 }
